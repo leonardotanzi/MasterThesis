@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Output/NewImages/Cropped/25_left.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN/CNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556094660/events.out.tfevents.1556094662.n139-p87.eduroam.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556094969/events.out.tfevents.1556094971.n139-p87.eduroam.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556095261/events.out.tfevents.1556095263.n139-p87.eduroam.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556095657/events.out.tfevents.1556095661.n139-p87.eduroam.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556096643/events.out.tfevents.1556096646.n139-p87.eduroam.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556097133/events.out.tfevents.1556097136.n139-p87.eduroam.kth.se" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,45 +20,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMultiScale.py">
+        <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1005">
-              <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
+            <state relative-caret-position="413">
+              <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
               <folding>
-                <element signature="e#32#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/PIL/_util.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionOneTemplate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1110">
-              <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="69" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,6 +52,7 @@
         <option value="$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionOneTemplate.py" />
         <option value="$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py" />
         <option value="$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMultiScale.py" />
+        <option value="$PROJECT_DIR$/CNN/CNN.py" />
       </list>
     </option>
   </component>
@@ -91,6 +66,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -101,25 +77,12 @@
             <path>
               <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
               <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="Source" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="Source" type="462c0819:PsiDirectoryNode" />
-              <item name="MatchFeature" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="Source" type="462c0819:PsiDirectoryNode" />
-              <item name="MatchTemplate" type="462c0819:PsiDirectoryNode" />
+              <item name="CNN" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -138,7 +101,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.BoneDetectionMultiScale">
+  <component name="RunManager" selected="Python.CNN">
     <configuration name="BoneDetection" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -223,14 +186,37 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="CNN" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MasterThesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CNN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CNN/CNN.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.BoneDetection" />
       <item itemvalue="Python.BoneDetectionFeature" />
       <item itemvalue="Python.BoneDetectionMultiScale" />
       <item itemvalue="Python.BoneDetectionOneTemplate" />
+      <item itemvalue="Python.CNN" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.CNN" />
         <item itemvalue="Python.BoneDetectionMultiScale" />
         <item itemvalue="Python.BoneDetectionOneTemplate" />
         <item itemvalue="Python.BoneDetectionFeature" />
@@ -260,7 +246,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.1810219" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31678832" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.44233575" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -276,25 +262,8 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/BoneDetection.py" />
-    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMoreTemplates.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/MatchFeature/BoneDetectionFeature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMoreTemplates.py" />
+    <entry file="file://$PROJECT_DIR$/Source/MatchFeature/BoneDetectionFeature.py" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/PIL/Image.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
@@ -302,16 +271,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMultiScale.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="67" column="33" selection-start-line="67" selection-start-column="33" selection-end-line="67" selection-end-column="33" />
-          <folding>
-            <element signature="e#32#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMultiScale.py" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/PIL/_util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -319,22 +279,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionOneTemplate.py">
+    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionOneTemplate.py" />
+    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py" />
+    <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="69" />
+        <state relative-caret-position="413">
+          <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
