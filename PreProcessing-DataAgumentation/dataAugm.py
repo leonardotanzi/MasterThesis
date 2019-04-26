@@ -1,6 +1,6 @@
 import Augmentor
 
-p = Augmentor.Pipeline("/Users/leonardotanzi/Desktop/PythonScripts/ToAugment")
+p = Augmentor.Pipeline("/Users/leonardotanzi/Desktop/MasterThesis/PreProcessing-DataAgumentation/ToAugment")
 
 # The probability parameter controls how often the operation is applied. 
 

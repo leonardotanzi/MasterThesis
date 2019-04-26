@@ -14,5 +14,5 @@ def prepare(filepath):
 model = tf.keras.models.load_model("firstModel.model")
 
 # always made prediction on list that's why we have []
-prediction = model.predict([prepare("unbroken_test3.jpg")])
+prediction = model.predict([prepare("broken_test5.jpg")])
 print(CATEGORIES[int(prediction[0][0])])

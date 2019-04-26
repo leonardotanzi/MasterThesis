@@ -4,12 +4,9 @@
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CNN/CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN/CNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556094660/events.out.tfevents.1556094662.n139-p87.eduroam.kth.se" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556094969/events.out.tfevents.1556094971.n139-p87.eduroam.kth.se" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556095261/events.out.tfevents.1556095263.n139-p87.eduroam.kth.se" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556095657/events.out.tfevents.1556095661.n139-p87.eduroam.kth.se" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556096643/events.out.tfevents.1556096646.n139-p87.eduroam.kth.se" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN/logs/FirstNN-1556097133/events.out.tfevents.1556097136.n139-p87.eduroam.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/TestingCNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN/TestingCNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/model_plot.png" beforeDir="false" afterPath="$PROJECT_DIR$/CNN/model_plot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PreProcessing-DataAgumentation/dataAugm.py" beforeDir="false" afterPath="$PROJECT_DIR$/PreProcessing-DataAgumentation/dataAugm.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +19,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
+            <state relative-caret-position="219">
+              <caret line="71" column="17" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="17" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CNN/TestingCNN.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -52,6 +61,7 @@
         <option value="$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionOneTemplate.py" />
         <option value="$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py" />
         <option value="$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMultiScale.py" />
+        <option value="$PROJECT_DIR$/CNN/TestingCNN.py" />
         <option value="$PROJECT_DIR$/CNN/CNN.py" />
       </list>
     </option>
@@ -66,7 +76,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -83,6 +92,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -102,27 +112,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.CNN">
-    <configuration name="BoneDetection" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MasterThesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BoneDetection.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="BoneDetectionFeature" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -207,20 +196,41 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="TestingCNN" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MasterThesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CNN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CNN/TestingCNN.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.BoneDetection" />
       <item itemvalue="Python.BoneDetectionFeature" />
       <item itemvalue="Python.BoneDetectionMultiScale" />
       <item itemvalue="Python.BoneDetectionOneTemplate" />
       <item itemvalue="Python.CNN" />
+      <item itemvalue="Python.TestingCNN" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.CNN" />
+        <item itemvalue="Python.TestingCNN" />
         <item itemvalue="Python.BoneDetectionMultiScale" />
         <item itemvalue="Python.BoneDetectionOneTemplate" />
         <item itemvalue="Python.BoneDetectionFeature" />
-        <item itemvalue="Python.BoneDetection" />
       </list>
     </recent_temporary>
   </component>
@@ -239,9 +249,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18665607" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18665607" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -281,10 +290,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionOneTemplate.py" />
     <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py" />
+    <entry file="file://$PROJECT_DIR$/CNN/TestingCNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
+        <state relative-caret-position="219">
+          <caret line="71" column="17" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="17" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>

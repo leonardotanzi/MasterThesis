@@ -5,7 +5,6 @@ from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.utils import plot_model
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -68,9 +67,10 @@ X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in num
 
 X = X/255.0
 
-dense_layers = [0]
-layer_sizes = [64]
 conv_layers = [3]
+layer_sizes = [64]
+dense_layers = [0]
+
 
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
@@ -111,6 +111,3 @@ for dense_layer in dense_layers:
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
             model.save("firstModel.model")
-
-
-
