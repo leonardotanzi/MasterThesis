@@ -19,9 +19,12 @@ DATADIR = "/Users/leonardotanzi/Desktop/MasterThesis/CNN"
 
 CATEGORIES = ["Broken", "Unbroken"]
 
+IMG_SIZE = 256
+
 # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
 # sees = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
+'''
 for category in CATEGORIES:
     path = os.path.join(DATADIR, category)  # create path to broken and unbroken
     for img in os.listdir(path):  # iterate over each image per broken and unbroken
@@ -30,10 +33,10 @@ for category in CATEGORIES:
         break
     break
 
-IMG_SIZE = 256
 new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
 # plt.imshow(new_array, cmap='gray')
 # plt.show()
+'''
 
 training_data = []
 
@@ -65,9 +68,12 @@ X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in num
 
 X = X/255.0
 
-conv_layers = [3]
-layer_sizes = [64]
-dense_layers = [0]
+for img in X:
+    a = 1
+
+conv_layers = [2]  # 3
+layer_sizes = [32]  # 64
+dense_layers = [2]  # 0
 
 
 for dense_layer in dense_layers:
@@ -99,15 +105,15 @@ for dense_layer in dense_layers:
             model.add(Dense(1))
             model.add(Activation("sigmoid"))
 
-            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+            adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
 
             model.compile(loss="binary_crossentropy",
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=23, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=30, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-            model.save("firstModel.model")
+            model.save("2-32-2model.model")

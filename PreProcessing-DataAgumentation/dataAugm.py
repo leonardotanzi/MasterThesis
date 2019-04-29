@@ -16,4 +16,4 @@ p.random_brightness(0.9, 0.5, 1.5)
 p.random_contrast(0.7, 0.5, 1.0)
 p.resize(1.0, 256, 256)
 
-p.sample(100)
+p.sample(50)

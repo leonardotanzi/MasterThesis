@@ -3,13 +3,8 @@ import cv2
 import os
 from tqdm import tqdm
 import random
-'''
-def prepare(filepath):
-    IMG_SIZE = 256
-    img_array = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
-    new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
-    return new_array.reshape(-1, IMG_SIZE, IMG_SIZE, 1)
-'''
+import numpy as np
+
 
 def print_img(name, img):
     cv2.namedWindow(name)
@@ -51,27 +46,45 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
+X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in numpy array, last 1 because it's grayscale
 
-model = tf.keras.models.load_model("firstModel.model")
+X = X/255.0
+
+model = tf.keras.models.load_model("2-32-2_lr0.0001_model.model")
+
+score = model.evaluate(X, y, verbose=0)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
 
 correct = 0
 uncorrect = 0
+unbroken_classified_as_broken = 0
+broken_classified_as_unbroken = 0
 
-for img, label in zip(X, y):
+prediction = model.predict([X])
 
-    # always made prediction on list that's why we have []
-    prediction = model.predict([img.reshape(-1, IMG_SIZE, IMG_SIZE, 1)])
-    if prediction == label:
+for i in range(X.shape[0]):
+
+    if int(round(prediction[i][0])) == int(y[i]):
         correct += 1
     else:
         uncorrect += 1
 
-    name = "Label: {} / Prediction: {}".format(CATEGORIES[int(label)], CATEGORIES[int(prediction[0][0])])
+    label = CATEGORIES[int(y[i])]
+    pred = CATEGORIES[int(round(prediction[i][0]))]
+    name = "Label: {} / Prediction: {}".format(label, pred)
+    print(name)
 
-    print(prediction[0][0])
-    # print_img(name, img)
+    if pred == 'Broken' and label == 'Unbroken':
+        unbroken_classified_as_broken += 1
+
+    if pred == 'Unbroken' and label == 'Broken':
+        broken_classified_as_unbroken += 1
+
+    # print_img(name, X[i])
 
 tot = correct + uncorrect
 
-print("Percentage: {}%".format(round(correct/tot*100, 4)))
-
+print("Percentage: {}%, unbroken_classified_as_broken {} and broken_classified_as_unbroken {}".format(round(correct/tot*100, 4),
+                                                                                                      unbroken_classified_as_broken,
+                                                                                                      broken_classified_as_unbroken))
