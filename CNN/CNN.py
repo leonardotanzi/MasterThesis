@@ -4,6 +4,7 @@ from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.utils import plot_model
+from tensorflow.keras.optimizers import Adam
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,13 +13,14 @@ import cv2
 from tqdm import tqdm
 import random
 import time
+from sklearn.model_selection import train_test_split
 
 DATADIR = "/Users/leonardotanzi/Desktop/MasterThesis/CNN"
 
 CATEGORIES = ["Broken", "Unbroken"]
 
-# NAME = "FirstNN-{}".format(int(time.time()))
-# tensorboard = TensorBoard(log_dir="logs/{}".format(NAME))
+# gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
+# sees = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
 for category in CATEGORIES:
     path = os.path.join(DATADIR, category)  # create path to broken and unbroken
@@ -47,10 +49,6 @@ for category in CATEGORIES:
             training_data.append([new_array, class_num])  # add this to our training_data
         except Exception as e:  # in the interest in keeping the output clean...
             pass
-        # except OSError as e:
-        #    print("OSErrroBad img most likely", e, os.path.join(path,img))
-        # except Exception as e:
-        #    print("general exception", e, os.path.join(path,img))
 
 
 random.shuffle(training_data)
@@ -101,11 +99,13 @@ for dense_layer in dense_layers:
             model.add(Dense(1))
             model.add(Activation("sigmoid"))
 
+            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+
             model.compile(loss="binary_crossentropy",
-                          optimizer="adam",
+                          optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=15, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=23, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
