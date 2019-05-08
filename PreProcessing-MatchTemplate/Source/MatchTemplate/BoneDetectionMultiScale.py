@@ -53,14 +53,14 @@ if __name__ == "__main__":
     # text for images
     templates_text = ["Normal", "Flipped"]
     rotation_text = ["Normal", "Right", "Left"]
-    output_path = "/Users/leonardotanzi/Desktop/MasterThesis/Output/NewImages/Cropped/"
+    output_path = "/Users/leonardotanzi/Desktop/Cropped/"
     # canny threshold values
 
     # load the image image, convert it to grayscale, and detect edges
     if alternative_approach:
-        template = cv2.imread("/Users/leonardotanzi/Desktop/MasterThesis/Templates/Ischius.jpg")
+        template = cv2.imread("/Users/leonardotanzi/Desktop/MasterThesis/PreProcessing-MatchTemplate/Templates/Ischius.jpg")
     else:
-        template = cv2.imread("/Users/leonardotanzi/Desktop/MasterThesis/Templates/Bacino_left3.jpg")
+        template = cv2.imread("/Users/leonardotanzi/Desktop/MasterThesis/PreProcessing-MatchTemplate/Templates/Bacino_left3.jpg")
     template = pre_process_image(template)
     # flip the template
     templates = [template, cv2.flip(template, 1)]
@@ -68,11 +68,11 @@ if __name__ == "__main__":
     (tH, tW) = template.shape[:2]
 
     # loop over the images to find the template in
-    for imagePath in glob.glob("/Users/leonardotanzi/Desktop/TesiMagistrale/BonesNew/*.jpg"):
+    for imagePath in glob.glob("/Users/leonardotanzi/Desktop/OutLabelled/A/Left/*.png"):
 
         if alternative_approach:
             distance_from_border = 60
-            square_size = 1200
+            square_size = 1400
             image = cv2.imread(imagePath)
             edged = pre_process_image(image)
             (h, w) = edged.shape[:2]
