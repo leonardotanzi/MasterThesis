@@ -105,13 +105,13 @@ for dense_layer in dense_layers:
             model.add(Dense(1))
             model.add(Activation("sigmoid"))
 
-            adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
 
             model.compile(loss="binary_crossentropy",
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=30, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=40, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
