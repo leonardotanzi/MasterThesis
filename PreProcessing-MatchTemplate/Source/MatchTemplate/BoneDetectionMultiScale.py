@@ -25,7 +25,7 @@ def print_img(name, image, save=False, save_name=None):
     if save is False:
         cv2.namedWindow(name)
         cv2.moveWindow(name, 370, 140)
-        scale_percent = 20  # percent of original size
+        scale_percent = 1  # percent of original size
         width = int(image.shape[1] * scale_percent / 100)
         height = int(image.shape[0] * scale_percent / 100)
         dim = (width, height)

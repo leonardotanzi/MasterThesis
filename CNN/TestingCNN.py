@@ -50,7 +50,7 @@ X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in num
 
 X = X/255.0
 
-model = tf.keras.models.load_model("2-32-2model.model")
+model = tf.keras.models.load_model("2-32-2_model.model")
 
 score = model.evaluate(X, y, verbose=0)
 print('Test loss:', score[0])
