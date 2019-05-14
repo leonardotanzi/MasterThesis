@@ -42,7 +42,7 @@ if __name__ == "__main__":
 	# load the image, clone it, and setup the mouse callback function
 	# path = args["image"]
 
-	path = "/Users/leonardotanzi/Desktop/OutLabelled/A/Left/"
+	path = "/Users/leonardotanzi/Desktop/OutLabelled/Unbroken/"  # "/Users/leonardotanzi/Desktop/rifare/"
 
 	for image_path in sorted(glob.glob(path + "*.png"), key=os.path.getsize):
 

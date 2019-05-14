@@ -15,9 +15,9 @@ import random
 import time
 from sklearn.model_selection import train_test_split
 
-DATADIR = "/Users/leonardotanzi/Desktop/MasterThesis/CNN"
+DATADIR = "/Users/leonardotanzi/Desktop/FinalDataset"
 
-CATEGORIES = ["Broken", "Unbroken"]
+CATEGORIES = ["A", "B", "Unbroken"]
 
 IMG_SIZE = 256
 
@@ -64,7 +64,7 @@ for features, label in training_data:
     y.append(label)
 
 
-X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in numpy array, last 1 because it's grayscale
+X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
 
 X = X/255.0
 
@@ -111,9 +111,9 @@ for dense_layer in dense_layers:
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=40, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=5, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-            model.save("2-32-2model.model")
+            model.save("2-32-2new.model")
