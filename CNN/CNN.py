@@ -111,7 +111,7 @@ for dense_layer in dense_layers:
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=5, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=20, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)

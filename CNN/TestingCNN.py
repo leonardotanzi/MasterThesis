@@ -14,9 +14,9 @@ def print_img(name, img):
     cv2.destroyWindow(name)
 
 
-DATADIR = "/Users/leonardotanzi/Desktop/MasterThesis/CNN/Test"
+DATADIR = "/Users/leonardotanzi/Desktop/FinalDataset/Train_val/Test"
 
-CATEGORIES = ["Broken", "Unbroken"]
+CATEGORIES = ["A", "B", "Unbroken"]
 
 IMG_SIZE = 256
 
@@ -50,12 +50,14 @@ X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in num
 
 X = X/255.0
 
-model = tf.keras.models.load_model("2-32-2model.model")
+model = tf.keras.models.load_model("../TransferLearning/transferLearning.model")
+
 
 score = model.evaluate(X, y, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
+'''
 correct = 0
 uncorrect = 0
 unbroken_classified_as_broken = 0
@@ -88,3 +90,4 @@ tot = correct + uncorrect
 print("Percentage: {}%, unbroken_classified_as_broken {} and broken_classified_as_unbroken {}".format(round(correct/tot*100, 4),
                                                                                                       unbroken_classified_as_broken,
                                                                                                       broken_classified_as_unbroken))
+'''

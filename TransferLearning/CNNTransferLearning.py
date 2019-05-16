@@ -1,8 +1,10 @@
-from tensorflow.python.keras.applications import ResNet50
+from tensorflow.python.keras.applications import ResNet50, inception_v3
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Flatten, GlobalAveragePooling2D
 from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.python.keras.utils import plot_model
+
 
 
 num_classes = 3
@@ -35,6 +37,12 @@ validation_generator = data_generator.flow_from_directory("/Users/leonardotanzi/
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=3,
+        epochs=10,
         validation_data=validation_generator,
         validation_steps=1)
 
+
+my_new_model.summary()
+plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+
+my_new_model.save("transferLearning.model")
