@@ -1,19 +1,17 @@
-from tensorflow.keras.applications import ResNet50, inception_v3
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D
-from tensorflow.keras.applications.resnet50 import preprocess_input
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.utils import plot_model
-
+from tensorflow.python.keras.applications import ResNet50, inception_v3
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense, Flatten, GlobalAveragePooling2D
+from tensorflow.python.keras.applications.resnet50 import preprocess_input
+from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.python.keras.utils import plot_model
 
 
 num_classes = 3
 image_size = 256
-resnet_weights_path = "/home/ltanzi//MasterThesis/TransferLearning/" \
-                      "resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
+resnet_weights_path = "/home/ltanzi/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
 
 my_new_model = Sequential()
-my_new_model.add(ResNet50(include_top=False, pooling='max', weights=resnet_weights_path))
+my_new_model.add(ResNet50(include_top=False, pooling='avg', weights=None))
 my_new_model.add(Dense(num_classes, activation='softmax'))
 
 # Say not to train first layer (ResNet) model. It is already trained
@@ -39,6 +37,7 @@ validation_generator = data_generator.flow_from_directory("/mnt/Data/ltanzi/Trai
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 my_new_model.fit_generator(
         train_generator,
+        steps_per_epoch=3,
         epochs=5,
         validation_data=validation_generator,
         validation_steps=1)

@@ -1,14 +1,13 @@
 import tensorflow as tf
-from tensorflow.python.keras.applications.resnet50 import preprocess_input
-from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
+from keras.applications.resnet50 import preprocess_input
+from keras.preprocessing.image import ImageDataGenerator
+from keras.models import load_model
 
-
-DATADIR = "/Users/leonardotanzi/Desktop/FinalDataset/Train_val/Test"
+DATADIR = "/mnt/Data/ltanzi/Train_Val/Test"
 
 CATEGORIES = ["A", "B", "Unbroken"]
 
 image_size = 256
-
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
@@ -18,7 +17,7 @@ test_generator = data_generator.flow_from_directory(DATADIR,
         class_mode='categorical')
 
 
-model = tf.keras.models.load_model("transferLearning.model")
+model = load_model("transferLearning.model")
 
 
 score = model.evaluate(test_generator, verbose=0)
