@@ -1,10 +1,10 @@
 import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten
-from tensorflow.keras.layers import Conv2D, MaxPooling2D
-from tensorflow.keras.callbacks import TensorBoard
-from tensorflow.keras.utils import plot_model
-from tensorflow.keras.optimizers import Adam
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import Dense, Dropout, Activation, Flatten
+from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
+from tensorflow.python.keras.callbacks import TensorBoard
+from tensorflow.python.keras.utils import plot_model
+from tensorflow.python.keras.optimizers import Adam
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -14,7 +14,7 @@ from tqdm import tqdm
 import random
 import time
 from sklearn.model_selection import train_test_split
-
+import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
@@ -107,15 +107,15 @@ for dense_layer in dense_layers:
             model.add(Dense(1))
             model.add(Activation("sigmoid"))
 
-            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+            # adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0,amsgrad=False)
 
             model.compile(loss="binary_crossentropy",
-                          optimizer=adam,
+                          optimizer="adam",
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=30, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=100, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
-            plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+            # plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
             model.save("2-32-2new.model")

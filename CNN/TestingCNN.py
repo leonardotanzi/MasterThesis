@@ -14,9 +14,9 @@ def print_img(name, img):
     cv2.destroyWindow(name)
 
 
-DATADIR = "/Users/leonardotanzi/Desktop/FinalDataset/Train_val/Test"
+DATADIR = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Test"
 
-CATEGORIES = ["A", "B", "Unbroken"]
+CATEGORIES = ["B", "Unbroken"]
 
 IMG_SIZE = 256
 
@@ -50,7 +50,7 @@ X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in num
 
 X = X/255.0
 
-model = tf.keras.models.load_model("../TransferLearning/transferLearning.model")
+model = tf.keras.models.load_model("2-32-2new.model")
 
 
 score = model.evaluate(X, y, verbose=0)
