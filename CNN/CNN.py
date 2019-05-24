@@ -19,14 +19,18 @@ import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+ap.add_argument("-b", "--binary", required=True, help="NN works on binary classification or not (y/n)")
 args = vars(ap.parse_args())
 run_on_server = args["server"]
+run_binary = args["binary"]
 
-if run_on_server == "y":
-        train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
-        val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
+if run_on_server == "y" and run_binary == "y":
+        train_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Train"
+        val_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Validation"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
+        categories = ["B", "Unbroken"]
+        num_classes = 2
 
 elif run_on_server == "n":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset2/Train_Val/Train"
@@ -36,6 +40,7 @@ elif run_on_server == "n":
 
 else:
         raise ValueError('Incorrect arg')
+
 
 categories = ["A", "B", "Unbroken"]
 
@@ -110,13 +115,13 @@ for dense_layer in dense_layers:
             model.add(Dense(num_classes))
             model.add(Activation("sigmoid"))
 
-            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0,amsgrad=False)
+            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
             model.compile(loss="sparse_categorical_crossentropy",
-                          optimizer=adam,
+                          optimizer="sgd",
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=5, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=50, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             # plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
