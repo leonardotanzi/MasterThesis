@@ -19,7 +19,7 @@ else:
         raise ValueError("Incorrect arg")
 
 
-categories = ["A", "B", "Unbroken"]
+categories = ["B", "Unbroken"]
 
 image_size = 256
 

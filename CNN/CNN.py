@@ -29,15 +29,17 @@ if run_on_server == "y" and run_binary == "y":
         val_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Validation"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
+        last_layer = 1
         categories = ["B", "Unbroken"]
         num_classes = 2
         loss = "binary_crossentropy"
 
-if run_on_server == "y" and run_binary == "n":
+elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
+        last_layer = 3
         categories = ["A", "B", "Unbroken"]
         num_classes = 3
         loss = "sparse_categorical_crossentropy"
@@ -119,7 +121,7 @@ for dense_layer in dense_layers:
                 model.add(Activation("relu"))
                 # model.add(Dropout(0.5))
 
-            model.add(Dense(num_classes))
+            model.add(Dense(last_layer))
             model.add(Activation("sigmoid"))
 
             adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
@@ -128,7 +130,7 @@ for dense_layer in dense_layers:
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=50, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=200, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             # plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)

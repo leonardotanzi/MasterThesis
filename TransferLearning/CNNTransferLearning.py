@@ -39,9 +39,9 @@ my_new_model.add(Dense(num_classes, activation='softmax'))
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
 
-# adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0)
+adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
-my_new_model.compile(optimizer="sgd", loss='categorical_crossentropy', metrics=['accuracy'])
+my_new_model.compile(optimizer=adam, loss='binary_crossentropy', metrics=['accuracy'])
 
 
 # Fit model
@@ -62,12 +62,13 @@ validation_generator = data_generator.flow_from_directory(val_folder,
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=30,
-        epochs=100,
+        epochs=20,
         validation_data=validation_generator,
         validation_steps=1)
 
 
 my_new_model.summary()
-plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+# plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 my_new_model.save(out_folder + "transferLearning.model")
+
