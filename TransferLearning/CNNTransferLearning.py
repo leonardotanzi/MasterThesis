@@ -25,6 +25,7 @@ if run_on_server == "y" and run_binary == "y":
         loss = "binary_crossentropy"
         num_classes = 2
         last_layer = 1
+        classmode = "binary"
 
 elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
@@ -34,6 +35,7 @@ elif run_on_server == "y" and run_binary == "n":
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
         last_layer = 3
+        classmode = "categorical"
 
 elif run_on_server == "n" and run_binary == "y":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Train"
@@ -86,7 +88,7 @@ validation_generator = data_generator.flow_from_directory(val_folder,
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=30,
-        epochs=1,
+        epochs=30,
         validation_data=validation_generator,
         validation_steps=1)
 
