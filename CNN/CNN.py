@@ -15,40 +15,42 @@ import random
 import time
 from sklearn.model_selection import train_test_split
 
-DATADIR = "/Users/leonardotanzi/Desktop/FinalDataset"
 
-CATEGORIES = ["A", "B", "Unbroken"]
+ap = argparse.ArgumentParser()
+ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+args = vars(ap.parse_args())
+run_on_server = args["server"]
 
-IMG_SIZE = 256
+if run_on_server == "y":
+        train_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Train"
+        val_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Validation"
+        out_folder = "/mnt/Data/ltanzi/"
+        resnet_weights_path = "imagenet"
 
-# gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
-# sees = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+elif run_on_server == "n":
+        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
+        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
+        out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+        resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
 
-'''
-for category in CATEGORIES:
-    path = os.path.join(DATADIR, category)  # create path to broken and unbroken
-    for img in os.listdir(path):  # iterate over each image per broken and unbroken
-        img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
+else:
+        raise ValueError('Incorrect arg')
 
-        break
-    break
+categories = ["B", "Unbroken"]
 
-new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
-# plt.imshow(new_array, cmap='gray')
-# plt.show()
-'''
+image_size = 256
 
 training_data = []
 
-for category in CATEGORIES:
+for category in categories:
 
-    path = os.path.join(DATADIR, category)  # create path to broken and unbroken
-    class_num = CATEGORIES.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
+    path = os.path.join(train_folder, category)  # create path to broken and unbroken
+    class_num = categories.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
 
     for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
         try:
             img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
-            new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))  # resize to normalize data size
+            new_array = cv2.resize(img_array, (image_size, image_size))  # resize to normalize data size
             training_data.append([new_array, class_num])  # add this to our training_data
         except Exception as e:  # in the interest in keeping the output clean...
             pass
@@ -64,7 +66,7 @@ for features, label in training_data:
     y.append(label)
 
 
-X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
+X = np.array(X).reshape(-1, image_size, image_size, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
 
 X = X/255.0
 
@@ -111,7 +113,7 @@ for dense_layer in dense_layers:
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=20, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=30, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
