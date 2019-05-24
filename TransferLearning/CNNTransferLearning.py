@@ -87,8 +87,8 @@ validation_generator = data_generator.flow_from_directory(val_folder,
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 my_new_model.fit_generator(
         train_generator,
-        steps_per_epoch=30,
-        epochs=30,
+        steps_per_epoch=3,
+        epochs=1,
         validation_data=validation_generator,
         validation_steps=1)
 
