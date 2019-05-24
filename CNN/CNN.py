@@ -29,8 +29,8 @@ if run_on_server == "y":
         resnet_weights_path = "imagenet"
 
 elif run_on_server == "n":
-        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
-        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
+        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset2/Train_Val/Train"
+        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset2/Train_Val/Validation"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
         resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
 
@@ -40,6 +40,8 @@ else:
 categories = ["A", "B", "Unbroken"]
 
 image_size = 256
+
+num_classes = 3
 
 training_data = []
 
@@ -56,7 +58,7 @@ for category in categories:
         except Exception as e:  # in the interest in keeping the output clean...
             pass
 
-
+pass
 random.shuffle(training_data)
 
 X = []
@@ -64,7 +66,7 @@ y = []
 
 for features, label in training_data:
     X.append(features)
-    y.append(to_categorical(label))
+    y.append(label)
 
 
 X = np.array(X).reshape(-1, image_size, image_size, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
@@ -105,16 +107,16 @@ for dense_layer in dense_layers:
                 model.add(Activation("relu"))
                 # model.add(Dropout(0.5))
 
-            model.add(Dense(1))
+            model.add(Dense(num_classes))
             model.add(Activation("sigmoid"))
 
-            # adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0,amsgrad=False)
+            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0,amsgrad=False)
 
-            model.compile(loss="categorical_crossentropy",
-                          optimizer="adam",
+            model.compile(loss="sparse_categorical_crossentropy",
+                          optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=100, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=5, validation_split=0.3, callbacks=[tensorboard])
 
             model.summary()
             # plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
