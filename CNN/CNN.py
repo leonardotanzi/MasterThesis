@@ -31,6 +31,17 @@ if run_on_server == "y" and run_binary == "y":
         resnet_weights_path = "imagenet"
         categories = ["B", "Unbroken"]
         num_classes = 2
+        loss = "binary_crossentropy"
+
+if run_on_server == "y" and run_binary == "n":
+        train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
+        val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
+        out_folder = "/mnt/Data/ltanzi/"
+        resnet_weights_path = "imagenet"
+        categories = ["A", "B", "Unbroken"]
+        num_classes = 3
+        loss = "sparse_categorical_crossentropy"
+
 
 elif run_on_server == "n":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset2/Train_Val/Train"
@@ -42,11 +53,7 @@ else:
         raise ValueError('Incorrect arg')
 
 
-categories = ["A", "B", "Unbroken"]
-
 image_size = 256
-
-num_classes = 3
 
 training_data = []
 
@@ -117,8 +124,8 @@ for dense_layer in dense_layers:
 
             adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
-            model.compile(loss="sparse_categorical_crossentropy",
-                          optimizer="sgd",
+            model.compile(loss=loss,
+                          optimizer=adam,
                           metrics=["accuracy"])
 
             model.fit(X, y, batch_size=32, epochs=50, validation_split=0.3, callbacks=[tensorboard])
