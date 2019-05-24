@@ -5,6 +5,7 @@ from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
 from tensorflow.python.keras.callbacks import TensorBoard
 from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.optimizers import Adam
+from tensorflow.python.keras.utils import to_categorical
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -22,8 +23,8 @@ args = vars(ap.parse_args())
 run_on_server = args["server"]
 
 if run_on_server == "y":
-        train_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Train"
-        val_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Validation"
+        train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
+        val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
 
@@ -36,7 +37,7 @@ elif run_on_server == "n":
 else:
         raise ValueError('Incorrect arg')
 
-categories = ["B", "Unbroken"]
+categories = ["A", "B", "Unbroken"]
 
 image_size = 256
 
@@ -63,7 +64,7 @@ y = []
 
 for features, label in training_data:
     X.append(features)
-    y.append(label)
+    y.append(to_categorical(label))
 
 
 X = np.array(X).reshape(-1, image_size, image_size, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
@@ -109,7 +110,7 @@ for dense_layer in dense_layers:
 
             # adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0,amsgrad=False)
 
-            model.compile(loss="binary_crossentropy",
+            model.compile(loss="categorical_crossentropy",
                           optimizer="adam",
                           metrics=["accuracy"])
 
