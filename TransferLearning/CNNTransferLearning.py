@@ -7,7 +7,7 @@ from tensorflow.python.keras.utils import plot_model
 import argparse
 
 
-num_classes = 3
+num_classes = 2
 image_size = 256
 
 ap = argparse.ArgumentParser()
@@ -38,7 +38,9 @@ my_new_model.add(Dense(num_classes, activation='softmax'))
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
 
-my_new_model.compile(optimizer='sgd', loss='categorical_crossentropy', metrics=['accuracy'])
+adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+
+my_new_model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
 
 # Fit model
