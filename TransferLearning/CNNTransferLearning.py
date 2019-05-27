@@ -36,7 +36,7 @@ elif run_on_server == "y" and run_binary == "n":
         num_classes = 3
         last_layer = 3
         classmode = "categorical"
-
+        
 elif run_on_server == "n" and run_binary == "y":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Train"
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Validation"
@@ -85,10 +85,11 @@ validation_generator = data_generator.flow_from_directory(val_folder,
 
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
+
 my_new_model.fit_generator(
         train_generator,
-        steps_per_epoch=3,
-        epochs=1,
+        steps_per_epoch=30,
+        epochs=50,
         validation_data=validation_generator,
         validation_steps=1)
 
