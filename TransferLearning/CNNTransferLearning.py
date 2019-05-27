@@ -6,7 +6,7 @@ from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.optimizers import Adam
 import argparse
-
+import numpy as np
 
 image_size = 256
 
@@ -31,7 +31,7 @@ if run_on_server == "y" and run_binary == "y":
 elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-        test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
+        test_folder = "/mnt/Data/ltanzi/Train_Val/TestB"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
         loss = "sparse_categorical_crossentropy"
@@ -61,6 +61,8 @@ elif run_on_server == "n" and run_binary == "n":
 else:
         raise ValueError('Incorrect arg')
 
+name = "ResNet-{}".format(int(time.time()))
+tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
 
 my_new_model = Sequential()
 my_new_model.add(ResNet50(include_top=False, pooling='avg', weights=resnet_weights_path))
@@ -96,12 +98,17 @@ test_generator = data_generator.flow_from_directory(test_folder,
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
+STEP_SIZE_TRAIN=train_generator.n//train_generator.batch_size
+STEP_SIZE_VALID=validation_generator.n//validation_generator.batch_size
+STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
+
 my_new_model.fit_generator(
         train_generator,
-        steps_per_epoch=1,
-        epochs=1,
+        steps_per_epoch=STEP_SIZE_TRAIN,
+        epochs=30,
         validation_data=validation_generator,
-        validation_steps=1)
+        validation_steps=STEP_SIZE_VALID,
+        callbacks=[tensorboard])
 
 
 my_new_model.summary()
@@ -109,9 +116,20 @@ my_new_model.summary()
 
 my_new_model.save(out_folder + "transferLearning.model")
 
-score = my_new_model.evaluate_generator(test_generator, steps=24)
+score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
+test_generator.reset()
 
+pred=my_new_model.predict_generator(test_generator,
+                             steps=STEP_SIZE_TEST,
+                             verbose=1)
 
+predicted_class_indices=np.argmax(pred,axis=1)
+
+labels = (train_generator.class_indices)
+labels = dict((v,k) for k,v in labels.items())
+predictions = [labels[k] for k in predicted_class_indices]
+
+print(predictions)

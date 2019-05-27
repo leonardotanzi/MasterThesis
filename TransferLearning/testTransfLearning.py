@@ -3,6 +3,7 @@ from keras.applications.resnet50 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 import argparse
+import numpy as np
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
@@ -12,7 +13,7 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y":
-        datadir = "/mnt/Data/ltanzi/Train_Val/TestUnbroken"
+        test_folder = ["/mnt/Data/ltanzi/Train_Val/TestA", "/mnt/Data/ltanzi/Train_Val/TestB", "/mnt/Data/ltanzi/Train_Val/TestUnbroken"]
         model_path = "/mnt/Data/ltanzi/"
 elif run_on_server == "n":
         datadir = "/Users/leonardotanzi/Desktop/FinalDataset/TestA"
@@ -31,20 +32,41 @@ image_size = 256
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
-test_generator = data_generator.flow_from_directory(datadir,
-        target_size=(image_size, image_size),
-        batch_size=24,
-        class_mode=classmode)
+dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
+classes = ["A", "B", "Unbroken"]
 
-pass
 model = load_model(model_path + "transferLearning.model")
 
+for i, folder in enumerate(test_folder):
+        test_generator = data_generator.flow_from_directory(folder,
+                                                            target_size=(image_size, image_size),
+                                                            batch_size=24,
+                                                            class_mode=classmode)
 
-score = model.evaluate_generator(test_generator, steps=1)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
+        STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
 
-predictions = model.predict_generator(test_generator, steps=1)
-indexes = tf.argmax(predictions, axis=1)
-for i in range(indexes.shape[0]):
-        print(indexes[i])
+
+        score = model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
+        print('Test loss:', score[0])
+        print('Test accuracy:', score[1])
+
+        test_generator.reset()
+        
+        pred=model.predict_generator(test_generator,
+                        steps=STEP_SIZE_TEST,
+                        verbose=1)
+
+        predicted_class_indices=np.argmax(pred,axis=1)
+
+        labels = dict_classes
+        labels = dict((v,k) for k,v in labels.items())
+        predictions = [labels[k] for k in predicted_class_indices]
+
+        #  print(predictions)
+
+        x = 0
+        for j in predictions:
+                if j == classes[i]:
+                        x += 1
+
+        print("{} classified correctly: {}%".format(classes[i], x))
