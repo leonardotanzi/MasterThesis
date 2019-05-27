@@ -15,7 +15,7 @@ if run_on_server == "y":
         datadir = "/mnt/Data/ltanzi/Train_Val/TestUnbroken"
         model_path = "/mnt/Data/ltanzi/"
 elif run_on_server == "n":
-        datadir = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
+        datadir = "/Users/leonardotanzi/Desktop/FinalDataset/TestA"
         model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
 else:
         raise ValueError("Incorrect 1st arg.")
@@ -36,15 +36,15 @@ test_generator = data_generator.flow_from_directory(datadir,
         batch_size=24,
         class_mode=classmode)
 
-
+pass
 model = load_model(model_path + "transferLearning.model")
 
 
-score = model.evaluate_generator(test_generator)
+score = model.evaluate_generator(test_generator, steps=1)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-predictions = model.predict_generator(test_generator)
+predictions = model.predict_generator(test_generator, steps=1)
 indexes = tf.argmax(predictions, axis=1)
 for i in range(indexes.shape[0]):
         print(indexes[i])

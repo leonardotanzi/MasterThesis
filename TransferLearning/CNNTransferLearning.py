@@ -98,8 +98,8 @@ test_generator = data_generator.flow_from_directory(test_folder,
 
 my_new_model.fit_generator(
         train_generator,
-        steps_per_epoch=24,
-        epochs=60,
+        steps_per_epoch=1,
+        epochs=1,
         validation_data=validation_generator,
         validation_steps=1)
 
@@ -112,4 +112,6 @@ my_new_model.save(out_folder + "transferLearning.model")
 score = my_new_model.evaluate_generator(test_generator, steps=24)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
+
 
