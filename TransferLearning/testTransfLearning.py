@@ -12,7 +12,7 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y":
-        datadir = "/mnt/Data/ltanzi/Train_Val/Test"
+        datadir = "/mnt/Data/ltanzi/Train_Val/TestUnbroken"
         model_path = "/mnt/Data/ltanzi/"
 elif run_on_server == "n":
         datadir = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
@@ -40,6 +40,11 @@ test_generator = data_generator.flow_from_directory(datadir,
 model = load_model(model_path + "transferLearning.model")
 
 
-score = model.evaluate_generator(test_generator, verbose=0)
+score = model.evaluate_generator(test_generator)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
+predictions = model.predict_generator(test_generator)
+indexes = tf.argmax(predictions, axis=1)
+for i in range(indexes.shape[0]):
+        print(indexes[i])
