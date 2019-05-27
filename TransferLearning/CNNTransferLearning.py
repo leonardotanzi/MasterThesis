@@ -35,7 +35,7 @@ elif run_on_server == "y" and run_binary == "n":
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
         last_layer = 3
-        classmode = "categorical"
+        classmode = "sparse"
         
 elif run_on_server == "n" and run_binary == "y":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Train"
@@ -53,7 +53,7 @@ elif run_on_server == "n" and run_binary == "n":
         resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
         loss = "sparse_categorical_crossentropy"
         last_layer = 3
-        classmode = "categorical"
+        classmode = "sparse"
 else:
         raise ValueError('Incorrect arg')
 
@@ -88,8 +88,8 @@ validation_generator = data_generator.flow_from_directory(val_folder,
 
 my_new_model.fit_generator(
         train_generator,
-        steps_per_epoch=30,
-        epochs=50,
+        steps_per_epoch=3,
+        epochs=1,
         validation_data=validation_generator,
         validation_steps=1)
 
