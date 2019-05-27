@@ -20,6 +20,7 @@ run_binary = args["binary"]
 if run_on_server == "y" and run_binary == "y":
         train_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Validation"
+        test_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Test"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
         loss = "binary_crossentropy"
@@ -30,6 +31,7 @@ if run_on_server == "y" and run_binary == "y":
 elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
+        test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
         out_folder = "/mnt/Data/ltanzi/"
         resnet_weights_path = "imagenet"
         loss = "sparse_categorical_crossentropy"
@@ -40,6 +42,7 @@ elif run_on_server == "y" and run_binary == "n":
 elif run_on_server == "n" and run_binary == "y":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Train"
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Validation"
+        test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
         resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
         loss = "binary_crossentropy"
@@ -49,6 +52,7 @@ elif run_on_server == "n" and run_binary == "y":
 elif run_on_server == "n" and run_binary == "n":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
+        test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
         resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
         loss = "sparse_categorical_crossentropy"
@@ -83,13 +87,19 @@ validation_generator = data_generator.flow_from_directory(val_folder,
         target_size=(image_size, image_size),
         class_mode=classmode)
 
+test_generator = data_generator.flow_from_directory(test_folder,
+        target_size=(image_size, image_size),
+        batch_size=24,
+        class_mode=classmode)
+
+
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
 my_new_model.fit_generator(
         train_generator,
-        steps_per_epoch=30,
-        epochs=50,
+        steps_per_epoch=3,
+        epochs=1,
         validation_data=validation_generator,
         validation_steps=1)
 
@@ -98,4 +108,8 @@ my_new_model.summary()
 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
 my_new_model.save(out_folder + "transferLearning.model")
+
+score = my_new_model.evaluate_generator(test_generator)
+print('Test loss:', score[0])
+print('Test accuracy:', score[1])
 

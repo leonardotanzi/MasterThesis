@@ -40,6 +40,6 @@ test_generator = data_generator.flow_from_directory(datadir,
 model = load_model(model_path + "transferLearning.model")
 
 
-score = model.evaluate(test_generator, verbose=0)
+score = model.evaluate_generator(test_generator, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
