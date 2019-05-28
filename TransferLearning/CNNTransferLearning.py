@@ -5,8 +5,10 @@ from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.optimizers import Adam
+from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelCheckpoint
 import argparse
 import numpy as np
+import time
 
 image_size = 256
 
@@ -64,7 +66,7 @@ else:
 name = "ResNet-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
 es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=20) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
-mc = ModelCheckpoint(out folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
+# mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
 my_new_model.add(ResNet50(include_top=False, pooling="avg", weights=resnet_weights_path))
@@ -109,7 +111,7 @@ my_new_model.fit_generator(
         epochs=100,
         validation_data=validation_generator,
         validation_steps=STEP_SIZE_VALID,
-        callbacks=[tensorboard, es, mc])
+        callbacks=[tensorboard, es])
 
 
 my_new_model.summary()
