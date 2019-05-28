@@ -63,17 +63,19 @@ else:
 
 name = "ResNet-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
+es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=20) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
+mc = ModelCheckpoint(out folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
-my_new_model.add(ResNet50(include_top=False, pooling='avg', weights=resnet_weights_path))
-my_new_model.add(Dense(last_layer, activation='softmax'))
+my_new_model.add(ResNet50(include_top=False, pooling="avg", weights=resnet_weights_path))
+my_new_model.add(Dense(last_layer, activation="softmax"))
 
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
 
 adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
-my_new_model.compile(optimizer=adam, loss=loss, metrics=['accuracy'])
+my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
 
 # Fit model
@@ -94,7 +96,6 @@ test_generator = data_generator.flow_from_directory(test_folder,
         batch_size=24,
         class_mode=classmode)
 
-
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
@@ -105,10 +106,10 @@ STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=STEP_SIZE_TRAIN,
-        epochs=30,
+        epochs=100,
         validation_data=validation_generator,
         validation_steps=STEP_SIZE_VALID,
-        callbacks=[tensorboard])
+        callbacks=[tensorboard, es, mc])
 
 
 my_new_model.summary()
@@ -117,14 +118,14 @@ my_new_model.summary()
 my_new_model.save(out_folder + "transferLearning.model")
 
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
+print("Test loss:", score[0])
+print("Test accuracy:", score[1])
 
 test_generator.reset()
 
 pred=my_new_model.predict_generator(test_generator,
-                             steps=STEP_SIZE_TEST,
-                             verbose=1)
+        steps=STEP_SIZE_TEST,
+        verbose=1)
 
 predicted_class_indices=np.argmax(pred,axis=1)
 
