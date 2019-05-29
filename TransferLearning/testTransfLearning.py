@@ -14,9 +14,9 @@ run_binary = args["binary"]
 
 if run_on_server == "y":
         test_folder = ["/mnt/Data/ltanzi/Train_Val/TestA", "/mnt/Data/ltanzi/Train_Val/TestB", "/mnt/Data/ltanzi/Train_Val/TestUnbroken"]
-        model_path = "/mnt/Data/ltanzi/"
+        model_path = "/home/ltanzi/"
 elif run_on_server == "n":
-        datadir = "/Users/leonardotanzi/Desktop/FinalDataset/TestA"
+        test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/TestA", "/Users/leonardotanzi/Desktop/FinalDataset/TestA", "/Users/leonardotanzi/Desktop/FinalDataset/TestA"]
         model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
 else:
         raise ValueError("Incorrect 1st arg.")

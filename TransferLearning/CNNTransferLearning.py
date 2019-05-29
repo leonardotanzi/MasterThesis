@@ -34,7 +34,7 @@ elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         test_folder = "/mnt/Data/ltanzi/Train_Val/TestB"
-        out_folder = "/mnt/Data/ltanzi/"
+        out_folder = "/home/ltanzi/"
         resnet_weights_path = "imagenet"
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
@@ -65,7 +65,7 @@ else:
 
 name = "ResNet-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
-es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=20) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
+es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=10) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
@@ -73,7 +73,7 @@ my_new_model.add(ResNet50(include_top=False, pooling="avg", weights=resnet_weigh
 my_new_model.add(Dense(last_layer, activation="softmax"))
 
 # Say not to train first layer (ResNet) model. It is already trained
-my_new_model.layers[0].trainable = False
+# my_new_model.layers[0].trainable = False
 
 adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
