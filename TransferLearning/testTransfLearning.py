@@ -13,8 +13,8 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y":
-        test_folder = ["/mnt/Data/ltanzi/Train_Val/TestA", "/mnt/Data/ltanzi/Train_Val/TestB", "/mnt/Data/ltanzi/Train_Val/TestUnbroken"]
-        score_folder = "/mnt/Data/ltanzi/Train_Val"
+        test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB", "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
+        score_folder = "/mnt/Data/ltanzi/Train_Val/Testing"
         model_path = "/home/ltanzi/"
 elif run_on_server == "n":
         test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestA", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestB", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestUnbroken"]
@@ -73,7 +73,7 @@ for i, folder in enumerate(test_folder):
         labels = dict((v, k) for k, v in labels.items())
         predictions = [labels[k] for k in predicted_class_indices]
 
-        print(predictions)
+        # print(predictions)
 
         x = 0
         for j in predictions:
