@@ -25,9 +25,9 @@ if run_on_server == "y" and run_binary == "y":
         test_folder = "/home/ltanzi/Train_Val_BROUNBRO/Test"
         out_folder = "/home/ltanzi/"
         loss = "binary_crossentropy"
-        num_classes = 2
         last_layer = 1
         classmode = "binary"
+        act = "sigmoid"
 
 elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
@@ -38,15 +38,17 @@ elif run_on_server == "y" and run_binary == "n":
         num_classes = 3
         last_layer = 3
         classmode = "sparse"
+        act = "softmax"
         
 elif run_on_server == "n" and run_binary == "y":
-        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Train"
-        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Validation"
-        test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Test"
+        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Train"
+        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Validation"
+        test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
         loss = "binary_crossentropy"
         last_layer = 1
         classmode = "binary"
+        act = "sigmoid"
 
 elif run_on_server == "n" and run_binary == "n":
         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
@@ -56,6 +58,7 @@ elif run_on_server == "n" and run_binary == "n":
         loss = "sparse_categorical_crossentropy"
         last_layer = 3
         classmode = "sparse"
+        act = "softmax"
 else:
         raise ValueError('Incorrect arg')
 
@@ -68,7 +71,7 @@ my_new_model = Sequential()
 my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
 my_new_model.add(Dense(32, activation="relu"))
 my_new_model.add(Dropout(0.25))
-my_new_model.add(Dense(last_layer, activation="softmax"))
+my_new_model.add(Dense(last_layer, activation=act))
 
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False

@@ -7,10 +7,8 @@ import numpy as np
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
-ap.add_argument("-b", "--binary", required=True, help="NN works on binary classification or not (y/n)")
 args = vars(ap.parse_args())
 run_on_server = args["server"]
-run_binary = args["binary"]
 
 if run_on_server == "y":
         test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB", "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
@@ -23,12 +21,8 @@ elif run_on_server == "n":
 else:
         raise ValueError("Incorrect 1st arg.")
 
-if run_binary == "y":
-        classmode = 'binary'
-elif run_binary == "n":
-        classmode = "sparse"
-else:
-        raise ValueError("Incorrect 2nd arg.")
+
+classmode = "sparse"
 
 image_size = 256
 
