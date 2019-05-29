@@ -24,7 +24,6 @@ if run_on_server == "y" and run_binary == "y":
         val_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Validation"
         test_folder = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Test"
         out_folder = "/mnt/Data/ltanzi/"
-        resnet_weights_path = "imagenet"
         loss = "binary_crossentropy"
         num_classes = 2
         last_layer = 1
@@ -35,7 +34,6 @@ elif run_on_server == "y" and run_binary == "n":
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         test_folder = "/mnt/Data/ltanzi/Train_Val/TestB"
         out_folder = "/home/ltanzi/"
-        resnet_weights_path = "imagenet"
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
         last_layer = 3
@@ -46,7 +44,6 @@ elif run_on_server == "n" and run_binary == "y":
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Validation"
         test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
-        resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
         loss = "binary_crossentropy"
         last_layer = 1
         classmode = "binary"
@@ -56,7 +53,6 @@ elif run_on_server == "n" and run_binary == "n":
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
         test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
-        resnet_weights_path = "/Users/leonardotanzi/Desktop/MasterThesis/TransferLearning/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
         loss = "sparse_categorical_crossentropy"
         last_layer = 3
         classmode = "sparse"
@@ -69,11 +65,11 @@ es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=10) # ve
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
-my_new_model.add(ResNet50(include_top=False, pooling="avg", weights=resnet_weights_path))
+my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
 my_new_model.add(Dense(last_layer, activation="softmax"))
 
 # Say not to train first layer (ResNet) model. It is already trained
-# my_new_model.layers[0].trainable = False
+my_new_model.layers[0].trainable = False
 
 adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
@@ -93,22 +89,22 @@ validation_generator = data_generator.flow_from_directory(val_folder,
         target_size=(image_size, image_size),
         class_mode=classmode)
 
-test_generator = data_generator.flow_from_directory(test_folder,
-        target_size=(image_size, image_size),
-        batch_size=24,
-        class_mode=classmode)
+# test_generator = data_generator.flow_from_directory(test_folder,
+        # target_size=(image_size, image_size),
+        # batch_size=24,
+        # class_mode=classmode)
 
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
-STEP_SIZE_TRAIN=train_generator.n//train_generator.batch_size
-STEP_SIZE_VALID=validation_generator.n//validation_generator.batch_size
-STEP_SIZE_TEST=test_generator.n//test_generator.batch_size
+STEP_SIZE_TRAIN = 1  # train_generator.n//train_generator.batch_size
+STEP_SIZE_VALID = 1  # validation_generator.n//validation_generator.batch_size
+STEP_SIZE_TEST = 1  # test_generator.n//test_generator.batch_size
 
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=STEP_SIZE_TRAIN,
-        epochs=100,
+        epochs=1,
         validation_data=validation_generator,
         validation_steps=STEP_SIZE_VALID,
         callbacks=[tensorboard, es])
@@ -119,20 +115,23 @@ my_new_model.summary()
 
 my_new_model.save(out_folder + "transferLearning.model")
 
+
+'''
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
 print("Test loss:", score[0])
 print("Test accuracy:", score[1])
 
 test_generator.reset()
 
-pred=my_new_model.predict_generator(test_generator,
+pred = my_new_model.predict_generator(test_generator,
         steps=STEP_SIZE_TEST,
         verbose=1)
 
-predicted_class_indices=np.argmax(pred,axis=1)
+predicted_class_indices = np.argmax(pred, axis=1)
 
-labels = (train_generator.class_indices)
-labels = dict((v,k) for k,v in labels.items())
+labels = train_generator.class_indices
+labels = dict((v, k) for k,v in labels.items())
 predictions = [labels[k] for k in predicted_class_indices]
 
 print(predictions)
+'''
