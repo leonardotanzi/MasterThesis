@@ -20,10 +20,10 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y" and run_binary == "y":
-        train_folder = "/home/ltanzi/Train_Val_BROUNBRO/Train"
-        val_folder = "/home/ltanzi/Train_Val_BROUNBRO/Validation"
-        test_folder = "/home/ltanzi/Train_Val_BROUNBRO/Test"
-        out_folder = "/home/ltanzi/"
+        train_folder = "/mnt/Data/ltanzi/A_B/Train"
+        val_folder = "/mnt/Data/ltanzi/A_B/Validation"
+        test_folder = "/mnt/Data/ltanzi/A_B/Test"
+        out_folder = "/mnt/Data/ltanzi/"
         loss = "binary_crossentropy"
         last_layer = 1
         classmode = "binary"
@@ -33,7 +33,7 @@ elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         test_folder = "/mnt/Data/ltanzi/Train_Val/TestB"
-        out_folder = "/home/ltanzi/"
+        out_folder = "/mnt/Data/ltanzi/"
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
         last_layer = 3
@@ -64,13 +64,13 @@ else:
 
 name = "ResNet-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
-es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=10) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
+es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
 my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-my_new_model.add(Dense(32, activation="relu"))
-my_new_model.add(Dropout(0.25))
+# my_new_model.add(Dense(32, activation="relu"))
+# my_new_model.add(Dropout(0.25))
 my_new_model.add(Dense(last_layer, activation=act))
 
 # Say not to train first layer (ResNet) model. It is already trained
@@ -118,7 +118,7 @@ my_new_model.fit_generator(
 my_new_model.summary()
 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-my_new_model.save(out_folder + "transferLearning.model")
+my_new_model.save(out_folder + "transferLearningAB.model")
 
 
 '''

@@ -13,7 +13,7 @@ run_on_server = args["server"]
 if run_on_server == "y":
         test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB", "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
         score_folder = "/mnt/Data/ltanzi/Train_Val/Testing"
-        model_path = "/home/ltanzi/"
+        model_path = "/mnt/Data/ltanzi/"
 elif run_on_server == "n":
         test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestA", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestB", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestUnbroken"]
         model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"

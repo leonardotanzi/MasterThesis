@@ -11,10 +11,9 @@ args = vars(ap.parse_args())
 run_on_server = args["server"]
 
 if run_on_server == "y":
-    test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
-                   "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
-    score_folder = "/mnt/Data/ltanzi/Train_Val/Testing"
-    model_path = "/home/ltanzi/"
+    test_folder = ["/mnt/Data/ltanzi/A_B/Testing/TestA", "/mnt/Data/ltanzi/A_B/Testing/TestB"]
+    score_folder = "/mnt/Data/ltanzi/A_B/Test"
+    model_path = "/mnt/Data/ltanzi/"
 
 elif run_on_server == "n":
     test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/BinaryDatasets/Bro_Unbro/Test/Broken",
@@ -35,7 +34,7 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 dict_classes = {class2: 1, class1: 0}
 classes = [class1, class2]
 
-model = load_model(model_path + "transferLearning.model")
+model = load_model(model_path + "transferLearningAB.model")
 
 # Evaluate scores of the full test set
 
@@ -70,11 +69,11 @@ for i, folder in enumerate(test_folder):
     labels = dict((v, k) for k, v in labels.items())
     predictions = [labels[k] for k in predicted_class_indices]
 
-    # print(predictions)
+    print(predictions)
 
     x = 0
     for j in predictions:
         if j == classes[i]:
             x += 1
 
-    print("{} classified correctly: {}%".format(classes[i], x))
+    print("{} classified correctly: {}%".format(classes[i], x*100/test_generator.n))
