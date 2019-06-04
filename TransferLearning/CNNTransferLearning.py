@@ -9,6 +9,10 @@ from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelC
 import argparse
 import numpy as np
 import time
+import os
+import tensorflow as tf
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 image_size = 256
 
@@ -20,9 +24,9 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y" and run_binary == "y":
-        train_folder = "/mnt/Data/ltanzi/A_B/Train"
-        val_folder = "/mnt/Data/ltanzi/A_B/Validation"
-        test_folder = "/mnt/Data/ltanzi/A_B/Test"
+        train_folder = "/mnt/Data/ltanzi/Bro_Unbro/Train"
+        val_folder = "/mnt/Data/ltanzi/Bro_Unbro/Validation"
+        test_folder = "/mnt/Data/ltanzi/Bro_Unbro/Test"
         out_folder = "/mnt/Data/ltanzi/"
         loss = "binary_crossentropy"
         last_layer = 1
@@ -32,7 +36,7 @@ if run_on_server == "y" and run_binary == "y":
 elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-        test_folder = "/mnt/Data/ltanzi/Train_Val/TestB"
+        test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
         out_folder = "/mnt/Data/ltanzi/"
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
@@ -95,17 +99,17 @@ validation_generator = data_generator.flow_from_directory(val_folder,
         target_size=(image_size, image_size),
         class_mode=classmode)
 
-# test_generator = data_generator.flow_from_directory(test_folder,
-        # target_size=(image_size, image_size),
-        # batch_size=24,
-        # class_mode=classmode)
+test_generator = data_generator.flow_from_directory(test_folder,
+        target_size=(image_size, image_size),
+        batch_size=24,
+        class_mode=classmode)
 
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
 STEP_SIZE_TRAIN =  train_generator.n//train_generator.batch_size
 STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
-# STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
+STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
 my_new_model.fit_generator(
         train_generator,
@@ -119,14 +123,14 @@ my_new_model.fit_generator(
 my_new_model.summary()
 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-my_new_model.save(out_folder + "transferLearningAB.model")
+my_new_model.save(out_folder + "transferLearning.model")
 
 
-'''
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
 print("Test loss:", score[0])
 print("Test accuracy:", score[1])
 
+'''
 test_generator.reset()
 
 pred = my_new_model.predict_generator(test_generator,
