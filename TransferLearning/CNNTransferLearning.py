@@ -64,7 +64,7 @@ else:
 
 name = "ResNet-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
-es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
+es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=3) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
@@ -82,7 +82,8 @@ my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
 
 # Fit model
-data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
+data_generator = ImageDataGenerator(zca_whitening=True, rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
+        horizontal_flip=True, preprocessing_function=preprocess_input)
 
 # Takes the path to a directory & generates batches of augmented data.
 train_generator = data_generator.flow_from_directory(train_folder,
