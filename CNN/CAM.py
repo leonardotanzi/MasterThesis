@@ -1,5 +1,4 @@
-from keras.applications.vgg16 import VGG16, decode_predictions
-from keras.applications.resnet50 import preprocess_input
+from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
 from keras.preprocessing import image
 import keras.backend as K
 from keras.models import load_model
@@ -11,7 +10,7 @@ import os
 
 model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
 test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/A"
-model = load_model(model_path + "transferLearning.model")
+model = VGG16(weights="imagenet")
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -41,6 +40,14 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
     superimposed_img = cv2.addWeighted(img, 0.6, heatmap, 0.4, 0)
-    cv2.imshow("Original", img)
-    cv2.imshow("GradCam", superimposed_img)
+    
+    window_name = "Original-CAM"
+    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(window_name, 900, 900)
+    cv2.moveWindow(window_name, 200, 0)
+
+    numpy_horizontal = np.hstack((img, superimposed_img))
+
+    cv2.imshow(window_name, numpy_horizontal)
+
     cv2.waitKey(0)

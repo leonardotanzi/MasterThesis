@@ -1,7 +1,7 @@
-from tensorflow.python.keras.applications import ResNet50, inception_v3
+from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Dropout
-from tensorflow.python.keras.applications.resnet50 import preprocess_input
+# from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.preprocessing import image
@@ -73,7 +73,9 @@ es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=3) # ver
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
-my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
+# my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
+my_new_model.add(VGG16(include_top=False, pooling="avg", weights="imagenet")
+
 # my_new_model.add(Dense(32, activation="relu"))
 # my_new_model.add(Dropout(0.25))
 my_new_model.add(Dense(last_layer, activation=act))
@@ -124,7 +126,7 @@ my_new_model.fit_generator(
 my_new_model.summary()
 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-my_new_model.save(out_folder + "transferLearning.model")
+my_new_model.save(out_folder + "transferLearningVGG.model")
 
 
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
