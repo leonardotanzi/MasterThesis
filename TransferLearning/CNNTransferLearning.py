@@ -4,6 +4,7 @@ from tensorflow.python.keras.layers import Dense, Flatten, GlobalAveragePooling2
 from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.utils import plot_model
+from tensorflow.python.keras.preprocessing import image
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelCheckpoint
 import argparse
@@ -129,6 +130,7 @@ my_new_model.save(out_folder + "transferLearning.model")
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
 print("Test loss:", score[0])
 print("Test accuracy:", score[1])
+
 
 '''
 test_generator.reset()
