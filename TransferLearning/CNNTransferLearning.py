@@ -74,7 +74,7 @@ es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=3) # ver
 
 my_new_model = Sequential()
 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-my_new_model.add(VGG16(include_top=False, pooling="avg", weights="imagenet")
+my_new_model.add(VGG16(include_top=False, pooling="avg", weights="imagenet"))
 
 # my_new_model.add(Dense(32, activation="relu"))
 # my_new_model.add(Dropout(0.25))
