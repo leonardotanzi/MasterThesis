@@ -8,10 +8,9 @@ import cv2
 import glob
 import os
 
-model_path = "/Users/leonardotanzi/Desktop/FinalDataset/transferLearningVGG.model"
+model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
 test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/A"
-model = load_model(model_path)
-
+model = VGG16(weights="imagenet")
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -23,11 +22,9 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     preds = model.predict(x)
     class_idx = np.argmax(preds[0])
     class_output = model.output[:, class_idx]
+    last_conv_layer = model.get_layer("block5_conv3")
 
-    extracted_vgg_model = model.layers[0]
-    last_conv_layer = extracted_vgg_model.get_layer("block5_conv3")
-
-    extracted_vgg_model.summary()
+    model.summary()
 
     grads = K.gradients(class_output, last_conv_layer.output)[0]
     pooled_grads = K.mean(grads, axis=(0, 1, 2))
@@ -45,7 +42,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
     superimposed_img = cv2.addWeighted(img, 0.6, heatmap, 0.4, 0)
-    
+
     window_name = "Original-CAM"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(window_name, 900, 900)
