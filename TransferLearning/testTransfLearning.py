@@ -31,7 +31,7 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
 classes = ["A", "B", "Unbroken"]
 
-model = load_model(model_path + "transferLearning.model")
+model = load_model(model_path + "transferLearningVGG.model")
 
 # Evaluate scores of the full test set
 
