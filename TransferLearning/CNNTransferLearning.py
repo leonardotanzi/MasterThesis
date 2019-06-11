@@ -74,11 +74,14 @@ es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=3) # ver
 
 my_new_model = Sequential()
 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-my_new_model.add(VGG16(include_top=True, pooling="avg", weights="imagenet"))
+my_new_model.add(VGG16(include_top=False, pooling="avg", weights="imagenet"))
 
+my_new_model.layers[0].summary()
 # my_new_model.add(Dense(32, activation="relu"))
 # my_new_model.add(Dropout(0.25))
 my_new_model.add(Dense(last_layer, activation=act))
+
+my_new_model.summary()
 
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
@@ -89,7 +92,7 @@ my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
 
 # Fit model
-data_generator = ImageDataGenerator(zca_whitening=True, rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
+data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
         horizontal_flip=True, preprocessing_function=preprocess_input)
 
 # Takes the path to a directory & generates batches of augmented data.
