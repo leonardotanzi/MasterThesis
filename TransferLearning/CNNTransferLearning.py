@@ -15,7 +15,7 @@ import tensorflow as tf
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-image_size = 256
+image_size = 224
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
