@@ -25,10 +25,11 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y" and run_binary == "y":
-        train_folder = "/mnt/Data/ltanzi/Bro_Unbro/Train"
-        val_folder = "/mnt/Data/ltanzi/Bro_Unbro/Validation"
-        test_folder = "/mnt/Data/ltanzi/Bro_Unbro/Test"
+        train_folder = "/mnt/Data/ltanzi/A_B/Train"
+        val_folder = "/mnt/Data/ltanzi/A_B/Validation"
+        test_folder = "/mnt/Data/ltanzi/A_B/Test"
         out_folder = "/mnt/Data/ltanzi/"
+        binary = "binary"
         loss = "binary_crossentropy"
         last_layer = 1
         classmode = "binary"
@@ -39,6 +40,7 @@ elif run_on_server == "y" and run_binary == "n":
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
         out_folder = "/mnt/Data/ltanzi/"
+        binary = "categorical"
         loss = "sparse_categorical_crossentropy"
         num_classes = 3
         last_layer = 3
@@ -50,6 +52,7 @@ elif run_on_server == "n" and run_binary == "y":
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Validation"
         test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+        binary = "binary"
         loss = "binary_crossentropy"
         last_layer = 1
         classmode = "binary"
@@ -60,6 +63,7 @@ elif run_on_server == "n" and run_binary == "n":
         val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
         test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
         out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+        binary = "categorical"
         loss = "sparse_categorical_crossentropy"
         last_layer = 3
         classmode = "sparse"
@@ -129,7 +133,7 @@ my_new_model.fit_generator(
 my_new_model.summary()
 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-my_new_model.save(out_folder + "transferLearningVGG.model")
+my_new_model.save(out_folder + binary + "transferLearningVGG.model")
 
 
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)

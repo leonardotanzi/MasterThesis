@@ -24,7 +24,7 @@ else:
 
 classmode = "sparse"
 
-image_size = 256
+image_size = 224
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 

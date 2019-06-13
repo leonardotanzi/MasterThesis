@@ -22,16 +22,16 @@ else:
 
 
 classmode = "binary"
-image_size = 256
+image_size = 224
 class1 = "A"
 class2 = "B"
 
-data_generator = ImageDataGenerator(zca_whitening=True, rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True,preprocessing_function=preprocess_input)
+data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True,preprocessing_function=preprocess_input)
 
 dict_classes = {class2: 1, class1: 0}
 classes = [class1, class2]
 
-model = load_model(model_path + "transferLearningAB.model")
+model = load_model(model_path + "binarytransferLearningVGG.model")
 
 # Evaluate scores of the full test set
 
@@ -46,3 +46,5 @@ score = model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
+preds = model.predict_generator(test_generator, steps=STEP_SIZE_TEST)
+print(preds)
