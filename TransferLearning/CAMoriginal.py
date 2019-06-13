@@ -9,7 +9,7 @@ import glob
 import os
 
 model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
-test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/A"
+test_folder = "/Users/leonardotanzi/Desktop/Dog" # "/Users/leonardotanzi/Desktop/FinalDataset/A"
 model = VGG16(weights="imagenet")
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
@@ -21,10 +21,15 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
     preds = model.predict(x)
     class_idx = np.argmax(preds[0])
+    class_o = model.output
     class_output = model.output[:, class_idx]
+
     last_conv_layer = model.get_layer("block5_conv3")
 
     model.summary()
+
+    print(class_output)
+    print(last_conv_layer.output)
 
     grads = K.gradients(class_output, last_conv_layer.output)[0]
     pooled_grads = K.mean(grads, axis=(0, 1, 2))

@@ -76,12 +76,15 @@ my_new_model = Sequential()
 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
 my_new_model.add(VGG16(include_top=False, input_shape=(224, 224, 3), pooling="avg", weights="imagenet"))
 
+model = VGG16(weights="imagenet")
+
+model.summary()
+
 my_new_model.layers[0].summary()
 # my_new_model.add(Dense(32, activation="relu"))
 # my_new_model.add(Dropout(0.25))
 my_new_model.add(Dense(last_layer, activation=act))
 
-my_new_model.summary()
 
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
