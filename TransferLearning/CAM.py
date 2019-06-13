@@ -29,6 +29,9 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
     extracted_vgg_model.summary()
 
+    print(class_output)
+    print(last_conv_layer.output)
+
     grads = K.gradients(class_output, last_conv_layer.output)[0]
     pooled_grads = K.mean(grads, axis=(0, 1, 2))
     iterate = K.function([model.input], [pooled_grads, last_conv_layer.output[0]])
