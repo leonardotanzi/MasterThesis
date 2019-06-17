@@ -13,16 +13,7 @@ import time
 
 test_folder = "/Users/leonardotanzi/Desktop/Dog" # "/Users/leonardotanzi/Desktop/FinalDataset/A"
 
-name = "VGGoriginal-{}".format(int(time.time()))
-tensorboard = TensorBoard(log_dir="logs/{}".format(name))
-model = Sequential()
-model.add(VGG16(weights="imagenet"))
-model.layers[0].trainable = False
-
-x=[1]
-y=[1]
-model.compile(optimizer='sgd', loss='binary_crossentropy')
-model.fit(x, y, callbacks=[tensorboard])
+model = VGG16(weights="imagenet")
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -34,7 +25,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     preds = model.predict(x)
     class_idx = np.argmax(preds[0])
     class_output = model.output[:, class_idx]  # extract a slice from the output referring to the index
-
+    class_o = model.output
     last_conv_layer = model.get_layer("block5_conv3")
 
     model.summary()

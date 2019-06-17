@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CAM.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CAM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CAMoriginal.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CAMoriginal.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" afterDir="false" />
@@ -18,41 +17,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="85" column="1" selection-start-line="85" selection-start-column="1" selection-end-line="85" selection-end-column="1" />
+            <state relative-caret-position="1344">
+              <caret line="127" column="16" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="16" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
                 <element signature="e#1149#1477#0" />
                 <element signature="e#1536#1923#0" />
                 <element signature="e#1990#2478#0" />
                 <element signature="e#2537#3000#0" />
-                <element signature="e#5806#6158#1" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="78" column="6" lean-forward="true" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="6" />
-              <folding>
-                <element signature="e#1012#1345#0" />
-                <element signature="e#1404#1736#0" />
-                <element signature="e#1774#2146#0" />
-              </folding>
+            <state relative-caret-position="7">
+              <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/CAM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+            <state relative-caret-position="540">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
-                <element signature="e#0#80#0" expanded="true" />
+                <element signature="e#0#98#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,6 +67,7 @@
       <find>save_image</find>
       <find>save_images</find>
       <find>num_classes</find>
+      <find>_get_node_attribute_at_index</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -100,8 +94,8 @@
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
         <option value="$PROJECT_DIR$/CNN/CAMoriginal.py" />
         <option value="$PROJECT_DIR$/CNN/CAM.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/CAM.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAMoriginal.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/CAM.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
       </list>
     </option>
@@ -301,13 +295,13 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13264495" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13264495" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49960285" visible="true" weight="0.31678832" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.44233575" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960285" weight="0.31678832" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.44233575" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -350,18 +344,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
-          <line>85</line>
+          <line>87</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
-          <line>74</line>
+          <line>76</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CAM.py</url>
-          <line>34</line>
+          <line>36</line>
           <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py</url>
+          <line>35</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -522,16 +521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CAM.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-24">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#0#80#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -544,27 +533,110 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="1335" selection-start-line="1335" selection-end-line="1335" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/keras/engine/topology.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="973" selection-start-line="973" selection-end-line="973" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/layers/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="883" selection-start-line="883" selection-end-line="883" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/abc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="182" selection-start-line="182" selection-end-line="182" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/framework/dtypes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/eager/context.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="323" selection-start-line="323" selection-end-line="323" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/ops/array_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="270" selection-start-line="270" selection-end-line="270" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/contextlib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/framework/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="3530" selection-start-line="3530" selection-end-line="3530" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/ops/gradients_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="235" selection-start-line="235" selection-end-line="235" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/keras/backend/tensorflow_backend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="1361" selection-start-line="1361" selection-end-line="1361" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="85" column="1" selection-start-line="85" selection-start-column="1" selection-end-line="85" selection-end-column="1" />
+        <state relative-caret-position="1344">
+          <caret line="127" column="16" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="16" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
             <element signature="e#1149#1477#0" />
             <element signature="e#1536#1923#0" />
             <element signature="e#1990#2478#0" />
             <element signature="e#2537#3000#0" />
-            <element signature="e#5806#6158#1" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+        <state relative-caret-position="7">
+          <caret line="7" column="18" lean-forward="true" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CAM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
-            <element signature="e#0#80#0" expanded="true" />
+            <element signature="e#0#98#0" expanded="true" />
           </folding>
         </state>
       </provider>

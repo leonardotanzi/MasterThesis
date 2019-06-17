@@ -1,5 +1,5 @@
-from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
-from keras.preprocessing import image
+from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
+from tensorflow.python.keras.preprocessing import image
 import keras.backend as K
 from keras.models import load_model
 
@@ -8,7 +8,7 @@ import cv2
 import glob
 import os
 
-model_path = "/Users/leonardotanzi/Desktop/FinalDataset/transferLearningVGG.model"
+model_path = "/Users/leonardotanzi/Desktop/FinalDataset/categoricaltransferLearningVGG.model"
 test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/A"
 model = load_model(model_path)
 
@@ -23,6 +23,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     preds = model.predict(x)
     class_idx = np.argmax(preds[0])
     class_output = model.output[:, class_idx]
+    class_o = model.output
 
     extracted_vgg_model = model.layers[0]
     last_conv_layer = extracted_vgg_model.get_layer("block5_conv3")
@@ -31,6 +32,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     model.summary()
     print(class_output)
     print(last_conv_layer.output)
+    print(last_conv_layer)
 
     grads = K.gradients(class_output, last_conv_layer.output)[0]
     pooled_grads = K.mean(grads, axis=(0, 1, 2))

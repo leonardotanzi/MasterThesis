@@ -13,6 +13,8 @@ import time
 import os
 import tensorflow as tf
 
+tf.enable_eager_execution()
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 image_size = 224
@@ -123,7 +125,7 @@ STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=STEP_SIZE_TRAIN,
-        epochs=100,
+        epochs=1,
         validation_data=validation_generator,
         validation_steps=STEP_SIZE_VALID,
         callbacks=[tensorboard, es])
