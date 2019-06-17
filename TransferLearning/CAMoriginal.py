@@ -1,16 +1,28 @@
-from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
-from keras.preprocessing import image
+from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
+from tensorflow.python.keras.preprocessing import image
 import keras.backend as K
+from tensorflow.python.keras.callbacks import TensorBoard
+from tensorflow.python.keras.models import Sequential
 from keras.models import load_model
 
 import numpy as np
 import cv2
 import glob
 import os
+import time
 
-model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
 test_folder = "/Users/leonardotanzi/Desktop/Dog" # "/Users/leonardotanzi/Desktop/FinalDataset/A"
-model = VGG16(weights="imagenet")
+
+name = "VGGoriginal-{}".format(int(time.time()))
+tensorboard = TensorBoard(log_dir="logs/{}".format(name))
+model = Sequential()
+model.add(VGG16(weights="imagenet"))
+model.layers[0].trainable = False
+
+x=[1]
+y=[1]
+model.compile(optimizer='sgd', loss='binary_crossentropy')
+model.fit(x, y, callbacks=[tensorboard])
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -21,8 +33,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
     preds = model.predict(x)
     class_idx = np.argmax(preds[0])
-    class_o = model.output
-    class_output = model.output[:, class_idx]
+    class_output = model.output[:, class_idx]  # extract a slice from the output referring to the index
 
     last_conv_layer = model.get_layer("block5_conv3")
 
@@ -56,5 +67,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     numpy_horizontal = np.hstack((img, superimposed_img))
 
     cv2.imshow(window_name, numpy_horizontal)
+
+
 
     cv2.waitKey(0)

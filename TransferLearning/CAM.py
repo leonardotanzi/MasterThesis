@@ -28,7 +28,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     last_conv_layer = extracted_vgg_model.get_layer("block5_conv3")
 
     extracted_vgg_model.summary()
-
+    model.summary()
     print(class_output)
     print(last_conv_layer.output)
 

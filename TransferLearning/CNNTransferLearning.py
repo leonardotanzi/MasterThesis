@@ -71,24 +71,19 @@ elif run_on_server == "n" and run_binary == "n":
 else:
         raise ValueError('Incorrect arg')
 
-name = "ResNet-{}".format(int(time.time()))
+name = "VGGoriginal-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
-es = EarlyStopping(monitor="val_acc", mode = "max", verbose=1, patience=3) # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=3)  # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-my_new_model.add(VGG16(include_top=False, input_shape=(224, 224, 3), pooling="avg", weights="imagenet"))
-
-model = VGG16(weights="imagenet")
-
-model.summary()
+my_new_model.add(VGG16(include_top=True, input_shape=(224, 224, 3), pooling="avg", weights="imagenet"))
 
 my_new_model.layers[0].summary()
 # my_new_model.add(Dense(32, activation="relu"))
 # my_new_model.add(Dropout(0.25))
-my_new_model.add(Dense(last_layer, activation=act))
-
+#my_new_model.add(Dense(last_layer, activation=act))
 
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
@@ -110,6 +105,7 @@ train_generator = data_generator.flow_from_directory(train_folder,
 
 validation_generator = data_generator.flow_from_directory(val_folder,
         target_size=(image_size, image_size),
+        batch_size=24,
         class_mode=classmode)
 
 test_generator = data_generator.flow_from_directory(test_folder,
@@ -120,7 +116,7 @@ test_generator = data_generator.flow_from_directory(test_folder,
 # Trains the model on data generated batch-by-batch by a Python generator
 # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
-STEP_SIZE_TRAIN =  train_generator.n//train_generator.batch_size
+STEP_SIZE_TRAIN = train_generator.n//train_generator.batch_size
 STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
 STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
