@@ -13,9 +13,6 @@ import time
 import os
 import tensorflow as tf
 
-tf.enable_eager_execution()
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 image_size = 224
 
@@ -73,19 +70,22 @@ elif run_on_server == "n" and run_binary == "n":
 else:
         raise ValueError('Incorrect arg')
 
-name = "VGGoriginal-{}".format(int(time.time()))
+model_type = "VGG"
+name = "-baseline{}-{}".format(model_type, int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(name))   
-es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=3)  # verbose to print the n of epoch in which stopped, patience to wait still some epochs before stop
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
+                                                                        # patience to wait still some epochs before stop
+
 # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
 
 my_new_model = Sequential()
 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-my_new_model.add(VGG16(include_top=True, input_shape=(224, 224, 3), pooling="avg", weights="imagenet"))
+my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
 
 my_new_model.layers[0].summary()
 # my_new_model.add(Dense(32, activation="relu"))
 # my_new_model.add(Dropout(0.25))
-#my_new_model.add(Dense(last_layer, activation=act))
+my_new_model.add(Dense(last_layer, activation=act))
 
 # Say not to train first layer (ResNet) model. It is already trained
 my_new_model.layers[0].trainable = False
@@ -98,6 +98,29 @@ my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 # Fit model
 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
         horizontal_flip=True, preprocessing_function=preprocess_input)
+
+'''
+Keras works with batches of images. So, the first dimension is used for the number of samples (or images) you have.
+When you load a single image, you get the shape of one image, which is (size1,size2,channels).
+In order to create a batch of images, you need an additional dimension: (samples, size1,size2,channels)
+The preprocess_input function is meant to adequate your image to the format the model requires.
+Some models use images with values ranging from 0 to 1. Others from -1 to +1. Others use the "caffe" style, that is not 
+normalized, but is centered.
+From the source code, Resnet is using the caffe style.
+You don't need to worry about the internal details of preprocess_input. But ideally, you should load images with the
+ keras functions for that (so you guarantee that the images you load are compatible with preprocess_input).
+
+
+First, if we are working with images, loading the entire data-set in a single python variable isn’t an option, and so we 
+need a generator function.
+A generator function is like a normal python function, but it behaves like an iterator. It has a special keyword yield, 
+which is similar to return as it returns some value. When the generator is called, it will return some value and save the
+state. Next time when we call the generator again, it will resume from the saved state, and return the next set of 
+values just like an iterator
+Thus using the advantage of generator, we can iterate over each (or batches of) image(s) in the large data-set and train
+our neural net quite easily.
+
+'''
 
 # Takes the path to a directory & generates batches of augmented data.
 train_generator = data_generator.flow_from_directory(train_folder,
@@ -122,6 +145,8 @@ STEP_SIZE_TRAIN = train_generator.n//train_generator.batch_size
 STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
 STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
+# fit_generator calls train_generator that generate a batch of images from train_folder
+
 my_new_model.fit_generator(
         train_generator,
         steps_per_epoch=STEP_SIZE_TRAIN,
@@ -134,7 +159,7 @@ my_new_model.fit_generator(
 my_new_model.summary()
 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-my_new_model.save(out_folder + binary + "transferLearningVGG.model")
+my_new_model.save(out_folder + binary + name + ".model")
 
 
 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)

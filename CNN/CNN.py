@@ -82,13 +82,36 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
+#qua ho due liste una con immagini e una con la label all'indice corrispondente (shufflate)
 
 X = np.array(X).reshape(-1, image_size, image_size, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
 
-X = X/255.0
+'''
+numpy allow us to give one of new shape parameter as -1 (eg: (2,-1) or (-1,3) but not (-1, -1)). It simply means that it 
+is an unknown dimension and we want numpy to figure it out. And numpy will figure this by looking at the 'length of the 
+array and remaining dimensions' and making sure it satisfies the above mentioned criteria.
+z = np.array([[1, 2, 3, 4],
+         [5, 6, 7, 8],
+         [9, 10, 11, 12]])
+        
+New shape as (-1, 2). row unknown, column 2. we get result new shape as (6, 2)
+z.reshape(-1, 2)
+array([[ 1,  2],
+   [ 3,  4],
+   [ 5,  6],
+   [ 7,  8],
+   [ 9, 10],
+   [11, 12]])
 
-for img in X:
-    a = 1
+It means, that the size of the dimension, for which you passed -1, is being inferred. Thus,
+
+A.reshape(-1, 28*28)
+means, "reshape A so that its second dimension has a size of 28*28 and calculate the correct size of the first dimension".
+
+'''
+
+X = X/255.0  # normalize
+
 
 conv_layers = [2]  # 3
 layer_sizes = [32]  # 64
@@ -104,7 +127,9 @@ for dense_layer in dense_layers:
             print(NAME)
             model = Sequential()
 
-            model.add(Conv2D(layer_size, (3, 3), input_shape=X.shape[1:])) #64 is the number of filter used
+            model.add(Conv2D(layer_size, (3, 3), input_shape=X.shape[1:])) #64 is the number of filter used. X.shape[] prende
+                                                                        #la seconda a la terza shape che sono altezza e larghezza immagine
+                                                                        #e salta la prima, che era il "-1" in reshape
             model.add(Activation("relu"))
             model.add(MaxPooling2D(pool_size=(2, 2)))
 
@@ -124,7 +149,7 @@ for dense_layer in dense_layers:
             model.add(Dense(last_layer))
             model.add(Activation("sigmoid"))
 
-            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
+            adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
 
             model.compile(loss=loss,
                           optimizer=adam,

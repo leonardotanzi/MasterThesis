@@ -7,11 +7,13 @@ import numpy as np
 import cv2
 import glob
 import os
+import tensorflow as tf
 
 model_path = "/Users/leonardotanzi/Desktop/FinalDataset/NotEagertransferLearningVGG.model"
-test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/A"
+test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/B"
+out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/B/"
 model = load_model(model_path)
-
+name_indexes = ["A", "B", "Unbroken"]
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -22,44 +24,23 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
     preds = model.predict(x)
     class_idx = np.argmax(preds[0])
+
     class_output = model.output[:, class_idx]
-    # class_output = model.output
 
     extracted_vgg_model = model.layers[0]
     last_conv_layer = extracted_vgg_model.get_layer("block5_conv3")
 
-    extracted_vgg_model.summary()
-    model.summary()
-    print(class_output)
-    print(last_conv_layer.output)
-    print(last_conv_layer)
-
-    loss = K.sum(last_conv_layer.output)
-
     conv_out = [l for l in model.layers[0].layers if l.name == "block5_conv3"][0].output
 
-    grads = K.gradients(loss, conv_out)[0]
-    # grads = K.gradients(class_output, model.trainable_weights)
-
-    """
-    import tensorflow as tf
-    with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
-        eval_grads = sess.run(grads, feed_dict={model.input:x})[0]
-
-    print(np.shape(eval_grads))
-    """
+    grads = K.gradients(last_conv_layer.output, conv_out)[0]
 
     a = model.layers[0].layers[0].input
     pooled_grads = K.mean(grads, axis=(0, 1, 2))
 
-    # iterate = K.function([model.input], [pooled_grads, conv_out[0]])
-    # pooled_grads_value, conv_layer_output_value = iterate(inputs=[x])
-    import tensorflow as tf
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
         pooled_grads_value, conv_layer_output_value = \
-            sess.run([pooled_grads, conv_out], feed_dict={a:x})
+            sess.run([pooled_grads, conv_out], feed_dict={a: x})
 
     for i in range(512):
         conv_layer_output_value[:, :, :, i] *= pooled_grads_value[i]
@@ -75,7 +56,8 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
     superimposed_img = cv2.addWeighted(img, 0.6, heatmap, 0.4, 0)
 
-    window_name = "Original-CAM"
+    '''
+    window_name = "{}-predicted:{}".format(img_path.split("/")[-1].split(".")[0], name_indexes[class_idx])
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.resizeWindow(window_name, 900, 900)
     cv2.moveWindow(window_name, 200, 0)
@@ -85,3 +67,6 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     cv2.imshow(window_name, numpy_horizontal)
 
     cv2.waitKey(0)
+    '''
+    window_name = "{}-predicted:{}".format(img_path.split("/")[-1].split(".")[0], name_indexes[class_idx])
+    cv2.imwrite(out_folder + window_name + ".png", superimposed_img)

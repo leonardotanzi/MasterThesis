@@ -11,7 +11,7 @@ import glob
 import os
 import time
 
-test_folder = "/Users/leonardotanzi/Desktop/Dog" # "/Users/leonardotanzi/Desktop/FinalDataset/A"
+test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/A"  # "/Users/leonardotanzi/Desktop/Dog"
 
 model = VGG16(weights="imagenet")
 
