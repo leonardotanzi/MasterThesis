@@ -37,58 +37,46 @@ if __name__ == "__main__":
         run_on_server = args["server"]
         run_binary = args["binary"]
 
+        model_type = "VGG"
+        image_size = 224
 
-        if run_on_server == "y" and run_binary == "y":
-                train_folder = "/mnt/Data/ltanzi/A_B/Train"
-                val_folder = "/mnt/Data/ltanzi/A_B/Validation"
-                test_folder = "/mnt/Data/ltanzi/A_B/Test"
-                out_folder = "/mnt/Data/ltanzi/"
-                binary = "binary"
-                loss = "binary_crossentropy"
-                last_layer = 1
-                classmode = "binary"
-                act = "sigmoid"
-
-        elif run_on_server == "y" and run_binary == "n":
+        if run_on_server == "y":
                 train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
                 val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
                 test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
                 out_folder = "/mnt/Data/ltanzi/"
-                binary = "categorical"
-                loss = "sparse_categorical_crossentropy"
-                num_classes = 3
-                last_layer = 3
-                classmode = "sparse"
-                act = "softmax"
 
-        elif run_on_server == "n" and run_binary == "y":
-                train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Train"
-                val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Validation"
-                test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDataset/Bro_Unbro/Test"
+        elif run_on_server == "n":
+                train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
+                val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
+                test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
                 out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+
+        else:
+                raise ValueError("Incorrect 1st arg")
+
+        if run_binary == "y":
                 binary = "binary"
                 loss = "binary_crossentropy"
                 last_layer = 1
                 classmode = "binary"
                 act = "sigmoid"
+                classes = ["A", "B"]
+                name = "{}_{}-{}-baseline{}-{}".format(classes[0], classes[1], binary, model_type, int(time.time()))
 
-        elif run_on_server == "n" and run_binary == "n":
-                train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
-                val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
-                test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
-                out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+        elif run_binary == "n":
                 binary = "categorical"
                 loss = "sparse_categorical_crossentropy"
                 last_layer = 3
                 classmode = "sparse"
                 act = "softmax"
+                classes = None
+                name = "{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+
         else:
-                raise ValueError('Incorrect arg')
+                raise ValueError("Incorrect 2nd arg")
 
         # class_weights_train = compute_weights(train_folder)
-        image_size = 224
-        model_type = "VGG"
-        name = "-baseline{}-{}".format(model_type, int(time.time()))
         tensorboard = TensorBoard(log_dir="logs/{}".format(name))
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
@@ -142,17 +130,20 @@ if __name__ == "__main__":
         train_generator = data_generator.flow_from_directory(train_folder,
                 target_size=(image_size, image_size),
                 batch_size=24,
-                class_mode=classmode)
+                class_mode=classmode,
+                classes=classes)
 
         validation_generator = data_generator.flow_from_directory(val_folder,
                 target_size=(image_size, image_size),
                 batch_size=24,
-                class_mode=classmode)
+                class_mode=classmode,
+                classes=classes)
 
         test_generator = data_generator.flow_from_directory(test_folder,
                 target_size=(image_size, image_size),
                 batch_size=24,
-                class_mode=classmode)
+                class_mode=classmode,
+                classes=classes)
 
         # Trains the model on data generated batch-by-batch by a Python generator
         # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
@@ -175,7 +166,7 @@ if __name__ == "__main__":
         my_new_model.summary()
         # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
-        my_new_model.save(out_folder + binary + name + ".model")
+        my_new_model.save(out_folder + name + ".model")
 
         score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
         print("Test loss:", score[0])
