@@ -85,7 +85,7 @@ if __name__ == "__main__":
         else:
                 raise ValueError('Incorrect arg')
 
-        class_weights_train = compute_weights(train_folder)
+        # class_weights_train = compute_weights(train_folder)
         image_size = 224
         model_type = "VGG"
         name = "-baseline{}-{}".format(model_type, int(time.time()))
