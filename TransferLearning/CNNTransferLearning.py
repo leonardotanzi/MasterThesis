@@ -18,6 +18,8 @@ def compute_weights(input_folder):
         dictio = {"A": 0, "B": 1, "Unbroken": 2}
         files_per_class = []
         for folder in os.listdir(input_folder):
+            if folder.startswith('.'):
+                    continue
             if not os.path.isfile(folder):
                     a=dictio.get(folder)
                     files_per_class.insert(dictio.get(folder), (len(os.listdir(input_folder + '/' + folder))))
@@ -71,12 +73,12 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = None
-                name = "{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                name = "balanced-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
 
         else:
                 raise ValueError("Incorrect 2nd arg")
 
-        # class_weights_train = compute_weights(train_folder)
+        class_weights_train = compute_weights(train_folder)
         tensorboard = TensorBoard(log_dir="logs/{}".format(name))
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
@@ -160,7 +162,7 @@ if __name__ == "__main__":
                 epochs=100,
                 validation_data=validation_generator,
                 validation_steps=STEP_SIZE_VALID,
-                # class_weight=class_weights_train,
+                class_weight=class_weights_train,
                 callbacks=[tensorboard, es])
 
         my_new_model.summary()
