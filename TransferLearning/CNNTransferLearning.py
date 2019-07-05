@@ -61,7 +61,7 @@ if __name__ == "__main__":
                 last_layer = 1
                 classmode = "binary"
                 act = "sigmoid"
-                classes = ["A", "B"]
+                classes = ["B", "Unbroken"]
                 name = "{}_{}-{}-baseline{}-{}".format(classes[0], classes[1], binary, model_type, int(time.time()))
 
         elif run_binary == "n":
