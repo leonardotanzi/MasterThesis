@@ -1,6 +1,6 @@
 from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input
 from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Dropout
+from tensorflow.python.keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D, BatchNormalization, Activation
 # from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.utils import plot_model
@@ -28,6 +28,53 @@ def compute_weights(input_folder):
         for i in range(len(files_per_class)):
             class_weights[i] = 1 - (float(files_per_class[i]) / total_files)
         return class_weights
+
+
+def VGG16_dropout_batchnorm():
+        input_shape = (224, 224, 3)
+
+        model = Sequential([
+                Conv2D(64, (3, 3), input_shape=input_shape, padding='same',
+                       activation='relu'),
+                Conv2D(64, (3, 3), activation='relu', padding='same'),
+                BatchNormalization(),
+                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
+                Dropout(0.7),
+                Conv2D(128, (3, 3), activation='relu', padding='same'),
+                Conv2D(128, (3, 3), activation='relu', padding='same', ),
+                BatchNormalization(),
+                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
+                Dropout(0.7),
+                Conv2D(256, (3, 3), activation='relu', padding='same', ),
+                Conv2D(256, (3, 3), activation='relu', padding='same', ),
+                Conv2D(256, (3, 3), activation='relu', padding='same', ),
+                BatchNormalization(),
+                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
+                Dropout(0.7),
+                Conv2D(512, (3, 3), activation='relu', padding='same', ),
+                Conv2D(512, (3, 3), activation='relu', padding='same', ),
+                Conv2D(512, (3, 3), activation='relu', padding='same', ),
+                BatchNormalization(),
+                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
+                Dropout(0.7),
+                Conv2D(512, (3, 3), activation='relu', padding='same', ),
+                Conv2D(512, (3, 3), activation='relu', padding='same', ),
+                Conv2D(512, (3, 3), activation='relu', padding='same', ),
+                BatchNormalization(),
+                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
+                Dropout(0.7),
+                Flatten(),
+                Dense(4096),
+                BatchNormalization(),
+                Activation('relu'),
+                Dropout(0.7),
+                Dense(4096),
+                BatchNormalization(),
+                Activation('relu'),
+                Dropout(0.7),
+                Dense(1000, activation='softmax')
+        ])
+        return model
 
 
 if __name__ == "__main__":
@@ -73,28 +120,29 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = None
-                name = "balanced-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                name = "{}-baseline{}-{}".format(binary, model_type, int(time.time()))
 
         else:
                 raise ValueError("Incorrect 2nd arg")
 
-        class_weights_train = compute_weights(train_folder)
+        # class_weights_train = compute_weights(train_folder)
         tensorboard = TensorBoard(log_dir="logs/{}".format(name))
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
 
-        # mc = ModelCheckpoint(out_folder + "best_model.h5", monitor="val_acc", mode='max', verbose=1)
+        mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
-        my_new_model = Sequential()
-        # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-        my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+        baseline = False
 
-        # my_new_model.add(Dense(32, activation="relu"))
-        # my_new_model.add(Dropout(0.25))
-        my_new_model.add(Dense(last_layer, activation=act))
-
-        # Say not to train first layer (ResNet) model. It is already trained
-        my_new_model.layers[0].trainable = False
+        if baseline:
+                my_new_model = Sequential()
+                # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
+                my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                my_new_model.add(Dense(last_layer, activation=act))
+                # Say not to train first layer (ResNet) model. It is already trained
+                my_new_model.layers[0].trainable = False
+        else:
+                my_new_model = VGG16_dropout_batchnorm()
 
         adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
@@ -162,8 +210,8 @@ if __name__ == "__main__":
                 epochs=100,
                 validation_data=validation_generator,
                 validation_steps=STEP_SIZE_VALID,
-                class_weight=class_weights_train,
-                callbacks=[tensorboard, es])
+                # class_weight=class_weights_train,
+                callbacks=[tensorboard, es, mc])
 
         my_new_model.summary()
         # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
