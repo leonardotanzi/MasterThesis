@@ -11,7 +11,7 @@ args = vars(ap.parse_args())
 run_on_server = args["server"]
 
 if run_on_server == "y":
-    score_folder = "/mnt/Data/ltanzi/A_B/Test"
+    score_folder = "/mnt/Data/ltanzi/Train_Val/Test"
     model_path = "/mnt/Data/ltanzi/"
 
 elif run_on_server == "n":
@@ -23,22 +23,23 @@ else:
 
 classmode = "binary"
 image_size = 224
-class1 = "A"
-class2 = "B"
+class1 = "B"
+class2 = "Unbroken"
 
 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True,preprocessing_function=preprocess_input)
 
 dict_classes = {class2: 1, class1: 0}
 classes = [class1, class2]
 
-model = load_model(model_path + "binarytransferLearningVGG.model")
+model = load_model(model_path + "B_Unbroken-binary-baselineVGG-1562319200.model")
 
 # Evaluate scores of the full test set
 
 test_generator = data_generator.flow_from_directory(score_folder,
                                                     target_size=(image_size, image_size),
                                                     batch_size=24,
-                                                    class_mode=classmode)
+                                                    class_mode=classmode,
+                                                    classes=classes)
 
 STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
 
@@ -47,4 +48,3 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 preds = model.predict_generator(test_generator, steps=STEP_SIZE_TEST)
-print(preds)
