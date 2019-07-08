@@ -64,15 +64,15 @@ def VGG16_dropout_batchnorm():
                 MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
                 Dropout(0.5),
                 Flatten(),
-                #Dense(4096),
-                #Activation('relu'),
-                #BatchNormalization(),
-                #Dropout(0.5),
-                #Dense(4096),
-                #Activation('relu'),
-                #BatchNormalization(),
-                #Dropout(0.5),
-                #Dense(3, activation='softmax')
+                Dense(4096),
+                Activation('relu'),
+                BatchNormalization(),
+                Dropout(0.5),
+                Dense(4096),
+                Activation('relu'),
+                BatchNormalization(),
+                Dropout(0.5),
+                Dense(3, activation='softmax')
         ])
         return model
 
@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = None
-                name = "{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                name = "batchnorm-dropout-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
 
         else:
                 raise ValueError("Incorrect 2nd arg")
@@ -139,11 +139,10 @@ if __name__ == "__main__":
                 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
                 my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
                 # Say not to train first layer (ResNet) model. It is already trained
+                my_new_model.add(Dense(last_layer, activation=act))
+                my_new_model.layers[0].trainable = False
         else:
-                my_new_model.add(VGG16_dropout_batchnorm())
-
-        my_new_model.add(Dense(last_layer, activation=act))
-        my_new_model.layers[0].trainable = False
+                my_new_model = VGG16_dropout_batchnorm()
 
         adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
