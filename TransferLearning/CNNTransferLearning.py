@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = None
-                name = "batchnorm-dropout-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                name = "balanced-retrainAll-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
 
         else:
                 raise ValueError("Incorrect 2nd arg")
@@ -130,17 +130,17 @@ if __name__ == "__main__":
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
 
-        # mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
+        mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
-        baseline = False
-        my_new_model = Sequential()
+        baseline = True
 
         if baseline:
+                my_new_model = Sequential()
                 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
                 my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
                 # Say not to train first layer (ResNet) model. It is already trained
                 my_new_model.add(Dense(last_layer, activation=act))
-                my_new_model.layers[0].trainable = False
+                my_new_model.layers[0].trainable = True
         else:
                 my_new_model = VGG16_dropout_batchnorm()
 
@@ -211,7 +211,7 @@ if __name__ == "__main__":
                 validation_data=validation_generator,
                 validation_steps=STEP_SIZE_VALID,
                 # class_weight=class_weights_train,
-                callbacks=[tensorboard, es])
+                callbacks=[tensorboard, es, mc])
 
         my_new_model.summary()
         # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
