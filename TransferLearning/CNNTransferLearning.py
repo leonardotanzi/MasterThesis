@@ -130,7 +130,7 @@ if __name__ == "__main__":
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
 
-        mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
+        # mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
         baseline = False
 
@@ -211,7 +211,7 @@ if __name__ == "__main__":
                 validation_data=validation_generator,
                 validation_steps=STEP_SIZE_VALID,
                 # class_weight=class_weights_train,
-                callbacks=[tensorboard, es, mc])
+                callbacks=[tensorboard, es])
 
         my_new_model.summary()
         # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
