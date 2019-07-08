@@ -139,6 +139,12 @@ if __name__ == "__main__":
                 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
                 my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
                 # Say not to train first layer (ResNet) model. It is already trained
+                my_new_model.add(Dense(4096), activation="relu"),
+                my_new_model.add(BatchNormalization()),
+                my_new_model.add(Dropout(0.5)),
+                my_new_model.add(Dense(4096), activation="relu"),
+\               my_new_model.add(BatchNormalization()),
+                my_new_model.add(Dropout(0.5)),
                 my_new_model.add(Dense(last_layer, activation=act))
                 my_new_model.layers[0].trainable = True
         else:
@@ -147,7 +153,6 @@ if __name__ == "__main__":
         adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
         my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
-
 
         # Fit model
         data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
@@ -218,23 +223,45 @@ if __name__ == "__main__":
 
         my_new_model.save(out_folder + name + ".model")
 
+
+        # EVALUATION
+
         score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
         print("Test loss:", score[0])
         print("Test accuracy:", score[1])
 
-
-        '''
         test_generator.reset()
-        
-        pred = my_new_model.predict_generator(test_generator,
-                steps=STEP_SIZE_TEST,
-                verbose=1)
-        
-        predicted_class_indices = np.argmax(pred, axis=1)
-        
-        labels = train_generator.class_indices
-        labels = dict((v, k) for k,v in labels.items())
-        predictions = [labels[k] for k in predicted_class_indices]
-        
-        print(predictions)
-        '''
+
+        test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
+               "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
+        dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
+        classes = ["A", "B", "Unbroken"]
+
+        for i, folder in enumerate(test_folder):
+                test_generator = data_generator.flow_from_directory(folder,
+                                                                    target_size=(image_size, image_size),
+                                                                    batch_size=24,
+                                                                    class_mode=classmode)
+
+                STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
+
+                test_generator.reset()
+
+                pred = model.predict_generator(test_generator,
+                                steps=STEP_SIZE_TEST,
+                                verbose=1)
+
+                predicted_class_indices = np.argmax(pred, axis=1)
+
+                labels = dict_classes
+                labels = dict((v, k) for k, v in labels.items())
+                predictions = [labels[k] for k in predicted_class_indices]
+
+                # print(predictions)
+
+                x = 0
+                for j in predictions:
+                        if j == classes[i]:
+                                x += 1
+
+                print("{} classified correctly: {}%".format(classes[i], x))
