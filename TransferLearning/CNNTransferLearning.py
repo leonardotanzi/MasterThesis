@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = None
-                name = "balanced-retrainAll-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                name = "addlayers-unbalanced-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
 
         else:
                 raise ValueError("Incorrect 2nd arg")
@@ -139,14 +139,14 @@ if __name__ == "__main__":
                 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
                 my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
                 # Say not to train first layer (ResNet) model. It is already trained
-                my_new_model.add(Dense(4096), activation="relu"),
-                my_new_model.add(BatchNormalization()),
-                my_new_model.add(Dropout(0.5)),
-                my_new_model.add(Dense(4096), activation="relu"),
-\               my_new_model.add(BatchNormalization()),
-                my_new_model.add(Dropout(0.5)),
+                my_new_model.add(Dense(4096, activation="relu"))
+                my_new_model.add(BatchNormalization())
+                my_new_model.add(Dropout(0.5))
+                my_new_model.add(Dense(4096, activation="relu"))
+                my_new_model.add(BatchNormalization())
+                my_new_model.add(Dropout(0.5))
                 my_new_model.add(Dense(last_layer, activation=act))
-                my_new_model.layers[0].trainable = True
+                my_new_model.layers[0].trainable = False
         else:
                 my_new_model = VGG16_dropout_batchnorm()
 
@@ -247,7 +247,7 @@ if __name__ == "__main__":
 
                 test_generator.reset()
 
-                pred = model.predict_generator(test_generator,
+                pred = my_new_model.predict_generator(test_generator,
                                 steps=STEP_SIZE_TEST,
                                 verbose=1)
 
