@@ -1,5 +1,5 @@
 import tensorflow as tf
-from keras.applications.resnet50 import preprocess_input
+from keras.applications.vgg16 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 import argparse

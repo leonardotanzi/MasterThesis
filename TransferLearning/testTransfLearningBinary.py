@@ -1,5 +1,5 @@
 import tensorflow as tf
-from keras.applications.resnet50 import preprocess_input
+from keras.applications.vgg16 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 import argparse
@@ -17,7 +17,8 @@ if run_on_server == "y":
 
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
-    score_folder = "/Users/leonardotanzi/Desktop/FinalDataset/BinaryDatasets/Bro_Unbro/Test"
+    score_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
+
 else:
     raise ValueError("Incorrect arg.")
 
@@ -29,9 +30,9 @@ class2 = "B"
 dict_classes = {class2: 1, class1: 0}
 classes = [class1, class2]
 
-test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/Test" + class1, "/mnt/Data/ltanzi/Train_Val/Testing/Test" + class2]
+test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class1, "/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class2]
 
-data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True,preprocessing_function=preprocess_input)
+data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, preprocessing_function=preprocess_input)
 
 model = load_model(model_path + "A_B-binary-baselineVGG-1562679455-best_model.h5")
 
@@ -45,9 +46,9 @@ test_generator = data_generator.flow_from_directory(score_folder,
 
 STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
 
-score = model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
+# score = model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
+# print('Test loss:', score[0])
+# print('Test accuracy:', score[1])
 
 for i, folder in enumerate(test_folder):
 
@@ -62,14 +63,20 @@ for i, folder in enumerate(test_folder):
     test_generator.reset()
 
     pred = model.predict_generator(test_generator,
-                                   steps=STEP_SIZE_TEST,
-                                   verbose=1)
+                                  steps=STEP_SIZE_TEST,
+                                  verbose=1)
 
-    predicted_class_indices = np.argmax(pred, axis=1)
+    # predicted_class_indices = np.argmax(pred, axis=1)  questo funziona per softmax! per binary no
+
+    sqArray = np.squeeze(pred)
+    integer_predictions = []
+
+    for p in sqArray:
+        integer_predictions.append(int(round(p)))
 
     labels = dict_classes
     labels = dict((v, k) for k, v in labels.items())
-    predictions = [labels[k] for k in predicted_class_indices]
+    predictions = [labels[k] for k in integer_predictions]
 
     print(predictions)
 
