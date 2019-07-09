@@ -10,14 +10,19 @@ ap.add_argument("-s", "--server", required=True, help="Running the code on the s
 args = vars(ap.parse_args())
 run_on_server = args["server"]
 
+class1 = "Broken"
+class2 = "Unbroken"
+
 if run_on_server == "y":
     score_folder = "/mnt/Data/ltanzi/Train_Val/Test"
     model_path = "/mnt/Data/ltanzi/"
+    test_folder = ["/mnt/data/ltanzi/Train_Val/Testing/Test" + class1, "/mnt/data/ltanzi/Train_Val/Testing/Test" + class2]
 
 
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
     score_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
+    test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class1, "/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class2]
 
 else:
     raise ValueError("Incorrect arg.")
@@ -25,16 +30,12 @@ else:
 
 classmode = "binary"
 image_size = 224
-class1 = "A"
-class2 = "B"
-dict_classes = {class2: 1, class1: 0}
+dict_classes = {class1: 0, class2: 1}
 classes = [class1, class2]
-
-test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class1, "/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class2]
 
 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, preprocessing_function=preprocess_input)
 
-model = load_model(model_path + "A_B-binary-baselineVGG-1562679455-best_model.h5")
+model = load_model(model_path + "Broken_Unbroken-binary-baselineVGG-1562672986-best_model.h5")
 
 # Evaluate scores of the full test set
 
