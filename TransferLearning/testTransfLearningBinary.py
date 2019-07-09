@@ -24,16 +24,16 @@ else:
 
 classmode = "binary"
 image_size = 224
-class1 = "Broken"
-class2 = "Unbroken"
-
-test_folder = ["/mnt/Data/ltanzi/Train_Val/Test/" + class1, "/mnt/Data/ltanzi/Train_Val/Test/" + class2]
+class1 = "A"
+class2 = "B"
 dict_classes = {class2: 1, class1: 0}
 classes = [class1, class2]
 
+test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/Test" + class1, "/mnt/Data/ltanzi/Train_Val/Testing/Test" + class2]
+
 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True,preprocessing_function=preprocess_input)
 
-model = load_model(model_path + "Broken_Unbroken-binary-baselineVGG-1562672986-best_model.h5")
+model = load_model(model_path + "A_B-binary-baselineVGG-1562679455-best_model.h5")
 
 # Evaluate scores of the full test set
 
@@ -49,8 +49,9 @@ score = model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-
 for i, folder in enumerate(test_folder):
+
+    print(folder)
     test_generator = data_generator.flow_from_directory(folder,
                                                         target_size=(image_size, image_size),
                                                         batch_size=24,
@@ -70,7 +71,7 @@ for i, folder in enumerate(test_folder):
     labels = dict((v, k) for k, v in labels.items())
     predictions = [labels[k] for k in predicted_class_indices]
 
-    # print(predictions)
+    print(predictions)
 
     x = 0
     for j in predictions:
