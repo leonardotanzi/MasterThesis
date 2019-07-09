@@ -31,7 +31,7 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
 classes = ["A", "B", "Unbroken"]
 
-model = load_model(model_path + "addlayers-unbalanced-retrainAll-categorical-baselineVGG-1562598168-best_model.h5")
+model = load_model(model_path + "batchnorm_before_act-addlayers-unbalanced-categorical-baselineVGG-1562662769-best_model.h5")
 
 # Evaluate scores of the full test set
 

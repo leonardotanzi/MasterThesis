@@ -110,7 +110,7 @@ if __name__ == "__main__":
                 last_layer = 1
                 classmode = "binary"
                 act = "sigmoid"
-                classes = ["B", "Unbroken"]
+                classes = ["Broken", "Unbroken"]
                 name = "{}_{}-{}-baseline{}-{}".format(classes[0], classes[1], binary, model_type, int(time.time()))
 
         elif run_binary == "n":
@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = None
-                name = "addlayers-unbalanced-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                name = "batchnorm_before_act-addlayers-unbalanced-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
 
         else:
                 raise ValueError("Incorrect 2nd arg")
@@ -129,9 +129,8 @@ if __name__ == "__main__":
         tensorboard = TensorBoard(log_dir="logs/{}".format(name))
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
-
         mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
-
+        
         baseline = True
 
         if baseline:
@@ -139,12 +138,14 @@ if __name__ == "__main__":
                 # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
                 my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
                 # Say not to train first layer (ResNet) model. It is already trained
-                my_new_model.add(Dense(4096, activation="relu"))
-                my_new_model.add(BatchNormalization())
-                my_new_model.add(Dropout(0.5))
-                my_new_model.add(Dense(4096, activation="relu"))
-                my_new_model.add(BatchNormalization())
-                my_new_model.add(Dropout(0.5))
+                # my_new_model.add(Dense(4096))
+                # my_new_model.add(BatchNormalization())
+                # my_new_model.add(Activation("relu"))
+                # my_new_model.add(Dropout(0.3))
+                # my_new_model.add(Dense(4096))
+                # my_new_model.add(BatchNormalization())
+                # my_new_model.add(Activation("relu"))
+                # my_new_model.add(Dropout(0.3))
                 my_new_model.add(Dense(last_layer, activation=act))
                 my_new_model.layers[0].trainable = False
         else:
@@ -230,38 +231,40 @@ if __name__ == "__main__":
         print("Test loss:", score[0])
         print("Test accuracy:", score[1])
 
-        test_generator.reset()
+        if run_on_binary == "n":
+        
+                test_generator.reset()
 
-        test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
-               "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
-        dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
-        classes = ["A", "B", "Unbroken"]
+                test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
+                       "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
+                dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
+                classes = ["A", "B", "Unbroken"]
 
-        for i, folder in enumerate(test_folder):
-                test_generator = data_generator.flow_from_directory(folder,
+                for i, folder in enumerate(test_folder):
+                        test_generator = data_generator.flow_from_directory(folder,
                                                                     target_size=(image_size, image_size),
                                                                     batch_size=24,
                                                                     class_mode=classmode)
 
-                STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
+                        STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
-                test_generator.reset()
+                        test_generator.reset()
 
-                pred = my_new_model.predict_generator(test_generator,
-                                steps=STEP_SIZE_TEST,
-                                verbose=1)
+                        pred = my_new_model.predict_generator(test_generator,
+                                                      steps=STEP_SIZE_TEST,
+                                                      verbose=1)
 
-                predicted_class_indices = np.argmax(pred, axis=1)
+                        predicted_class_indices = np.argmax(pred, axis=1)
 
-                labels = dict_classes
-                labels = dict((v, k) for k, v in labels.items())
-                predictions = [labels[k] for k in predicted_class_indices]
+                        labels = dict_classes
+                        labels = dict((v, k) for k, v in labels.items())
+                        predictions = [labels[k] for k in predicted_class_indices]
 
-                # print(predictions)
+                        # print(predictions)
 
-                x = 0
-                for j in predictions:
-                        if j == classes[i]:
-                                x += 1
+                        x = 0
+                        for j in predictions:
+                                if j == classes[i]:
+                                        x += 1
 
-                print("{} classified correctly: {}%".format(classes[i], x))
+                        print("{} classified correctly: {}%".format(classes[i], x))

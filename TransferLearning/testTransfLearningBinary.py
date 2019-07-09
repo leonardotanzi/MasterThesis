@@ -23,7 +23,7 @@ else:
 
 classmode = "binary"
 image_size = 224
-class1 = "B"
+class1 = "Broken"
 class2 = "Unbroken"
 
 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True,preprocessing_function=preprocess_input)
@@ -31,7 +31,7 @@ data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, he
 dict_classes = {class2: 1, class1: 0}
 classes = [class1, class2]
 
-model = load_model(model_path + "B_Unbroken-binary-baselineVGG-1562319200.model")
+model = load_model(model_path + "Broken_Unbroken-binary-baselineVGG-1562672986-best_model.h5")
 
 # Evaluate scores of the full test set
 
