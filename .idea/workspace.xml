@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+            <state relative-caret-position="3495">
+              <caret line="233" column="14" lean-forward="true" selection-start-line="233" selection-start-column="14" selection-end-line="233" selection-end-column="14" />
               <folding>
                 <element signature="e#0#78#0" expanded="true" />
               </folding>
@@ -26,10 +26,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="32" lean-forward="true" selection-start-line="30" selection-end-line="32" />
+            <state relative-caret-position="510">
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -38,24 +38,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-117">
-              <caret line="15" column="33" selection-start-line="15" selection-end-line="16" />
+            <state relative-caret-position="885">
+              <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
               <folding>
-                <element signature="e#0#80#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CAM.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="55" column="7" selection-start-line="55" selection-start-column="7" selection-end-line="55" selection-end-column="7" />
-              <folding>
-                <element signature="e#0#80#0" expanded="true" />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -99,13 +87,13 @@
         <option value="$PROJECT_DIR$/PreProcessing-MatchTemplate/Source/MatchTemplate/BoneDetectionMultiScale.py" />
         <option value="$PROJECT_DIR$/DatasetCleaning/cropImageManually.py" />
         <option value="$PROJECT_DIR$/CNN/TestingCNN.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py" />
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
         <option value="$PROJECT_DIR$/CNN/CAMoriginal.py" />
         <option value="$PROJECT_DIR$/CNN/CAM.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAMoriginal.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAM.py" />
         <option value="$PROJECT_DIR$/CNN/CNN.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
       </list>
     </option>
@@ -295,7 +283,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13264495" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13264495" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -444,16 +432,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1720">
           <caret line="194" selection-start-line="194" selection-end-line="194" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="76" selection-start-line="18" selection-start-column="76" selection-end-line="18" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -620,7 +598,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-117">
+        <state relative-caret-position="225">
           <caret line="15" column="33" selection-start-line="15" selection-end-line="16" />
           <folding>
             <element signature="e#0#80#0" expanded="true" />
@@ -630,8 +608,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="32" lean-forward="true" selection-start-line="30" selection-end-line="32" />
+        <state relative-caret-position="885">
+          <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -640,8 +628,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="155" lean-forward="true" selection-start-line="155" selection-end-line="155" />
+        <state relative-caret-position="3495">
+          <caret line="233" column="14" lean-forward="true" selection-start-line="233" selection-start-column="14" selection-end-line="233" selection-end-column="14" />
           <folding>
             <element signature="e#0#78#0" expanded="true" />
           </folding>

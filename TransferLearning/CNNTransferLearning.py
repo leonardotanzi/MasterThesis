@@ -231,7 +231,7 @@ if __name__ == "__main__":
         print("Test loss:", score[0])
         print("Test accuracy:", score[1])
 
-        if run_on_binary == "n":
+        if run_binary == "n":
         
                 test_generator.reset()
 
