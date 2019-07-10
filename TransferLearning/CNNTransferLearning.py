@@ -90,10 +90,10 @@ if __name__ == "__main__":
         image_size = 224
 
         if run_on_server == "y":
-                train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
-                val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-                test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
-                out_folder = "/mnt/Data/ltanzi/"
+                # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
+                # val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
+                # test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
+                out_folder = "/mnt/Data/ltanzi/CV"
 
         elif run_on_server == "n":
                 train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
@@ -104,167 +104,173 @@ if __name__ == "__main__":
         else:
                 raise ValueError("Incorrect 1st arg")
 
-        if run_binary == "y":
-                binary = "binary"
-                loss = "binary_crossentropy"
-                last_layer = 1
-                classmode = "binary"
-                act = "sigmoid"
-                classes = ["A", "B"]
-                name = "{}_{}-{}-baseline{}-{}".format(classes[0], classes[1], binary, model_type, int(time.time()))
+        for i in range(1, 6):
+                if run_binary == "y":
+                        binary = "binary"
+                        loss = "binary_crossentropy"
+                        last_layer = 1
+                        classmode = "binary"
+                        act = "sigmoid"
+                        classes = ["A", "B"]
+                        name = "Fold{}/{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
-        elif run_binary == "n":
-                binary = "categorical"
-                loss = "sparse_categorical_crossentropy"
-                last_layer = 3
-                classmode = "sparse"
-                act = "softmax"
-                classes = None
-                name = "batchnorm_before_act-addlayers-unbalanced-{}-baseline{}-{}".format(binary, model_type, int(time.time()))
+                elif run_binary == "n":
+                        binary = "categorical"
+                        loss = "sparse_categorical_crossentropy"
+                        last_layer = 3
+                        classmode = "sparse"
+                        act = "softmax"
+                        classes = None
+                        name = "Fold{}/batchnorm_before_act-addlayers-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
-        else:
-                raise ValueError("Incorrect 2nd arg")
+                else:
+                        raise ValueError("Incorrect 2nd arg")
 
-        # class_weights_train = compute_weights(train_folder)
-        tensorboard = TensorBoard(log_dir="logs/{}".format(name))
-        es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
-                                                                                # patience to wait still some epochs before stop
-        mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
-        
-        baseline = True
+                train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+                val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+                test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Test".format(i)
 
-        if baseline:
-                my_new_model = Sequential()
-                # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-                my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
-                # Say not to train first layer (ResNet) model. It is already trained
-                # my_new_model.add(Dense(4096))
-                # my_new_model.add(BatchNormalization())
-                # my_new_model.add(Activation("relu"))
-                # my_new_model.add(Dropout(0.3))
-                # my_new_model.add(Dense(4096))
-                # my_new_model.add(BatchNormalization())
-                # my_new_model.add(Activation("relu"))
-                # my_new_model.add(Dropout(0.3))
-                my_new_model.add(Dense(last_layer, activation=act))
-                my_new_model.layers[0].trainable = False
-        else:
-                my_new_model = VGG16_dropout_batchnorm()
+                # class_weights_train = compute_weights(train_folder)
+                tensorboard = TensorBoard(log_dir="CV/logs/{}".format(name))
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
+                                                                                        # patience to wait still some epochs before stop
+                mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
-        adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
+                baseline = True
 
-        my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
+                if baseline:
+                        my_new_model = Sequential()
+                        # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
+                        my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                        # Say not to train first layer (ResNet) model. It is already trained
+                        # my_new_model.add(Dense(4096))
+                        # my_new_model.add(BatchNormalization())
+                        # my_new_model.add(Activation("relu"))
+                        # my_new_model.add(Dropout(0.3))
+                        # my_new_model.add(Dense(4096))
+                        # my_new_model.add(BatchNormalization())
+                        # my_new_model.add(Activation("relu"))
+                        # my_new_model.add(Dropout(0.3))
+                        my_new_model.add(Dense(last_layer, activation=act))
+                        my_new_model.layers[0].trainable = False
+                else:
+                        my_new_model = VGG16_dropout_batchnorm()
 
-        # Fit model
-        data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
-                horizontal_flip=True, preprocessing_function=preprocess_input)
+                adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
-        '''
-        Keras works with batches of images. So, the first dimension is used for the number of samples (or images) you have.
-        When you load a single image, you get the shape of one image, which is (size1,size2,channels).
-        In order to create a batch of images, you need an additional dimension: (samples, size1,size2,channels)
-        The preprocess_input function is meant to adequate your image to the format the model requires.
-        Some models use images with values ranging from 0 to 1. Others from -1 to +1. Others use the "caffe" style, that is not 
-        normalized, but is centered.
-        From the source code, Resnet is using the caffe style.
-        You don't need to worry about the internal details of preprocess_input. But ideally, you should load images with the
-         keras functions for that (so you guarantee that the images you load are compatible with preprocess_input).
-        
-        
-        First, if we are working with images, loading the entire data-set in a single python variable isn’t an option, and so we 
-        need a generator function.
-        A generator function is like a normal python function, but it behaves like an iterator. It has a special keyword yield, 
-        which is similar to return as it returns some value. When the generator is called, it will return some value and save the
-        state. Next time when we call the generator again, it will resume from the saved state, and return the next set of 
-        values just like an iterator
-        Thus using the advantage of generator, we can iterate over each (or batches of) image(s) in the large data-set and train
-        our neural net quite easily.
-        
-        '''
+                my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
-        # Takes the path to a directory & generates batches of augmented data.
-        train_generator = data_generator.flow_from_directory(train_folder,
-                target_size=(image_size, image_size),
-                batch_size=24,
-                class_mode=classmode,
-                classes=classes)
+                # Fit model
+                data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
+                        horizontal_flip=True, preprocessing_function=preprocess_input)
+                # data_generator_notAug = ImageDataGenerator(preprocessing_function=preprocess_input)
 
-        validation_generator = data_generator.flow_from_directory(val_folder,
-                target_size=(image_size, image_size),
-                batch_size=24,
-                class_mode=classmode,
-                classes=classes)
+                '''
+                Keras works with batches of images. So, the first dimension is used for the number of samples (or images) you have.
+                When you load a single image, you get the shape of one image, which is (size1,size2,channels).
+                In order to create a batch of images, you need an additional dimension: (samples, size1,size2,channels)
+                The preprocess_input function is meant to adequate your image to the format the model requires.
+                Some models use images with values ranging from 0 to 1. Others from -1 to +1. Others use the "caffe" style, that is not 
+                normalized, but is centered.
+                From the source code, Resnet is using the caffe style.
+                You don't need to worry about the internal details of preprocess_input. But ideally, you should load images with the
+                 keras functions for that (so you guarantee that the images you load are compatible with preprocess_input).
+                
+                
+                First, if we are working with images, loading the entire data-set in a single python variable isn’t an option, and so we 
+                need a generator function.
+                A generator function is like a normal python function, but it behaves like an iterator. It has a special keyword yield, 
+                which is similar to return as it returns some value. When the generator is called, it will return some value and save the
+                state. Next time when we call the generator again, it will resume from the saved state, and return the next set of 
+                values just like an iterator
+                Thus using the advantage of generator, we can iterate over each (or batches of) image(s) in the large data-set and train
+                our neural net quite easily.
+                
+                '''
 
-        test_generator = data_generator.flow_from_directory(test_folder,
-                target_size=(image_size, image_size),
-                batch_size=24,
-                class_mode=classmode,
-                classes=classes)
+                # Takes the path to a directory & generates batches of augmented data.
+                train_generator = data_generator.flow_from_directory(train_folder,
+                        target_size=(image_size, image_size),
+                        batch_size=24,
+                        class_mode=classmode,
+                        classes=classes)
 
-        # Trains the model on data generated batch-by-batch by a Python generator
-        # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
+                validation_generator = data_generator.flow_from_directory(val_folder,
+                        target_size=(image_size, image_size),
+                        batch_size=24,
+                        class_mode=classmode,
+                        classes=classes)
 
-        STEP_SIZE_TRAIN = train_generator.n//train_generator.batch_size
-        STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
-        STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
+                test_generator = data_generator.flow_from_directory(test_folder,
+                        target_size=(image_size, image_size),
+                        batch_size=24,
+                        class_mode=classmode,
+                        classes=classes)
 
-        # fit_generator calls train_generator that generate a batch of images from train_folder
+                # Trains the model on data generated batch-by-batch by a Python generator
+                # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
-        my_new_model.fit_generator(
-                train_generator,
-                steps_per_epoch=STEP_SIZE_TRAIN,
-                epochs=100,
-                validation_data=validation_generator,
-                validation_steps=STEP_SIZE_VALID,
-                # class_weight=class_weights_train,
-                callbacks=[tensorboard, es, mc])
+                STEP_SIZE_TRAIN = train_generator.n//train_generator.batch_size
+                STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
+                STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
-        my_new_model.summary()
-        # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+                # fit_generator calls train_generator that generate a batch of images from train_folder
 
-        my_new_model.save(out_folder + name + ".model")
+                my_new_model.fit_generator(
+                        train_generator,
+                        steps_per_epoch=STEP_SIZE_TRAIN,
+                        epochs=100,
+                        validation_data=validation_generator,
+                        validation_steps=STEP_SIZE_VALID,
+                        # class_weight=class_weights_train,
+                        callbacks=[tensorboard, es, mc])
+
+                my_new_model.summary()
+                # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+
+                my_new_model.save(out_folder + name + ".model")
 
 
-        # EVALUATION
+                # EVALUATION
 
-        score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
-        print("Test loss:", score[0])
-        print("Test accuracy:", score[1])
+                score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
+                print("Test loss:", score[0])
+                print("Test accuracy:", score[1])
 
-        if run_binary == "n":
-        
-                test_generator.reset()
-
-                test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
-                       "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
-                dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
-                classes = ["A", "B", "Unbroken"]
-
-                for i, folder in enumerate(test_folder):
-                        test_generator = data_generator.flow_from_directory(folder,
-                                                                    target_size=(image_size, image_size),
-                                                                    batch_size=24,
-                                                                    class_mode=classmode)
-
-                        STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
+                if run_binary == "n":
 
                         test_generator.reset()
 
-                        pred = my_new_model.predict_generator(test_generator,
-                                                      steps=STEP_SIZE_TEST,
-                                                      verbose=1)
+                        test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
+                               "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
+                        dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
+                        classes = ["A", "B", "Unbroken"]
 
-                        predicted_class_indices = np.argmax(pred, axis=1)
+                        for i, folder in enumerate(test_folder):
+                                test_generator = data_generator.flow_from_directory(folder,
+                                                                            target_size=(image_size, image_size),
+                                                                            batch_size=24,
+                                                                            class_mode=classmode)
 
-                        labels = dict_classes
-                        labels = dict((v, k) for k, v in labels.items())
-                        predictions = [labels[k] for k in predicted_class_indices]
+                                STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
-                        # print(predictions)
+                                test_generator.reset()
 
-                        x = 0
-                        for j in predictions:
-                                if j == classes[i]:
-                                        x += 1
+                                pred = my_new_model.predict_generator(test_generator,
+                                                              steps=STEP_SIZE_TEST,
+                                                              verbose=1)
 
-                        print("{} classified correctly: {}%".format(classes[i], x))
+                                predicted_class_indices = np.argmax(pred, axis=1)
+
+                                labels = dict_classes
+                                labels = dict((v, k) for k, v in labels.items())
+                                predictions = [labels[k] for k in predicted_class_indices]
+
+                                # print(predictions)
+
+                                x = 0
+                                for j in predictions:
+                                        if j == classes[i]:
+                                                x += 1
+
+                                print("{} classified correctly: {}%".format(classes[i], x))

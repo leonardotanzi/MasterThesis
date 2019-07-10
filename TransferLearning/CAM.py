@@ -21,9 +21,9 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/NotEagertransferLearningVGG.model"
-    test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/B"
-    out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/B/"
+    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/retrainAll-categorical-baselineVGG-1562590231.model"
+    test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test/B"
+    out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/NewNet/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
