@@ -8,10 +8,26 @@ import cv2
 import glob
 import os
 import tensorflow as tf
+import argparse
 
-model_path = "/Users/leonardotanzi/Desktop/FinalDataset/NotEagertransferLearningVGG.model"
-test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/B"
-out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/B/"
+ap = argparse.ArgumentParser()
+ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+args = vars(ap.parse_args())
+run_on_server = args["server"]
+
+if run_on_server == "y":
+    model_path = "/mnt/data/ltanzi/retrainAll-categorical-baselineVGG-1562590231.model"
+    test_folder = "/mnt/data/ltanzi/Train_Val/Test/A"
+    out_folder = "/mnt/data/ltanzi/Cam_output"
+
+elif run_on_server == "n":
+    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/NotEagertransferLearningVGG.model"
+    test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/B"
+    out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/B/"
+
+else:
+    raise ValueError("Incorrect 1st arg.")
+
 model = load_model(model_path)
 name_indexes = ["A", "B", "Unbroken"]
 
