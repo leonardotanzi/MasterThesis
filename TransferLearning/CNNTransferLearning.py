@@ -93,7 +93,7 @@ if __name__ == "__main__":
                 # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
                 # val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
                 # test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
-                out_folder = "/mnt/Data/ltanzi/CV"
+                out_folder = "/mnt/Data/ltanzi/CV/"
 
         elif run_on_server == "n":
                 train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
@@ -105,6 +105,7 @@ if __name__ == "__main__":
                 raise ValueError("Incorrect 1st arg")
 
         for i in range(1, 6):
+                print("Fold number {}".format(i))
                 if run_binary == "y":
                         binary = "binary"
                         loss = "binary_crossentropy"
@@ -112,7 +113,7 @@ if __name__ == "__main__":
                         classmode = "binary"
                         act = "sigmoid"
                         classes = ["A", "B"]
-                        name = "Fold{}/{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
+                        name = "Fold{}_{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
                         binary = "categorical"
@@ -120,16 +121,16 @@ if __name__ == "__main__":
                         last_layer = 3
                         classmode = "sparse"
                         act = "softmax"
-                        classes = None
-                        name = "Fold{}/batchnorm_before_act-addlayers-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        classes = ["A", "B", "Unbroken"]
+                        name = "Fold{}_batchnorm_before_act-addlayers-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
 
                 train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
                 val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Test".format(i)
-
+                test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
+                
                 # class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="CV/logs/{}".format(name))
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
@@ -219,7 +220,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=100,
+                        epochs=2,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         # class_weight=class_weights_train,
