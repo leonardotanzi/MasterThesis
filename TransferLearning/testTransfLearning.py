@@ -12,7 +12,7 @@ run_on_server = args["server"]
 
 if run_on_server == "y":
         test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB", "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
-        score_folder = "/mnt/Data/ltanzi/Train_Val/Testing"
+        score_folder = "/mnt/Data/ltanzi/Train_Val/Test"
         model_path = "/mnt/Data/ltanzi/"
 elif run_on_server == "n":
         test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestA", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestB", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestUnbroken"]
@@ -31,14 +31,16 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
 classes = ["A", "B", "Unbroken"]
 
-model = load_model(model_path + "batchnorm_before_act-addlayers-unbalanced-categorical-baselineVGG-1562662769-best_model.h5")
+model = load_model(model_path + "CV/Fold1_batchnorm_before_act-addlayers-unbalanced-categorical-baselineVGG-1562773629-best_model.h5")
 
 # Evaluate scores of the full test set
 
 test_generator = data_generator.flow_from_directory(score_folder,
         target_size=(image_size, image_size),
         batch_size=24,
-        class_mode=classmode)
+        class_mode=classmode,
+        classes=classes
+)
 
 STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
 

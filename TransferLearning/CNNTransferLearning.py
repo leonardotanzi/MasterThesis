@@ -220,7 +220,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=2,
+                        epochs=30,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         # class_weight=class_weights_train,
