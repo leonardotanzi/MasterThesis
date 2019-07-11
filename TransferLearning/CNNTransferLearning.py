@@ -129,10 +129,10 @@ if __name__ == "__main__":
 
                 train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
                 val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
+                test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
                 
                 # class_weights_train = compute_weights(train_folder)
-                tensorboard = TensorBoard(log_dir="CV/logs/{}".format(name))
+                tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                         # patience to wait still some epochs before stop
                 mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
@@ -164,7 +164,7 @@ if __name__ == "__main__":
                 # Fit model
                 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
                         horizontal_flip=True, preprocessing_function=preprocess_input)
-                # data_generator_notAug = ImageDataGenerator(preprocessing_function=preprocess_input)
+                data_generator_notAug = ImageDataGenerator(preprocessing_function=preprocess_input)
 
                 '''
                 Keras works with batches of images. So, the first dimension is used for the number of samples (or images) you have.
@@ -196,13 +196,13 @@ if __name__ == "__main__":
                         class_mode=classmode,
                         classes=classes)
 
-                validation_generator = data_generator.flow_from_directory(val_folder,
+                validation_generator = data_generator_notAug.flow_from_directory(val_folder,
                         target_size=(image_size, image_size),
                         batch_size=24,
                         class_mode=classmode,
                         classes=classes)
 
-                test_generator = data_generator.flow_from_directory(test_folder,
+                test_generator = data_generator_notAug.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
                         batch_size=24,
                         class_mode=classmode,
