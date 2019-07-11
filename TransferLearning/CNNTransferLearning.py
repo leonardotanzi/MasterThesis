@@ -91,9 +91,9 @@ if __name__ == "__main__":
         n_fold = 5
 
         if run_on_server == "y":
-                train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
-                val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-                test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
+                # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
+                # val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
+                # test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
                 out_folder = "/mnt/Data/ltanzi/CV/"
 
         elif run_on_server == "n":
@@ -123,14 +123,14 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_retrainAll-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
 
-                #train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                #val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                #test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+                train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+                val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+                test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
                 
                 # class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
@@ -154,7 +154,7 @@ if __name__ == "__main__":
                         # my_new_model.add(Activation("relu"))
                         # my_new_model.add(Dropout(0.3))
                         my_new_model.add(Dense(last_layer, activation=act))
-                        my_new_model.layers[0].trainable = False
+                        my_new_model.layers[0].trainable = True
                 else:
                         my_new_model = VGG16_dropout_batchnorm()
 
@@ -221,7 +221,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=30,
+                        epochs=15,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         # class_weight=class_weights_train,
