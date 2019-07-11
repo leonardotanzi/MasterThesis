@@ -12,8 +12,11 @@ import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+ap.add_argument("-b", "--binary", required=True, help="Running the code on a binary dataset or not (y/n)")
 args = vars(ap.parse_args())
+
 run_on_server = args["server"]
+run_binary = args["binary"]
 
 if run_on_server == "y":
     model_path = "/mnt/data/ltanzi/retrainAll-categorical-baselineVGG-1562590231.model"
@@ -29,7 +32,11 @@ else:
     raise ValueError("Incorrect 1st arg.")
 
 model = load_model(model_path)
-name_indexes = ["A", "B", "Unbroken"]
+
+if run_binary == "n":
+    name_indexes = ["A", "B", "Unbroken"]
+elif run_binary == "y":
+    name_indexes = ["A", "B"]
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -39,7 +46,11 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     x = preprocess_input(x)
 
     preds = model.predict(x)
-    class_idx = np.argmax(preds[0])
+    
+    if run_binary == "n":
+        class_idx = np.argmax(preds[0])
+    elif run_binary == "y":
+        class_idx = int(round(preds[0]))
 
     class_output = model.output[:, class_idx]
 
