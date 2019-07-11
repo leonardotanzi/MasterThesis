@@ -123,7 +123,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_addOneLayer-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -149,10 +149,10 @@ if __name__ == "__main__":
                         # my_new_model.add(BatchNormalization())
                         # my_new_model.add(Activation("relu"))
                         # my_new_model.add(Dropout(0.3))
-                        # my_new_model.add(Dense(4096))
-                        # my_new_model.add(BatchNormalization())
-                        # my_new_model.add(Activation("relu"))
-                        # my_new_model.add(Dropout(0.3))
+                        my_new_model.add(Dense(4096))
+                        my_new_model.add(BatchNormalization())
+                        my_new_model.add(Activation("relu"))
+                        my_new_model.add(Dropout(0.3))
                         my_new_model.add(Dense(last_layer, activation=act))
                         my_new_model.layers[0].trainable = True
                 else:
