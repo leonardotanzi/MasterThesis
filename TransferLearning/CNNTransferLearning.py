@@ -123,7 +123,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_retrainAll-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -132,7 +132,7 @@ if __name__ == "__main__":
                 val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
                 test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
                 
-                # class_weights_train = compute_weights(train_folder)
+                class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                         # patience to wait still some epochs before stop
@@ -197,13 +197,13 @@ if __name__ == "__main__":
                         class_mode=classmode,
                         classes=classes)
 
-                validation_generator = data_generator.flow_from_directory(val_folder,
+                validation_generator = data_generator_notAug.flow_from_directory(val_folder,
                         target_size=(image_size, image_size),
                         batch_size=24,
                         class_mode=classmode,
                         classes=classes)
 
-                test_generator = data_generator.flow_from_directory(test_folder,
+                test_generator = data_generator_notAug.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
                         batch_size=24,
                         class_mode=classmode,
@@ -224,7 +224,7 @@ if __name__ == "__main__":
                         epochs=15,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        # class_weight=class_weights_train,
+                        class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 my_new_model.summary()
