@@ -7,13 +7,20 @@ from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.preprocessing import image
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelCheckpoint
+from tensorflow.python.keras import backend as K
 import argparse
 import numpy as np
 import time
 import os
 import tensorflow as tf
 
-
+def focal_loss(y_true, y_pred):
+            gamma = 2.0
+            alpha = 0.25
+            pt_1 = tf.where(tf.equal(y_true, 1), y_pred, tf.ones_like(y_pred))
+            pt_0 = tf.where(tf.equal(y_true, 0), y_pred, tf.zeros_like(y_pred))
+            return -K.sum(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1))-K.sum((1-alpha) * K.pow( pt_0, gamma) * K.log(1. - pt_0))
+                
 def compute_weights(input_folder):
         dictio = {"A": 0, "B": 1, "Unbroken": 2}
         files_per_class = []
@@ -123,7 +130,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_addOneLayer-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_focalLoss-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -149,10 +156,10 @@ if __name__ == "__main__":
                         # my_new_model.add(BatchNormalization())
                         # my_new_model.add(Activation("relu"))
                         # my_new_model.add(Dropout(0.3))
-                        my_new_model.add(Dense(4096))
-                        my_new_model.add(BatchNormalization())
-                        my_new_model.add(Activation("relu"))
-                        my_new_model.add(Dropout(0.3))
+                        # my_new_model.add(Dense(4096))
+                        # my_new_model.add(BatchNormalization())
+                        # my_new_model.add(Activation("relu"))
+                        # my_new_model.add(Dropout(0.3))
                         my_new_model.add(Dense(last_layer, activation=act))
                         my_new_model.layers[0].trainable = True
                 else:
@@ -160,7 +167,7 @@ if __name__ == "__main__":
 
                 adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
-                my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
+                my_new_model.compile(optimizer=adam, loss=[focal_loss], metrics=["accuracy"])
 
                 # Fit model
                 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
