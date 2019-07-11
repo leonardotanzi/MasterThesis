@@ -88,11 +88,12 @@ if __name__ == "__main__":
 
         model_type = "VGG"
         image_size = 224
+        n_fold = 5
 
         if run_on_server == "y":
-                # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
-                # val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-                # test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
+                train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
+                val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
+                test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
                 out_folder = "/mnt/Data/ltanzi/CV/"
 
         elif run_on_server == "n":
@@ -104,7 +105,7 @@ if __name__ == "__main__":
         else:
                 raise ValueError("Incorrect 1st arg")
 
-        for i in range(1, 6):
+        for i in range(1, n_fold+1):
                 print("Fold number {}".format(i))
                 if run_binary == "y":
                         binary = "binary"
@@ -122,14 +123,14 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_batchnorm_before_act-addlayers-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
 
-                train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+                #train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+                #val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+                #test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
                 
                 # class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
@@ -196,13 +197,13 @@ if __name__ == "__main__":
                         class_mode=classmode,
                         classes=classes)
 
-                validation_generator = data_generator_notAug.flow_from_directory(val_folder,
+                validation_generator = data_generator.flow_from_directory(val_folder,
                         target_size=(image_size, image_size),
                         batch_size=24,
                         class_mode=classmode,
                         classes=classes)
 
-                test_generator = data_generator_notAug.flow_from_directory(test_folder,
+                test_generator = data_generator.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
                         batch_size=24,
                         class_mode=classmode,
