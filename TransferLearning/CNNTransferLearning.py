@@ -96,6 +96,9 @@ if __name__ == "__main__":
         model_type = "VGG"
         image_size = 224
         n_fold = 5
+        n_class = 3
+        accuracies = [[] for x in range(n_class)]
+        scores = [[] for x in range(2)]
 
         if run_on_server == "y":
                 # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
@@ -228,7 +231,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=15,
+                        epochs=1,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         class_weight=class_weights_train,
@@ -245,6 +248,8 @@ if __name__ == "__main__":
                 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
                 print("Test loss:", score[0])
                 print("Test accuracy:", score[1])
+                scores[0].append(score[0])
+                scores[1].append(score[1])
 
                 if run_binary == "n":
 
@@ -255,7 +260,7 @@ if __name__ == "__main__":
                         dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
                         classes = ["A", "B", "Unbroken"]
 
-                        for i, folder in enumerate(test_folder):
+                        for k, folder in enumerate(test_folder):
                                 test_generator = data_generator.flow_from_directory(folder,
                                                                             target_size=(image_size, image_size),
                                                                             batch_size=24,
@@ -279,7 +284,25 @@ if __name__ == "__main__":
 
                                 x = 0
                                 for j in predictions:
-                                        if j == classes[i]:
+                                        if j == classes[k]:
                                                 x += 1
 
-                                print("{} classified correctly: {}%".format(classes[i], x))
+                                print("{} classified correctly: {}%".format(classes[k], x))
+
+                                accuracies[k].append(x)
+
+        avg_accuracies = [0, 0, 0, 0, 0]
+        avg_scores = [0, 0]
+        for i in range(n_class):
+                for j in range(n_fold):
+                        avg_accuracies[i] += accuracies[i][j]
+                avg_accuracies[i] /= n_fold
+
+        for i in range(2):
+                for j in range(n_class):
+                        avg_scores[i] += scores[i][j]
+                avg_scores[i] /= n_fold
+
+        print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
+              "Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2],
+                                                            avg_scores[0], avg_scores[1]))

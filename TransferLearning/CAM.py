@@ -24,9 +24,9 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/retrainAll-categorical-baselineVGG-1562590231.model"
-    test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test/B"
-    out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/NewNet/"
+    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/Fold1_batchnorm_before_act-addlayers-unbalanced-categorical-baselineVGG-1562773629-best_model.h5" #A_B-binary-baselineVGG-1562679455-best_model.h5"
+    test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val_CV/Test/A"
+    out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/NewNet/Binary/A/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
@@ -41,16 +41,17 @@ elif run_binary == "y":
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
     img = image.load_img(img_path, target_size=(224, 224))
+    print(img_path)
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
 
     preds = model.predict(x)
-    
+
     if run_binary == "n":
         class_idx = np.argmax(preds[0])
     elif run_binary == "y":
-        class_idx = int(round(preds[0]))
+        class_idx = int(round(preds[0][0])) #per far funzionare binary devo re-train con softmax e non binary
 
     class_output = model.output[:, class_idx]
 
