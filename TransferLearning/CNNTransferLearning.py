@@ -91,7 +91,9 @@ if __name__ == "__main__":
         n_fold = 5
         n_class = 3
         accuracies = [[] for x in range(n_class)]
+        best_accuracies = [[] for x in range(n_class)]
         scores = [[] for x in range(2)]
+        best_scores = [[] for x in range(2)]
 
         if run_on_server == "y":
                 # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
@@ -126,7 +128,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_150epochs-batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -137,9 +139,10 @@ if __name__ == "__main__":
                 
                 class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
-                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=15)  # verbose to print the n of epoch in which stopped,
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=20)  # verbose to print the n of epoch in which stopped,
                                                                                         # patience to wait still some epochs before stop
-                mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
+                best_model_path = out_folder + name + "-best_model.h5"
+                mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
                 baseline = True
 
@@ -224,23 +227,30 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=100,
+                        epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
-                my_new_model.summary()
+                # my_new_model.summary()
                 # plot_model(my_new_model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
 
                 my_new_model.save(out_folder + name + ".model")
 
-
                 # EVALUATION
-
                 score = my_new_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
+                print("EVALUATING MODEL")
                 print("Test loss:", score[0])
                 print("Test accuracy:", score[1])
+                scores[0].append(score[0])
+                scores[1].append(score[1])
+
+                best_model = load_model(best_model_path)
+                best_score = best_model.evaluate_generator(test_generator, steps=STEP_SIZE_TEST)
+                print("EVALUATING BEST MODEL")
+                print("Test loss:", best_score[0])
+                print("Test accuracy:", best_score[1])
                 scores[0].append(score[0])
                 scores[1].append(score[1])
 
@@ -267,22 +277,34 @@ if __name__ == "__main__":
                                                               steps=STEP_SIZE_TEST,
                                                               verbose=1)
 
+                                best_pred = best_model.predict_generator(test_generator,
+                                                              steps=STEP_SIZE_TEST,
+                                                              verbose=1)
+
                                 predicted_class_indices = np.argmax(pred, axis=1)
+                                best_predicted_class_indices = np.argmaz(best_pred, axis=1)
 
                                 labels = dict_classes
                                 labels = dict((v, k) for k, v in labels.items())
                                 predictions = [labels[k] for k in predicted_class_indices]
-
-                                # print(predictions)
+                                best_predictions = [labels[k] for k in best_predicted_class_indices]
 
                                 x = 0
                                 for j in predictions:
                                         if j == classes[k]:
                                                 x += 1
 
-                                print("{} classified correctly: {}%".format(classes[k], x))
-
+                                print("Model:{} classified correctly: {}%".format(classes[k], x))
                                 accuracies[k].append(x)
+
+                                x = 0
+                                for j in best_predictions:
+                                        if j == classes[k]:
+                                                x += 1
+
+                                print("Best Model: {} classified correctly: {}%".format(classes[k], x))
+
+                                best_accuracies[k].append(x)
 
         avg_accuracies = [0, 0, 0]
         avg_scores = [0, 0]
@@ -295,7 +317,24 @@ if __name__ == "__main__":
                 for j in range(n_fold):
                         avg_scores[i] += scores[i][j]
                 avg_scores[i] /= n_fold
-
+        print("MODEL")
         print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
               "Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2],
                                                             avg_scores[0], avg_scores[1]))
+
+        best_avg_accuracies = [0, 0, 0]
+        best_avg_scores = [0, 0]
+        for i in range(n_class):
+                for j in range(n_fold):
+                        best_avg_accuracies[i] += best_accuracies[i][j]
+                best_avg_accuracies[i] /= n_fold
+
+        for i in range(2):
+                for j in range(n_fold):
+                        best_avg_scores[i] += best_scores[i][j]
+                best_avg_scores[i] /= n_fold
+
+        print("BEST MODEL")
+        print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
+              "Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2],
+                                                            best_avg_scores[0], best_avg_scores[1]))
