@@ -13,13 +13,6 @@ import numpy as np
 import time
 import os
 import tensorflow as tf
-
-def focal_loss(y_true, y_pred):
-            gamma = 2.0
-            alpha = 0.25
-            pt_1 = tf.where(tf.equal(y_true, 1), y_pred, tf.ones_like(y_pred))
-            pt_0 = tf.where(tf.equal(y_true, 0), y_pred, tf.zeros_like(y_pred))
-            return -K.sum(alpha * K.pow(1. - pt_1, gamma) * K.log(pt_1))-K.sum((1-alpha) * K.pow( pt_0, gamma) * K.log(1. - pt_0))
                 
 def compute_weights(input_folder):
         dictio = {"A": 0, "B": 1, "Unbroken": 2}
@@ -133,7 +126,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_focalLoss-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -144,7 +137,7 @@ if __name__ == "__main__":
                 
                 class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
-                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=15)  # verbose to print the n of epoch in which stopped,
                                                                                         # patience to wait still some epochs before stop
                 mc = ModelCheckpoint(out_folder + name + "-best_model.h5", monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
@@ -168,9 +161,9 @@ if __name__ == "__main__":
                 else:
                         my_new_model = VGG16_dropout_batchnorm()
 
-                adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
+                adam = Adam(lr=0.000001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
-                my_new_model.compile(optimizer=adam, loss=[focal_loss], metrics=["accuracy"])
+                my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
                 # Fit model
                 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
@@ -203,19 +196,19 @@ if __name__ == "__main__":
                 # Takes the path to a directory & generates batches of augmented data.
                 train_generator = data_generator.flow_from_directory(train_folder,
                         target_size=(image_size, image_size),
-                        batch_size=24,
+                        batch_size=32,
                         class_mode=classmode,
                         classes=classes)
 
                 validation_generator = data_generator_notAug.flow_from_directory(val_folder,
                         target_size=(image_size, image_size),
-                        batch_size=24,
+                        batch_size=32,
                         class_mode=classmode,
                         classes=classes)
 
                 test_generator = data_generator_notAug.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
-                        batch_size=24,
+                        batch_size=32,
                         class_mode=classmode,
                         classes=classes)
 
@@ -231,7 +224,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=1,
+                        epochs=100,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         class_weight=class_weights_train,
@@ -291,7 +284,7 @@ if __name__ == "__main__":
 
                                 accuracies[k].append(x)
 
-        avg_accuracies = [0, 0, 0, 0, 0]
+        avg_accuracies = [0, 0, 0]
         avg_scores = [0, 0]
         for i in range(n_class):
                 for j in range(n_fold):
@@ -299,7 +292,7 @@ if __name__ == "__main__":
                 avg_accuracies[i] /= n_fold
 
         for i in range(2):
-                for j in range(n_class):
+                for j in range(n_fold):
                         avg_scores[i] += scores[i][j]
                 avg_scores[i] /= n_fold
 
