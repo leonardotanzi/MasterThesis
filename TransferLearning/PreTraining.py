@@ -15,9 +15,9 @@ import os
 import tensorflow as tf
 
 
-
 if __name__ == "__main__":
 
+    image_size = 224
     binary = "categorical"
     loss = "sparse_categorical_crossentropy"
     last_layer = 7
@@ -27,14 +27,22 @@ if __name__ == "__main__":
 
     train_folder = "/mnt/data/ltanzi/MURA/train"
     val_folder = "/mnt/data/ltanzi/MURA/valid"
+    out_folder = "/mnt/data/ltanzi/MURA/"
+    name = "pre_trained_weights_MURA"
+
+    tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
+    es = EarlyStopping(monitor="val_acc", mode="max", verbose=1,
+                       patience=20)  # verbose to print the n of epoch in which stopped,
+    # patience to wait still some epochs before stop
+    best_model_path = out_folder + name + "-best_model.h5"
+    mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
     my_new_model = Sequential()
     my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=None))
     my_new_model.add(Dense(last_layer, activation=act))
     my_new_model.layers[0].trainable = True
 
-
-    adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
+    adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=0.01)
 
     my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
     data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
@@ -52,7 +60,6 @@ if __name__ == "__main__":
             batch_size=32,
             class_mode=classmode,
             classes=classes)
-
   
     STEP_SIZE_TRAIN = train_generator.n//train_generator.batch_size
     STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
@@ -64,3 +71,5 @@ if __name__ == "__main__":
                         validation_steps=STEP_SIZE_VALID,
                         class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
+
+    my_new_model.save(out_folder + name + ".model")
