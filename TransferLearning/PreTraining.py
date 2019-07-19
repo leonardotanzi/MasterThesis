@@ -20,10 +20,10 @@ if __name__ == "__main__":
     image_size = 224
     binary = "categorical"
     loss = "sparse_categorical_crossentropy"
-    last_layer = 7
+    last_layer = 3
     classmode = "sparse"
     act = "softmax"
-    classes = ["XR_ELBOW", "XR_FINGER", "XR_FOREARM", "XR_HAND", "XR_HUMERUS", "XR_SHOULDER", "XR_WRIST"]
+    classes = ["XR_FOREARM", "XR_HAND", "XR_HUMERUS"]
 
     train_folder = "/mnt/data/ltanzi/MURA/train"
     val_folder = "/mnt/data/ltanzi/MURA/valid"
@@ -32,8 +32,7 @@ if __name__ == "__main__":
 
     tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
     es = EarlyStopping(monitor="val_acc", mode="max", verbose=1,
-                       patience=20)  # verbose to print the n of epoch in which stopped,
-    # patience to wait still some epochs before stop
+                       patience=10)  # verbose to print the n of epoch in which stopped,
     best_model_path = out_folder + name + "-best_model.h5"
     mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
@@ -69,7 +68,6 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
     my_new_model.save(out_folder + name + ".model")

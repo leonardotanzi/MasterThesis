@@ -1,5 +1,5 @@
 from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input
-from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.models import Sequential, load_model
 from tensorflow.python.keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D, BatchNormalization, Activation
 # from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
@@ -139,7 +139,7 @@ if __name__ == "__main__":
                 
                 class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
-                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=20)  # verbose to print the n of epoch in which stopped,
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=50)  # verbose to print the n of epoch in which stopped,
                                                                                         # patience to wait still some epochs before stop
                 best_model_path = out_folder + name + "-best_model.h5"
                 mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
@@ -251,8 +251,8 @@ if __name__ == "__main__":
                 print("EVALUATING BEST MODEL")
                 print("Test loss:", best_score[0])
                 print("Test accuracy:", best_score[1])
-                scores[0].append(score[0])
-                scores[1].append(score[1])
+                best_scores[0].append(best_score[0])
+                best_scores[1].append(best_score[1])
 
                 if run_binary == "n":
 
@@ -282,7 +282,7 @@ if __name__ == "__main__":
                                                               verbose=1)
 
                                 predicted_class_indices = np.argmax(pred, axis=1)
-                                best_predicted_class_indices = np.argmaz(best_pred, axis=1)
+                                best_predicted_class_indices = np.argmax(best_pred, axis=1)
 
                                 labels = dict_classes
                                 labels = dict((v, k) for k, v in labels.items())
