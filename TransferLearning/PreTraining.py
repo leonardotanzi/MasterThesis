@@ -23,12 +23,12 @@ if __name__ == "__main__":
     last_layer = 3
     classmode = "sparse"
     act = "softmax"
-    classes = ["XR_FOREARM", "XR_HAND", "XR_HUMERUS"]
+    classes = ["XR_SHOULDER", "XR_WRIST", "XR_FINGER"]
 
     train_folder = "/mnt/data/ltanzi/MURA/train"
     val_folder = "/mnt/data/ltanzi/MURA/valid"
     out_folder = "/mnt/data/ltanzi/MURA/"
-    name = "pre_trained_weights_MURA"
+    name = "randomW-pre_trained_weights_MURA"
 
     tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
     es = EarlyStopping(monitor="val_acc", mode="max", verbose=1,
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     my_new_model.add(Dense(last_layer, activation=act))
     my_new_model.layers[0].trainable = True
 
-    adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=0.01)
+    adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=0.001)
 
     my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
     data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,

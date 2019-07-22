@@ -49,7 +49,7 @@ if __name__ == "__main__":
                 raise ValueError("Incorrect 1st arg")
 
 
-        print("Fold number {}".format(i))
+        
         if run_binary == "y":
                 binary = "binary"
                 loss = "binary_crossentropy"
@@ -75,7 +75,6 @@ if __name__ == "__main__":
         out_folder = "/mnt/data/ltanzi/MURA/"
         name = "pre_trained_weights_MURA"
     
-        class_weights_train = compute_weights(train_folder)
         tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=20)  # verbose to print the n of epoch in which stopped,
                                                                                 # patience to wait still some epochs before stop
@@ -125,7 +124,6 @@ if __name__ == "__main__":
                 epochs=150,
                 validation_data=validation_generator,
                 validation_steps=STEP_SIZE_VALID,
-                class_weight=class_weights_train,
                 callbacks=[tensorboard, es, mc])
 
         my_new_model.save(out_folder + name + ".model")

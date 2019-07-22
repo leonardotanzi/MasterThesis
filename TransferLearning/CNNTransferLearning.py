@@ -128,7 +128,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_150epochs-batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_pretrained-150epochs-batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -139,7 +139,7 @@ if __name__ == "__main__":
                 
                 class_weights_train = compute_weights(train_folder)
                 tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
-                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=50)  # verbose to print the n of epoch in which stopped,
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                                                                                         # patience to wait still some epochs before stop
                 best_model_path = out_folder + name + "-best_model.h5"
                 mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
@@ -167,6 +167,8 @@ if __name__ == "__main__":
                 adam = Adam(lr=0.000001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
                 my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
+
+                my_new_model.load_weights("/mnt/data/ltanzi/MURA/pre_trained_weights_MURA-best_model.h5")
 
                 # Fit model
                 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
