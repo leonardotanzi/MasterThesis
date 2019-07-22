@@ -1,7 +1,8 @@
-from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input
+from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input as pre_process_VGG
+from tensorflow.python.keras.applications.resnet50 import ResNet50, preprocess_input as pre_process_ResNet
+from tensorflow.python.keras.applications.inception_v3 import InceptionV3, preprocess_input as pre_process_Inception
 from tensorflow.python.keras.models import Sequential, load_model
 from tensorflow.python.keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D, BatchNormalization, Activation
-# from tensorflow.python.keras.applications.resnet50 import preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.preprocessing import image
@@ -64,14 +65,14 @@ def VGG16_dropout_batchnorm():
                 MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
                 Dropout(0.5),
                 Flatten(),
-                Dense(4096),
-                Activation('relu'),
-                BatchNormalization(),
-                Dropout(0.5),
-                Dense(4096),
-                Activation('relu'),
-                BatchNormalization(),
-                Dropout(0.5),
+                # Dense(4096),
+                # Activation('relu'),
+                # BatchNormalization(),
+                # Dropout(0.5),
+                # Dense(4096),
+                # Activation('relu'),
+                # BatchNormalization(),
+                # Dropout(0.5),
                 Dense(3, activation='softmax')
         ])
         return model
@@ -82,12 +83,15 @@ if __name__ == "__main__":
         ap = argparse.ArgumentParser()
         ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
         ap.add_argument("-b", "--binary", required=True, help="NN works on binary classification or not (y/n)")
+        ap.add_argument("-m", "--model", required=True, help="Select the network (0 for VGG, 1 for ResNet, 2 for InceptionV3)")
         args = vars(ap.parse_args())
         run_on_server = args["server"]
         run_binary = args["binary"]
+        run_model = int(args["model"])
 
-        model_type = "VGG"
-        image_size = 224
+        models = ["VGG", "ResNet", "Inception"]
+        model_type = models[run_model]
+        image_size = 224 if run_model == 0 or run_model == 1 else 299
         n_fold = 5
         n_class = 3
         accuracies = [[] for x in range(n_class)]
@@ -95,23 +99,26 @@ if __name__ == "__main__":
         scores = [[] for x in range(2)]
         best_scores = [[] for x in range(2)]
 
-        if run_on_server == "y":
-                # train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
-                # val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-                # test_folder = "/mnt/Data/ltanzi/Train_Val/Test"
-                out_folder = "/mnt/Data/ltanzi/CV/"
-
-        elif run_on_server == "n":
-                train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
-                val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
-                test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
-                out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
-
-        else:
-                raise ValueError("Incorrect 1st arg")
-
         for i in range(1, n_fold+1):
+
+                if run_on_server == "y":
+                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+                        out_folder = "/mnt/Data/ltanzi/CV/"
+
+                elif run_on_server == "n":
+                        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
+                        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
+                        test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
+                        out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+
+                else:
+                        raise ValueError("Incorrect 1st arg")
+
+
                 print("Fold number {}".format(i))
+
                 if run_binary == "y":
                         binary = "binary"
                         loss = "binary_crossentropy"
@@ -128,29 +135,40 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_pretrained-150epochs-batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_150epochs-batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
 
-                train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-                
-                class_weights_train = compute_weights(train_folder)
-                tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
-                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
-                                                                                        # patience to wait still some epochs before stop
+
+                # BALANCING
+                # class_weights_train = compute_weights(train_folder)
+
+                # CALLBACKS
+                log_dir = out_folder + "logs/{}".format(name)
+                tensorboard = TensorBoard(log_dir=log_dir)
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=50)  # verbose to print the n of epoch in which stopped,
                 best_model_path = out_folder + name + "-best_model.h5"
                 mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
+                #MODEL DEFINITION
                 baseline = True
 
                 if baseline:
                         my_new_model = Sequential()
                         # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
-                        my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
-                        # Say not to train first layer (ResNet) model. It is already trained
+                        if model_type == "VGG":
+                                my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                                preprocess_input = pre_process_VGG
+
+                        elif model_type == "ResNet":
+                                my_new_model.add(ResNet50(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                                preprocess_input = pre_process_ResNet
+
+                        elif model_type == "Inception":
+                                my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                                preprocess_input = pre_process_Inception
+
                         # my_new_model.add(Dense(4096))
                         # my_new_model.add(BatchNormalization())
                         # my_new_model.add(Activation("relu"))
@@ -168,8 +186,6 @@ if __name__ == "__main__":
 
                 my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
-                my_new_model.load_weights("/mnt/data/ltanzi/MURA/pre_trained_weights_MURA-best_model.h5")
-
                 # Fit model
                 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
                         horizontal_flip=True, preprocessing_function=preprocess_input)
@@ -184,7 +200,7 @@ if __name__ == "__main__":
                 normalized, but is centered.
                 From the source code, Resnet is using the caffe style.
                 You don't need to worry about the internal details of preprocess_input. But ideally, you should load images with the
-                 keras functions for that (so you guarantee that the images you load are compatible with preprocess_input).
+                keras functions for that (so you guarantee that the images you load are compatible with preprocess_input).
                 
                 
                 First, if we are working with images, loading the entire data-set in a single python variable isn’t an option, and so we 
@@ -232,7 +248,7 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        class_weight=class_weights_train,
+                        # class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
@@ -261,27 +277,27 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
-                               "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
+                        "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
                         dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
                         classes = ["A", "B", "Unbroken"]
 
                         for k, folder in enumerate(test_folder):
                                 test_generator = data_generator.flow_from_directory(folder,
-                                                                            target_size=(image_size, image_size),
-                                                                            batch_size=24,
-                                                                            class_mode=classmode)
+                                                                        target_size=(image_size, image_size),
+                                                                        batch_size=24,
+                                                                        class_mode=classmode)
 
                                 STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
                                 test_generator.reset()
 
                                 pred = my_new_model.predict_generator(test_generator,
-                                                              steps=STEP_SIZE_TEST,
-                                                              verbose=1)
+                                                          steps=STEP_SIZE_TEST,
+                                                          verbose=1)
 
                                 best_pred = best_model.predict_generator(test_generator,
-                                                              steps=STEP_SIZE_TEST,
-                                                              verbose=1)
+                                                          steps=STEP_SIZE_TEST,
+                                                          verbose=1)
 
                                 predicted_class_indices = np.argmax(pred, axis=1)
                                 best_predicted_class_indices = np.argmax(best_pred, axis=1)
@@ -293,16 +309,16 @@ if __name__ == "__main__":
 
                                 x = 0
                                 for j in predictions:
-                                        if j == classes[k]:
-                                                x += 1
+                                    if j == classes[k]:
+                                            x += 1
 
                                 print("Model:{} classified correctly: {}%".format(classes[k], x))
                                 accuracies[k].append(x)
 
                                 x = 0
                                 for j in best_predictions:
-                                        if j == classes[k]:
-                                                x += 1
+                                    if j == classes[k]:
+                                            x += 1
 
                                 print("Best Model: {} classified correctly: {}%".format(classes[k], x))
 
