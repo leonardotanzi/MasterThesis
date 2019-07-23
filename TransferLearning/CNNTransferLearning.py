@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
 
                 # BALANCING
-                # class_weights_train = compute_weights(train_folder)
+                class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -248,7 +248,7 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        # class_weight=class_weights_train,
+                        class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
