@@ -92,7 +92,7 @@ if __name__ == "__main__":
         models = ["VGG", "ResNet", "Inception"]
         model_type = models[run_model]
         image_size = 224 if run_model == 0 or run_model == 1 else 299
-        n_fold = 5
+        n_fold = 1
         n_class = 3
         accuracies = [[] for x in range(n_class)]
         best_accuracies = [[] for x in range(n_class)]
@@ -120,11 +120,16 @@ if __name__ == "__main__":
                 print("Fold number {}".format(i))
 
                 if run_binary == "y":
-                        binary = "binary"
-                        loss = "binary_crossentropy"
-                        last_layer = 1
-                        classmode = "binary"
-                        act = "sigmoid"
+                        # binary = "binary"
+                        # loss = "binary_crossentropy"
+                        # last_layer = 1
+                        # classmode = "binary"
+                        # act = "sigmoid"
+                        binary = "categorical"
+                        loss = "sparse_categorical_crossentropy"
+                        last_layer = 2
+                        classmode = "sparse"
+                        act = "softmax"
                         classes = ["A", "B"]
                         name = "Fold{}_{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
@@ -142,7 +147,7 @@ if __name__ == "__main__":
 
 
                 # BALANCING
-                class_weights_train = compute_weights(train_folder)
+                # class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -245,10 +250,10 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=150,
+                        epochs=1,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        class_weight=class_weights_train,
+                        # class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
@@ -324,35 +329,35 @@ if __name__ == "__main__":
 
                                 best_accuracies[k].append(x)
 
-        avg_accuracies = [0, 0, 0]
-        avg_scores = [0, 0]
-        for i in range(n_class):
-                for j in range(n_fold):
-                        avg_accuracies[i] += accuracies[i][j]
-                avg_accuracies[i] /= n_fold
+                avg_accuracies = [0, 0, 0]
+                avg_scores = [0, 0]
+                for i in range(n_class):
+                        for j in range(n_fold):
+                                avg_accuracies[i] += accuracies[i][j]
+                        avg_accuracies[i] /= n_fold
 
-        for i in range(2):
-                for j in range(n_fold):
-                        avg_scores[i] += scores[i][j]
-                avg_scores[i] /= n_fold
-        print("MODEL")
-        print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
-              "Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2],
-                                                            avg_scores[0], avg_scores[1]))
+                for i in range(2):
+                        for j in range(n_fold):
+                                avg_scores[i] += scores[i][j]
+                        avg_scores[i] /= n_fold
+                print("MODEL")
+                print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
+                      "Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2],
+                                                                    avg_scores[0], avg_scores[1]))
 
-        best_avg_accuracies = [0, 0, 0]
-        best_avg_scores = [0, 0]
-        for i in range(n_class):
-                for j in range(n_fold):
-                        best_avg_accuracies[i] += best_accuracies[i][j]
-                best_avg_accuracies[i] /= n_fold
+                best_avg_accuracies = [0, 0, 0]
+                best_avg_scores = [0, 0]
+                for i in range(n_class):
+                        for j in range(n_fold):
+                                best_avg_accuracies[i] += best_accuracies[i][j]
+                        best_avg_accuracies[i] /= n_fold
 
-        for i in range(2):
-                for j in range(n_fold):
-                        best_avg_scores[i] += best_scores[i][j]
-                best_avg_scores[i] /= n_fold
+                for i in range(2):
+                        for j in range(n_fold):
+                                best_avg_scores[i] += best_scores[i][j]
+                        best_avg_scores[i] /= n_fold
 
-        print("BEST MODEL")
-        print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
-              "Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2],
-                                                            best_avg_scores[0], best_avg_scores[1]))
+                print("BEST MODEL")
+                print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
+                      "Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2],
+                                                                    best_avg_scores[0], best_avg_scores[1]))

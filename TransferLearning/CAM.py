@@ -24,7 +24,7 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/Fold1_batchnorm_before_act-addlayers-unbalanced-categorical-baselineVGG-1562773629-best_model.h5" #A_B-binary-baselineVGG-1562679455-best_model.h5"
+    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/Fold1_A_B-categorical-baselineVGG-1563886949-best_model.h5"
     test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val_CV/Test/A"
     out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/CAM/NewNet/Binary/A/"
 

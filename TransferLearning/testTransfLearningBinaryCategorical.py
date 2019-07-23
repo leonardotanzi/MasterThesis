@@ -10,8 +10,8 @@ ap.add_argument("-s", "--server", required=True, help="Running the code on the s
 args = vars(ap.parse_args())
 run_on_server = args["server"]
 
-class1 = "Broken"
-class2 = "Unbroken"
+class1 = "A"
+class2 = "B"
 
 if run_on_server == "y":
     score_folder = "/mnt/Data/ltanzi/Train_Val/Test"
@@ -28,14 +28,14 @@ else:
     raise ValueError("Incorrect arg.")
 
 
-classmode = "binary"
+classmode = "sparse"
 image_size = 224
 dict_classes = {class1: 0, class2: 1}
 classes = [class1, class2]
 
 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, preprocessing_function=preprocess_input)
 
-model = load_model(model_path + "Broken_Unbroken-binary-baselineVGG-1562672986-best_model.h5")
+model = load_model(model_path + "Fold1_A_B-categorical-baselineVGG-1563886949-best_model.h5")
 
 # Evaluate scores of the full test set
 
@@ -67,19 +67,15 @@ for i, folder in enumerate(test_folder):
                                   steps=STEP_SIZE_TEST,
                                   verbose=1)
 
+    # predicted_class_indices = np.argmax(pred, axis=1)  questo funziona per softmax! per binary no
+
     predicted_class_indices = np.argmax(pred, axis=1)
-
-    sqArray = np.squeeze(pred)
-    integer_predictions = []
-
-    for p in sqArray:
-        integer_predictions.append(int(round(p)))
 
     labels = dict_classes
     labels = dict((v, k) for k, v in labels.items())
-    predictions = [labels[k] for k in integer_predictions]
+    predictions = [labels[k] for k in predicted_class_indices]
 
-    print(predictions)
+    # print(predictions)
 
     x = 0
     for j in predictions:
