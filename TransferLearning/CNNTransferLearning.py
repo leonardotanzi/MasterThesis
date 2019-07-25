@@ -277,6 +277,7 @@ if __name__ == "__main__":
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
 
+'''
                 if run_binary == "n":
 
                         test_generator.reset()
@@ -361,3 +362,10 @@ if __name__ == "__main__":
                         print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
                               "Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2],
                                                                     best_avg_scores[0], best_avg_scores[1]))
+
+'''
+        print("MODEL")
+        print("Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2], avg_scores[0], avg_scores[1]))
+
+        print("BEST MODEL")
+        print("Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2], best_avg_scores[0], best_avg_scores[1]))
