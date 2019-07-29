@@ -130,7 +130,7 @@ if __name__ == "__main__":
                         last_layer = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A", "B"]
+                        classes = ["Broken", "Unbroken"]
                         name = "Fold{}_{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
@@ -147,7 +147,7 @@ if __name__ == "__main__":
 
 
                 # BALANCING
-                class_weights_train = compute_weights(train_folder)
+                # class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -253,7 +253,7 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        class_weight=class_weights_train,
+                        # class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
@@ -364,8 +364,8 @@ if __name__ == "__main__":
                                                                     best_avg_scores[0], best_avg_scores[1]))
 
 '''
-        print("MODEL")
-        print("Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2], avg_scores[0], avg_scores[1]))
+print("MODEL")
+print("Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2], avg_scores[0], avg_scores[1]))
 
-        print("BEST MODEL")
-        print("Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2], best_avg_scores[0], best_avg_scores[1]))
+print("BEST MODEL")
+print("Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2], best_avg_scores[0], best_avg_scores[1]))
