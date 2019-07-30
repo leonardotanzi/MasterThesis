@@ -92,7 +92,7 @@ if __name__ == "__main__":
         models = ["VGG", "ResNet", "Inception"]
         model_type = models[run_model]
         image_size = 224 if run_model == 0 or run_model == 1 else 299
-        n_fold = 5
+        n_fold = 2
         n_class = 3
         accuracies = [[] for x in range(n_class)]
         best_accuracies = [[] for x in range(n_class)]
@@ -108,14 +108,13 @@ if __name__ == "__main__":
                         out_folder = "/mnt/Data/ltanzi/CV/SubgroupA_folds/"
 
                 elif run_on_server == "n":
-                        train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
-                        val_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Validation"
-                        test_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Test"
-                        out_folder = "/Users/leonardotanzi/Desktop/FinalDataset/"
+                        train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
+                        val_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Validation".format(i)
+                        test_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Test".format(i)
+                        out_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/"
 
                 else:
                         raise ValueError("Incorrect 1st arg")
-
 
                 print("Fold number {}".format(i))
 
@@ -234,7 +233,7 @@ if __name__ == "__main__":
 
                 test_generator = data_generator_notAug.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
-                        batch_size=32,
+                        batch_size=8,
                         class_mode=classmode,
                         classes=classes)
 
@@ -250,7 +249,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=1,
+                        epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         # class_weight=class_weights_train,
@@ -281,14 +280,16 @@ if __name__ == "__main__":
 
                         test_generator.reset()
 
-                        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1", "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2", "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
+                        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
+                                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
+                                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
                         dict_classes = {'A3': 2, 'A2': 1, 'A1': 0}
                         classes = ["A1", "A2", "A3"]
 
                         for k, folder in enumerate(test_folder):
                                 test_generator = data_generator.flow_from_directory(folder,
                                                                         target_size=(image_size, image_size),
-                                                                        batch_size=24,
+                                                                        batch_size=8,
                                                                         class_mode=classmode)
 
                                 STEP_SIZE_TEST = test_generator.n//test_generator.batch_size

@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scripts/kfold_cross.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/kfold_cross.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/CAM.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CAM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +27,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
+            <state relative-caret-position="1260">
               <caret line="89" selection-start-line="89" selection-end-line="89" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -43,10 +39,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3877">
-              <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+            <state relative-caret-position="705">
+              <caret line="283" column="53" selection-start-line="283" selection-start-column="53" selection-end-line="283" selection-end-column="53" />
               <folding>
-                <element signature="e#1669#3776#0" />
+                <element signature="e#1025#1651#0" />
+                <element signature="e#1693#3800#0" />
               </folding>
             </state>
           </provider>
@@ -153,7 +150,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CascadeEvaluation">
+  <component name="RunManager" selected="Python.CNNTransferLearning">
     <configuration name="CAM (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -188,7 +185,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
-      <option name="PARAMETERS" value="-s n -b y -m 0" />
+      <option name="PARAMETERS" value="-s n -b n -m 0" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -268,11 +265,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.CNNTransferLearning" />
         <item itemvalue="Python.CascadeEvaluation" />
         <item itemvalue="Python.kfold_cross (1)" />
         <item itemvalue="Python.CAM (1)" />
         <item itemvalue="Python.testTransfLearningBinaryCategorical" />
-        <item itemvalue="Python.CNNTransferLearning" />
       </list>
     </recent_temporary>
   </component>
@@ -293,7 +290,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -356,11 +353,6 @@
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
-          <line>101</line>
-          <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CAM.py</url>
           <line>55</line>
           <option name="timeStamp" value="81" />
@@ -369,6 +361,11 @@
           <url>file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py</url>
           <line>82</line>
           <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
+          <line>280</line>
+          <option name="timeStamp" value="86" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -652,6 +649,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="34" column="80" selection-start-line="34" selection-start-column="80" selection-end-line="34" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/kfold_cross.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -662,16 +666,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="34" column="80" selection-start-line="34" selection-start-column="80" selection-end-line="34" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
+        <state relative-caret-position="1260">
           <caret line="89" selection-start-line="89" selection-end-line="89" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
@@ -681,10 +678,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3877">
-          <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+        <state relative-caret-position="705">
+          <caret line="283" column="53" selection-start-line="283" selection-start-column="53" selection-end-line="283" selection-end-column="53" />
           <folding>
-            <element signature="e#1669#3776#0" />
+            <element signature="e#1025#1651#0" />
+            <element signature="e#1693#3800#0" />
           </folding>
         </state>
       </provider>
