@@ -102,10 +102,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-                        out_folder = "/mnt/Data/ltanzi/CV/"
+                        train_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
+                        out_folder = "/mnt/Data/ltanzi/CV/SubgroupA_folds/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val/Train"
@@ -139,15 +139,15 @@ if __name__ == "__main__":
                         last_layer = 3
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_150epochs-batch32-notAugValTest-retrainAll-balanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        classes = ["A1", "A2", "A3"]
+                        name = "Fold{}_150epochs-A1A2A3-batch32-notAugValTest-retrainAll-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
 
 
                 # BALANCING
-                # class_weights_train = compute_weights(train_folder)
+                # class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -250,10 +250,10 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=150,
+                        epochs=1,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        # class_weight=class_weights_train,
+                        # class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
@@ -277,15 +277,15 @@ if __name__ == "__main__":
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
 
-'''
+
                 if run_binary == "n":
 
                         test_generator.reset()
 
-                        test_folder = ["/mnt/Data/ltanzi/Train_Val/Testing/TestA", "/mnt/Data/ltanzi/Train_Val/Testing/TestB",
-                        "/mnt/Data/ltanzi/Train_Val/Testing/TestUnbroken"]
-                        dict_classes = {'Unbroken': 2, 'B': 1, 'A': 0}
-                        classes = ["A", "B", "Unbroken"]
+                        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1", "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
+                        "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
+                        dict_classes = {'A3': 2, 'A2': 1, 'A1': 0}
+                        classes = ["A1", "A2", "A3"]
 
                         for k, folder in enumerate(test_folder):
                                 test_generator = data_generator.flow_from_directory(folder,
@@ -342,7 +342,7 @@ if __name__ == "__main__":
                                         avg_scores[i] += scores[i][j]
                                         avg_scores[i] /= n_fold
                         print("MODEL")
-                        print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
+                        print("Average:\n A1 classified correctly {}%, A2 classified correctly {}%, A3 Classified correctly {}%.\n"
                                       "Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2],
                                                                                     avg_scores[0], avg_scores[1]))
 
@@ -359,13 +359,9 @@ if __name__ == "__main__":
                                         best_avg_scores[i] /= n_fold
 
                         print("BEST MODEL")
-                        print("Average:\n A classified correctly {}%, B classified correctly {}%, Unbroken Classified correctly {}%.\n"
+                        print("Average:\n A1 classified correctly {}%, A2 classified correctly {}%, A3 Classified correctly {}%.\n"
                               "Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2],
                                                                     best_avg_scores[0], best_avg_scores[1]))
 
-'''
-print("MODEL")
-print("Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2], avg_scores[0], avg_scores[1]))
-
-print("BEST MODEL")
-print("Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1], best_avg_accuracies[2], best_avg_scores[0], best_avg_scores[1]))
+            
+                        
