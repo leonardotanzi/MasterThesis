@@ -7,11 +7,11 @@ import numpy as np
 
 K = 5
 image_size = 256
-categories = ["A", "B", "Unbroken"]
+categories = ["A1", "A2", "A3"]
 
-input_folders = ["/Users/leonardotanzi/Desktop/{}".format(categories[0]),
-                 "/Users/leonardotanzi/Desktop/{}".format(categories[1]),
-                 "/Users/leonardotanzi/Desktop/{}".format(categories[2])]
+input_folders = ["/Users/leonardotanzi/Desktop/A/{}".format(categories[0]),
+                 "/Users/leonardotanzi/Desktop/A/{}".format(categories[1]),
+                 "/Users/leonardotanzi/Desktop/A/{}".format(categories[2])]
 
 # create the root folder
 output_path = "/Users/leonardotanzi/Desktop/KCrossVal"

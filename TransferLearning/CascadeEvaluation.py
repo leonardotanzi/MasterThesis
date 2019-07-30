@@ -1,3 +1,5 @@
+# can evaluate one single folder a time
+
 import tensorflow as tf
 from keras.applications.vgg16 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
@@ -28,15 +30,15 @@ if run_on_server == "y":
 
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
-    score_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Train_Val_CV/Test/Unbroken"
-    test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class1, "/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class2]
+    model_path = "/Users/leonardotanzi/Desktop/Cascade/"
+    score_folder = "/Users/leonardotanzi/Desktop/Cascade/Test/A"
+    test_folder = ["/Users/leonardotanzi/Desktop/Cascade/Testing/Test" + class1, "/Users/leonardotanzi/Desktop/FinalDataset/Testing/Test" + class2]
 
 else:
     raise ValueError("Incorrect arg.")
 
 
-output_path = "/Users/leonardotanzi/Desktop/Output/"
+output_path = "/Users/leonardotanzi/Desktop/Cascade/Output/"
 
 classmode = "binary"
 image_size = 224
@@ -49,6 +51,7 @@ first_model = load_model(model_path + "Broken_Unbroken-binary-baselineVGG-156267
 second_model = load_model(model_path + "A_B-binary-baselineVGG-1562679455-best_model.h5")
 
 i = 0
+j = 0
 
 for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
 
@@ -67,11 +70,13 @@ for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
         i += 1
 
     elif class_idx == 0:
+        print("Broken")
+        j += 1
         name_out = output_path + "{}".format(img_path.split("/")[-1])
         cv2.imwrite(name_out, X_original)
 
 
-print("Unbroken {}".format(i))
+print("Unbroken {} - Broken {}".format(i, j))
 
 i = 0
 j = 0
