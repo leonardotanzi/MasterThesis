@@ -249,7 +249,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=150,
+                        epochs=1,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         class_weight=class_weights_train,
@@ -280,16 +280,23 @@ if __name__ == "__main__":
 
                         test_generator.reset()
 
-                        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
-                                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
-                                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
-                        dict_classes = {'A3': 2, 'A2': 1, 'A1': 0}
-                        classes = ["A1", "A2", "A3"]
+                        if run_on_server == "y":
+                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
+                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
+                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
+                                batch_size = 8
+                        elif run_on_server == "n":
+                                test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
+                                               "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA2",
+                                               "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA3"]
+                                batch_size = 1
+
+                        dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}
 
                         for k, folder in enumerate(test_folder):
                                 test_generator = data_generator.flow_from_directory(folder,
                                                                         target_size=(image_size, image_size),
-                                                                        batch_size=8,
+                                                                        batch_size=batch_size,
                                                                         class_mode=classmode)
 
                                 STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
@@ -334,36 +341,42 @@ if __name__ == "__main__":
                                 print("Best Model: {} classified correctly: {}%".format(classes[k], percentage))
 
                                 best_accuracies[k].append(percentage)
-                                
-        avg_accuracies = [0, 0, 0]
-        avg_scores = [0, 0]
-        for i in range(n_class):
-                for j in range(n_fold):
-                        avg_accuracies[i] += accuracies[i][j]
-                        avg_accuracies[i] /= n_fold
 
-        for i in range(2):
-                for j in range(n_fold):
-                        avg_scores[i] += scores[i][j]
-                        avg_scores[i] /= n_fold
-        print("MODEL")
-        print("Average:\n A1 classified correctly {}%, A2 classified correctly {}%, A3 Classified correctly {}%.\n"
-                      "Average loss {}, average accuracy {}".format(avg_accuracies[0], avg_accuracies[1], avg_accuracies[2],
-                                                                    avg_scores[0], avg_scores[1]))
 
-        best_avg_accuracies = [0, 0, 0]
-        best_avg_scores = [0, 0]
-        for i in range(n_class):
-                for j in range(n_fold):
-                        best_avg_accuracies[i] += best_accuracies[i][j]
-                        best_avg_accuracies[i] /= n_fold
+                        avg_accuracies = [0, 0, 0]
+                        avg_scores = [0, 0]
+                        for i in range(n_class):
+                                for j in range(n_fold):
+                                        avg_accuracies[i] += accuracies[i][j]
+                                avg_accuracies[i] /= n_fold
 
-        for i in range(2):
-                for j in range(n_fold):
-                        best_avg_scores[i] += best_scores[i][j]
-                        best_avg_scores[i] /= n_fold
+                        for i in range(2):
+                                for j in range(n_fold):
+                                        avg_scores[i] += scores[i][j]
+                                avg_scores[i] /= n_fold
 
-        print("BEST MODEL")
-        print("Average:\n A1 classified correctly {}%, A2 classified correctly {}%, A3 Classified correctly {}%.\n"
-              "Average loss {}, average accuracy {}".format(best_avg_accuracies[0], best_avg_accuracies[1],
-                                                            best_avg_accuracies[2], best_avg_scores[0], best_avg_scores[1]))
+                        print("MODEL")
+                        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+                                      "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
+                                                                                    classes[1], avg_accuracies[1],
+                                                                                    classes[2], avg_accuracies[2],
+                                                                                    avg_scores[0], avg_scores[1]))
+
+                        best_avg_accuracies = [0, 0, 0]
+                        best_avg_scores = [0, 0]
+                        for i in range(n_class):
+                                for j in range(n_fold):
+                                        best_avg_accuracies[i] += best_accuracies[i][j]
+                                best_avg_accuracies[i] /= n_fold
+
+                        for i in range(2):
+                                for j in range(n_fold):
+                                        best_avg_scores[i] += best_scores[i][j]
+                                best_avg_scores[i] /= n_fold
+
+                        print("BEST MODEL")
+                        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+                              "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0],
+                                                                            classes[1], best_avg_accuracies[1],
+                                                                            classes[2], best_avg_accuracies[2],
+                                                                            best_avg_scores[0], best_avg_scores[1]))
