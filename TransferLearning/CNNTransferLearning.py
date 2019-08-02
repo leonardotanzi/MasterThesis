@@ -249,7 +249,7 @@ if __name__ == "__main__":
                 my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=1,
+                        epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         class_weight=class_weights_train,
@@ -275,7 +275,7 @@ if __name__ == "__main__":
                 print("Test accuracy:", best_score[1])
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
-
+                '''
                 if run_binary == "n":
 
                         test_generator.reset()
@@ -344,7 +344,9 @@ if __name__ == "__main__":
 
 
                         avg_accuracies = [0, 0, 0]
+                        print(avg_accuracies)
                         avg_scores = [0, 0]
+                        print(avg_scores)
                         for i in range(n_class):
                                 for j in range(n_fold):
                                         avg_accuracies[i] += accuracies[i][j]
@@ -380,3 +382,4 @@ if __name__ == "__main__":
                                                                             classes[1], best_avg_accuracies[1],
                                                                             classes[2], best_avg_accuracies[2],
                                                                             best_avg_scores[0], best_avg_scores[1]))
+                '''
