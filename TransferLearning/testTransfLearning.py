@@ -1,5 +1,7 @@
 import tensorflow as tf
-from keras.applications.vgg16 import preprocess_input
+from tensorflow.python.keras.applications.vgg16 import preprocess_input as pre_process_VGG
+from tensorflow.python.keras.applications.resnet50 import preprocess_input as pre_process_ResNet
+from tensorflow.python.keras.applications.inception_v3 import preprocess_input as pre_process_Inception
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 import argparse
@@ -13,27 +15,39 @@ run_on_server = args["server"]
 model_name = int(args["model"])
 
 if run_on_server == "y":
-        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1", "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2", "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
+        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
+                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
+                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
         score_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
         model_path = "/mnt/Data/ltanzi/"
 elif run_on_server == "n":
-        test_folder = ["/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestA", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestB", "/Users/leonardotanzi/Desktop/FinalDataset/Testing/TestUnbroken"]
-        model_path = "/Users/leonardotanzi/Desktop/FinalDataset/"
-        score_folder = "/Users/leonardotanzi/Desktop/FinalDataset/Testing"
+        test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
+                       "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA2",
+                       "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA3"]
+        model_path = "/Users/leonardotanzi/Desktop/SubgroupA_folds/"
+        score_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Test"
 else:
         raise ValueError("Incorrect 1st arg.")
 
-classmode = "sparse"
 
+classmode = "sparse"
 image_size = 299 if model_name == 2 else 224
 batch_size = 8
+
+if model_name == 0:
+        preprocess_input = pre_process_VGG
+elif model_name == 1:
+        preprocess_input = pre_process_ResNet
+elif model_name == 2:
+        preprocess_input = pre_process_Inception
+
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 classes = ["A1", "A2", "A3"]
 dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}  
 
-model = load_model(model_path + "CV/SubgroupA_folds/Fold3_150epochs-A1A2A3-batch32-notAugValTest-retrainAll-unbalanced-categorical-baselineInception-1564674228.model")
+model = load_model(model_path + "Fold3_150epochs-A1A2A3-batch32-notAugValTest-retrainAll-unbalanced-categorical-baselineInception-1564674228.model")
 
 # Evaluate scores of the full test set
 

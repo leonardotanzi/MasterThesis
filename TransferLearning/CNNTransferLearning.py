@@ -275,7 +275,7 @@ if __name__ == "__main__":
                 print("Test accuracy:", best_score[1])
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
-                '''
+
                 if run_binary == "n":
 
                         test_generator.reset()
@@ -343,43 +343,40 @@ if __name__ == "__main__":
                                 best_accuracies[k].append(percentage)
 
 
-                        avg_accuracies = [0, 0, 0]
-                        print(avg_accuracies)
-                        avg_scores = [0, 0]
-                        print(avg_scores)
-                        for i in range(n_class):
-                                for j in range(n_fold):
-                                        avg_accuracies[i] += accuracies[i][j]
-                                avg_accuracies[i] /= n_fold
+        avg_accuracies = [0, 0, 0]
+        avg_scores = [0, 0]
+        for i in range(n_class):
+                for j in range(n_fold):
+                        avg_accuracies[i] += accuracies[i][j]
+                avg_accuracies[i] /= n_fold
 
-                        for i in range(2):
-                                for j in range(n_fold):
-                                        avg_scores[i] += scores[i][j]
-                                avg_scores[i] /= n_fold
+        for i in range(2):
+                for j in range(n_fold):
+                        avg_scores[i] += scores[i][j]
+                avg_scores[i] /= n_fold
 
-                        print("MODEL")
-                        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
-                                      "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
-                                                                                    classes[1], avg_accuracies[1],
-                                                                                    classes[2], avg_accuracies[2],
-                                                                                    avg_scores[0], avg_scores[1]))
+        print("MODEL")
+        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+                      "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
+                                                                    classes[1], avg_accuracies[1],
+                                                                    classes[2], avg_accuracies[2],
+                                                                    avg_scores[0], avg_scores[1]))
 
-                        best_avg_accuracies = [0, 0, 0]
-                        best_avg_scores = [0, 0]
-                        for i in range(n_class):
-                                for j in range(n_fold):
-                                        best_avg_accuracies[i] += best_accuracies[i][j]
-                                best_avg_accuracies[i] /= n_fold
+        best_avg_accuracies = [0, 0, 0]
+        best_avg_scores = [0, 0]
+        for i in range(n_class):
+                for j in range(n_fold):
+                        best_avg_accuracies[i] += best_accuracies[i][j]
+                best_avg_accuracies[i] /= n_fold
 
-                        for i in range(2):
-                                for j in range(n_fold):
-                                        best_avg_scores[i] += best_scores[i][j]
-                                best_avg_scores[i] /= n_fold
+        for i in range(2):
+                for j in range(n_fold):
+                        best_avg_scores[i] += best_scores[i][j]
+                best_avg_scores[i] /= n_fold
 
-                        print("BEST MODEL")
-                        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
-                              "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0],
-                                                                            classes[1], best_avg_accuracies[1],
-                                                                            classes[2], best_avg_accuracies[2],
-                                                                            best_avg_scores[0], best_avg_scores[1]))
-                '''
+        print("BEST MODEL")
+        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+              "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0],
+                                                            classes[1], best_avg_accuracies[1],
+                                                            classes[2], best_avg_accuracies[2],
+                                                            best_avg_scores[0], best_avg_scores[1]))

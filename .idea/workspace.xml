@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/outputInception.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,25 +28,25 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1260">
-              <caret line="89" selection-start-line="89" selection-end-line="89" />
+            <state relative-caret-position="-1390">
+              <caret line="3" lean-forward="true" selection-end-line="3" />
               <folding>
-                <element signature="e#0#23#0" expanded="true" />
+                <element signature="e#1025#1647#0" />
+                <element signature="e#1689#3796#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3907">
-              <caret line="362" column="114" lean-forward="true" selection-start-line="362" selection-start-column="114" selection-end-line="362" selection-end-column="114" />
+            <state relative-caret-position="157">
+              <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
               <folding>
-                <element signature="e#1025#1647#0" />
-                <element signature="e#1689#3796#0" />
+                <element signature="e#0#23#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,7 +96,6 @@
         <option value="$PROJECT_DIR$/CNN/CAMoriginal.py" />
         <option value="$PROJECT_DIR$/CNN/CAM.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAMoriginal.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
         <option value="$PROJECT_DIR$/CNN/CNN.py" />
         <option value="$PROJECT_DIR$/kfold_cross.py" />
         <option value="$PROJECT_DIR$/TransferLearning/PreTraining.py" />
@@ -103,6 +105,7 @@
         <option value="$PROJECT_DIR$/Scripts/kfold_cross.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
       </list>
     </option>
   </component>
@@ -151,7 +154,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CNNTransferLearning">
+  <component name="RunManager" selected="Python.testTransfLearning">
     <configuration name="CAM (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -236,7 +239,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="testTransfLearningBinaryCategorical" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="testTransfLearning" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -248,8 +251,8 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TransferLearning/testTransfLearningBinaryCategorical.py" />
-      <option name="PARAMETERS" value="-s n" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
+      <option name="PARAMETERS" value="-s n -m 2" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -262,15 +265,15 @@
       <item itemvalue="Python.CNNTransferLearning" />
       <item itemvalue="Python.CascadeEvaluation" />
       <item itemvalue="Python.kfold_cross (1)" />
-      <item itemvalue="Python.testTransfLearningBinaryCategorical" />
+      <item itemvalue="Python.testTransfLearning" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.testTransfLearning" />
         <item itemvalue="Python.CNNTransferLearning" />
         <item itemvalue="Python.CascadeEvaluation" />
         <item itemvalue="Python.kfold_cross (1)" />
         <item itemvalue="Python.CAM (1)" />
-        <item itemvalue="Python.testTransfLearningBinaryCategorical" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +299,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4988086" weight="0.31678832" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4988086" visible="true" weight="0.31678832" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.40145984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -345,7 +348,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py</url>
-          <line>51</line>
+          <line>67</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -368,17 +371,20 @@
           <line>295</line>
           <option name="timeStamp" value="91" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
+          <line>233</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/PIL/Image.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="1950" selection-start-line="1950" selection-end-line="1950" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/BoneDetectionMultiScale.py" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/PIL/_util.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -619,16 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="79" selection-start-line="65" selection-start-column="8" selection-end-line="79" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/PreTraining.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
@@ -656,6 +652,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/keras/_impl/keras/engine/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="1973" selection-start-line="1973" selection-end-line="1973" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Scripts/kfold_cross.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -676,20 +679,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/keras/_impl/keras/engine/training.py">
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/keras/engine/training.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="1973" selection-start-line="1973" selection-end-line="1973" />
+        <state relative-caret-position="340">
+          <caret line="2345" selection-start-line="2345" selection-end-line="2345" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3907">
-          <caret line="362" column="114" lean-forward="true" selection-start-line="362" selection-start-column="114" selection-end-line="362" selection-end-column="114" />
+        <state relative-caret-position="-1390">
+          <caret line="3" lean-forward="true" selection-end-line="3" />
           <folding>
             <element signature="e#1025#1647#0" />
             <element signature="e#1689#3796#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
