@@ -186,7 +186,7 @@ if __name__ == "__main__":
                 else:
                         my_new_model = VGG16_dropout_batchnorm()
 
-                adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
+                adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
                 my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
@@ -233,7 +233,7 @@ if __name__ == "__main__":
 
                 test_generator = data_generator_notAug.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
-                        batch_size=8,
+                        batch_size=1,
                         class_mode=classmode,
                         classes=classes)
 
@@ -284,7 +284,7 @@ if __name__ == "__main__":
                                 test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
                                                "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
                                                "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
-                                batch_size = 8
+                                batch_size = 1
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
                                                "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA2",

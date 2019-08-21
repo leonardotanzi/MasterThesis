@@ -111,10 +111,12 @@ tensorboard = TensorBoard(log_dir="logs/{}".format(model_name))
 
 model = Sequential()
 
-model.add(Dense(32, input_shape=X.shape[1:])) # X.shape[] prende la seconda a la terza shape che sono altezza e larghezza immagine
+model.add(Dense(32, input_shape=image_size*image_size)) # X.shape[] prende la seconda a la terza shape che sono altezza e larghezza immagine
 model.add(Activation("relu"))
 
 model.add(Dense(last_layer, activation="softmax"))
+
+model.summary()
 
 adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
 
@@ -123,8 +125,6 @@ model.compile(loss=loss,
               metrics=["accuracy"])
 
 model.fit(X, y, batch_size=32, epochs=10, validation_split=0.33, callbacks=[tensorboard])
-
-model.summary()
 
 model.save("{}.model".format(model_name))
 

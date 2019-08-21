@@ -19,7 +19,7 @@ if run_on_server == "y":
                        "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
                        "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
         score_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
-        model_path = "/mnt/Data/ltanzi/"
+        model_path = "/mnt/Data/ltanzi/CV/SubgroupA_folds/"
 elif run_on_server == "n":
         test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
                        "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA2",
@@ -32,7 +32,7 @@ else:
 
 classmode = "sparse"
 image_size = 299 if model_name == 2 else 224
-batch_size = 8
+batch_size = 1
 
 if model_name == 0:
         preprocess_input = pre_process_VGG
@@ -47,7 +47,7 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 classes = ["A1", "A2", "A3"]
 dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}  
 
-model = load_model(model_path + "Fold3_150epochs-A1A2A3-batch32-notAugValTest-retrainAll-unbalanced-categorical-baselineInception-1564674228.model")
+model = load_model(model_path + "Fold5_150epochs-A1A2A3-batch32-notAugValTest-retrainAll-unbalanced-categorical-baselineInception-1564676323.model")
 
 # Evaluate scores of the full test set
 
@@ -85,7 +85,7 @@ for i, folder in enumerate(test_folder):
         labels = dict((v, k) for k, v in labels.items())
         predictions = [labels[k] for k in predicted_class_indices]
 
-        # print(predictions)
+        print(predictions)
 
         x = 0
         tot = 0
