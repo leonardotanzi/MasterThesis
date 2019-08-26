@@ -16,7 +16,7 @@ import os
 import tensorflow as tf
                 
 def compute_weights(input_folder):
-        dictio = {"A1": 0, "A2": 1, "A3": 2}
+        dictio = {"A": 0, "B": 1, "Unbroken": 2}
         files_per_class = []
         for folder in os.listdir(input_folder):
                 if folder.startswith('.'):
@@ -102,10 +102,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
-                        out_folder = "/mnt/Data/ltanzi/CV/SubgroupA_folds/"
+                        train_folder = "/mnt/Data/ltanzi/FullHalfImages/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/FullHalfImages/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/FullHalfImages/Test"
+                        out_folder = "/mnt/Data/ltanzi/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -138,8 +138,8 @@ if __name__ == "__main__":
                         last_layer = 3
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A1", "A2", "A3"]
-                        name = "Fold{}_150epochs-A1A2A3-batch32-notAugValTest-retrainAll-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        classes = ["A", "B", "Unbroken"]
+                        name = "Fold{}_150epochs-FullImg--batch32-notAugValTest-retrainAll-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
