@@ -111,9 +111,9 @@ tensorboard = TensorBoard(log_dir="logs/{}".format(model_name))
 
 model = Sequential()
 
+model.add(Flatten())
 model.add(Dense(32, input_shape=image_size*image_size)) # X.shape[] prende la seconda a la terza shape che sono altezza e larghezza immagine
 model.add(Activation("relu"))
-
 model.add(Dense(last_layer, activation="softmax"))
 
 model.summary()

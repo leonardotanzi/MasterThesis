@@ -24,9 +24,9 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/Fold4_150epochs-batch32-notAugValTest-retrainAll-balanced-categorical-baselineVGG-1563471279-best_model.h5"
-    test_folder = "/Users/leonardotanzi/Desktop/Canc" #"/Users/leonardotanzi/Desktop/FinalDataset/Train_Val_CV/Test/A"
-    out_folder = "/Users/leonardotanzi/Desktop/" #FinalDataset/CAM/NewNet/Binary/A/"
+    model_path = "/Users/leonardotanzi/Desktop/Fold1_150epochs-FullImg--batch32-notAugValTest-retrainAll-unbalanced-categorical-baselineVGG-1566820752.model"
+    test_folder = "/Users/leonardotanzi/Desktop/FullHalfImages/Test/Unbroken"
+    out_folder = "/Users/leonardotanzi/Desktop/FullHalfImages/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
