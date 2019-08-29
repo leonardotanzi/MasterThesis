@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
-from tensorflow.python.keras.callbacks import TensorBoard
+from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping
 from tensorflow.python.keras.utils import plot_model
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.utils import to_categorical
@@ -37,7 +37,7 @@ if run_on_server == "y" and run_binary == "y":
 elif run_on_server == "y" and run_binary == "n":
         train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
-        out_folder = "/mnt/Data/ltanzi/"
+        out_folder = "/mnt/Data/ltanzi/FirstNN/"
         resnet_weights_path = "imagenet"
         last_layer = 3
         categories = ["A", "B", "Unbroken"]
@@ -113,17 +113,18 @@ means, "reshape A so that its second dimension has a size of 28*28 and calculate
 X = X/255.0  # normalize
 
 
-conv_layers = [2]  # 3
-layer_sizes = [32]  # 64
-dense_layers = [2]  # 0
+conv_layers = [1, 2, 3]
+layer_sizes = [16, 32, 64]
+dense_layers = [0, 1, 2]
 
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=8)  # verbose to print the n of epoch in which stopped,
 
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
         for conv_layer in conv_layers:
 
             NAME = "{}conv-{}nodes-{}dense-{}".format(conv_layer, layer_size, dense_layer, int(time.time()))
-            tensorboard = TensorBoard(log_dir="logs/{}".format(NAME))
+            tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/FirstNN/logs/{}".format(NAME))
             print(NAME)
             model = Sequential()
 
@@ -155,9 +156,8 @@ for dense_layer in dense_layers:
                           optimizer=adam,
                           metrics=["accuracy"])
 
-            model.fit(X, y, batch_size=32, epochs=200, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=150, validation_split=0.3, callbacks=[tensorboard. es])
 
-            model.summary()
-            # plot_model(model, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+            # model.summary()
 
-            model.save("2-32-2new.model")
+            # model.save("2-32-2new.model")
