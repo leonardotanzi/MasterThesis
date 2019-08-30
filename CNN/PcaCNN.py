@@ -1,7 +1,7 @@
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Dropout, Activation, Flatten
 from tensorflow.python.keras.layers import Conv2D, MaxPooling2D
-from tensorflow.python.keras.callbacks import TensorBoard
+from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping
 from tensorflow.python.keras.optimizers import Adam
 
 import numpy as np
@@ -53,6 +53,7 @@ image_size = 256
 cannyWindow = 17
 
 training_data = []
+testing_data = []
 
 for category in categories:
 
@@ -63,8 +64,8 @@ for category in categories:
         try:
             img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
             resized_array = cv2.resize(img_array, (image_size, image_size))  # resize to normalize data size
-            edged_array = cv2.cv2.Canny(resized_array, cannyWindow, cannyWindow * 3, apertureSize=3)
-            training_data.append([edged_array, class_num])  # add this to our training_data
+            # edged_array = cv2.Canny(resized_array, cannyWindow, cannyWindow * 3, apertureSize=3)
+            training_data.append([resized_array, class_num])  # add this to our training_data
         except Exception as e:  # in the interest in keeping the output clean...
             pass
 
@@ -82,32 +83,10 @@ for features, label in training_data:
 
 X = np.array(X).reshape(-1, image_size, image_size, 1)  # we need to convert x in numpy array, last 1 because it's grayscale
 
-'''
-numpy allow us to give one of new shape parameter as -1 (eg: (2,-1) or (-1,3) but not (-1, -1)). It simply means that it 
-is an unknown dimension and we want numpy to figure it out. And numpy will figure this by looking at the 'length of the 
-array and remaining dimensions' and making sure it satisfies the above mentioned criteria.
-z = np.array([[1, 2, 3, 4],
-         [5, 6, 7, 8],
-         [9, 10, 11, 12]])
-        
-New shape as (-1, 2). row unknown, column 2. we get result new shape as (6, 2)
-z.reshape(-1, 2)
-array([[ 1,  2],
-   [ 3,  4],
-   [ 5,  6],
-   [ 7,  8],
-   [ 9, 10],
-   [11, 12]])
-
-It means, that the size of the dimension, for which you passed -1, is being inferred. Thus,
-
-A.reshape(-1, 28*28)
-means, "reshape A so that its second dimension has a size of 28*28 and calculate the correct size of the first dimension".
-
-'''
-
-model_name = "BaselineNet-{}".format(int(time.time()))
+model_name = "EdgedNet-lr00001{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(model_name))
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=30)  # verbose to print the n of epoch in which stopped,
+
 
 dimData = np.prod(X.shape[1:])
 X = X.reshape(X.shape[0], dimData)
@@ -121,13 +100,13 @@ model.add(Dense(n_class, activation='softmax'))
 
 model.summary()
 
-adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
+adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
 
 model.compile(loss=loss,
               optimizer=adam,
               metrics=["accuracy"])
 
-model.fit(X, y, batch_size=32, epochs=10, validation_split=0.33, callbacks=[tensorboard])
+model.fit(X, y, batch_size=32, epochs=100, validation_split=0.33, callbacks=[tensorboard, es])
 
 model.save("{}.model".format(model_name))
 
@@ -143,24 +122,27 @@ for category in categories:
         try:
             img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
             resized_array = cv2.resize(img_array, (image_size, image_size))  # resize to normalize data size
-            edged_array = cv2.cv2.Canny(resized_array, cannyWindow, cannyWindow * 3, apertureSize=3)
-            training_data.append([edged_array, class_num])  # add this to our training_data
+            # edged_array = cv2.Canny(resized_array, cannyWindow, cannyWindow * 3, apertureSize=3)
+            testing_data.append([resized_array, class_num])  # add this to our training_data
         except Exception as e:  # in the interest in keeping the output clean...
             pass
 
 pass
-random.shuffle(training_data)
+random.shuffle(testing_data)
 
 X = []
 y = []
 
-for features, label in training_data:
+for features, label in testing_data:
     X.append(features)
     y.append(label)
 
 X = np.array(X).reshape(-1, image_size, image_size, 1)
 
-X = X / 255.0
+dimData = np.prod(X.shape[1:])
+X = X.reshape(X.shape[0], dimData)
+X = X.astype('float32')
+X = X/255.0  # normalize
 
 score = model.evaluate(X, y, verbose=0)
 print('Test loss:', score[0])
