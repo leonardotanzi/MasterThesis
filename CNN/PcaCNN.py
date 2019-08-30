@@ -25,9 +25,9 @@ if run_on_server == "y":
         out_folder = "/mnt/Data/ltanzi/PcaCNN/"
 
 elif run_on_server == "n":
-        train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNN/Train"
-        test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNN/Test"
-        out_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNN/"
+        train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNNsmall/Train"
+        test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNNsmall/Test"
+        out_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNNsmall/"
 
 else:
         raise ValueError('Incorrect 1st arg.')
@@ -37,11 +37,13 @@ if run_binary == "y":
         last_layer = 2
         categories = ["Broken", "Unbroken"]
         loss = "sparse_categorical_crossentropy"
+        n_class = 2
 
 elif run_binary == "n":
         last_layer = 3
         categories = ["A", "B", "Unbroken"]
         loss = "sparse_categorical_crossentropy"
+        n_class = 3
 
 else:
         raise ValueError('Incorrect 2nd arg.')
@@ -104,17 +106,18 @@ means, "reshape A so that its second dimension has a size of 28*28 and calculate
 
 '''
 
-X = X/255.0  # normalize
-
 model_name = "BaselineNet-{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(model_name))
 
-model = Sequential()
+dimData = np.prod(X.shape[1:])
+X = X.reshape(X.shape[0], dimData)
+X = X.astype('float32')
+X = X/255.0  # normalize
 
-model.add(Flatten())
-model.add(Dense(32, input_shape=image_size*image_size)) # X.shape[] prende la seconda a la terza shape che sono altezza e larghezza immagine
-model.add(Activation("relu"))
-model.add(Dense(last_layer, activation="softmax"))
+model = Sequential()
+model.add(Dense(512, activation='relu', input_shape=(dimData,)))
+model.add(Dense(512, activation='relu'))
+model.add(Dense(n_class, activation='softmax'))
 
 model.summary()
 
