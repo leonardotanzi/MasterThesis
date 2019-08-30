@@ -35,7 +35,7 @@ if run_on_server == "y" and run_binary == "y":
         loss = "binary_crossentropy"
 
 elif run_on_server == "y" and run_binary == "n":
-        train_folder = "/mnt/Data/ltanzi/Train_Val/Train"
+        train_folder = "/mnt/Data/ltanzi/Train_Val/TrainShallow"
         val_folder = "/mnt/Data/ltanzi/Train_Val/Validation"
         out_folder = "/mnt/Data/ltanzi/FirstNN/"
         resnet_weights_path = "imagenet"
@@ -117,14 +117,14 @@ conv_layers = [1, 2, 3]
 layer_sizes = [16, 32, 64]
 dense_layers = [0, 1, 2]
 
-es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=8)  # verbose to print the n of epoch in which stopped,
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=30)  # verbose to print the n of epoch in which stopped,
 
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
         for conv_layer in conv_layers:
 
             NAME = "{}conv-{}nodes-{}dense-{}".format(conv_layer, layer_size, dense_layer, int(time.time()))
-            tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/FirstNN/logs/{}".format(NAME))
+            tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/FirstNN/logsNoEs/{}".format(NAME))
             print(NAME)
             model = Sequential()
 
@@ -155,8 +155,8 @@ for dense_layer in dense_layers:
             model.compile(loss=loss,
                           optimizer=adam,
                           metrics=["accuracy"])
-
-            model.fit(X, y, batch_size=32, epochs=150, validation_split=0.3, callbacks=[tensorboard. es])
+            
+            model.fit(X, y, batch_size=32, epochs=200, validation_split=0.3, callbacks=[tensorboard])
 
             # model.summary()
 

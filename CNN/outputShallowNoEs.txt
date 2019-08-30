@@ -1,0 +1,3 @@
+1conv-16nodes-0dense-1567169298
+Train on 1668 samples, validate on 716 samples
+Epoch 1/200
