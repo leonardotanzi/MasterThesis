@@ -1,3 +1,5 @@
+#layer size 128, softmax, 40 epochs, print model summary
+
 import tensorflow as tf
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Dropout, Activation, Flatten
@@ -113,9 +115,9 @@ means, "reshape A so that its second dimension has a size of 28*28 and calculate
 X = X/255.0  # normalize
 
 
-conv_layers = [1, 2, 3]
-layer_sizes = [16, 32, 64]
-dense_layers = [0, 1, 2]
+conv_layers = [3]
+layer_sizes = [32]
+dense_layers = [2]
 
 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=30)  # verbose to print the n of epoch in which stopped,
 
@@ -124,8 +126,7 @@ for dense_layer in dense_layers:
         for conv_layer in conv_layers:
 
             NAME = "{}conv-{}nodes-{}dense-{}".format(conv_layer, layer_size, dense_layer, int(time.time()))
-            tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/FirstNN/logsNoEs/{}".format(NAME))
-            print(NAME)
+            tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/FirstNN/logsingle/{}".format(NAME))
             model = Sequential()
 
             model.add(Conv2D(layer_size, (3, 3), input_shape=X.shape[1:])) #64 is the number of filter used. X.shape[] prende
@@ -148,7 +149,7 @@ for dense_layer in dense_layers:
                 # model.add(Dropout(0.5))
 
             model.add(Dense(last_layer))
-            model.add(Activation("sigmoid"))
+            model.add(Activation("softmax"))
 
             adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
 
@@ -156,8 +157,9 @@ for dense_layer in dense_layers:
                           optimizer=adam,
                           metrics=["accuracy"])
             
-            model.fit(X, y, batch_size=32, epochs=200, validation_split=0.3, callbacks=[tensorboard])
+            model.fit(X, y, batch_size=32, epochs=40, validation_split=0.3, callbacks=[tensorboard])
 
-            # model.summary()
+            print(NAME)
+            model.summary()
 
-            # model.save("2-32-2new.model")
+            model.save("3-32-2.model")
