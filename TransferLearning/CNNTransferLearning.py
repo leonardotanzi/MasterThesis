@@ -160,7 +160,6 @@ if __name__ == "__main__":
 
                 if baseline:
                         my_new_model = Sequential()
-                        # my_new_model.add(ResNet50(include_top=False, pooling="avg", weights='imagenet'))
                         if model_type == "VGG":
                                 my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
                                 preprocess_input = pre_process_VGG

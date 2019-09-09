@@ -1,4 +1,4 @@
-from tensorflow.python.keras.applications.vgg16 import VGG16, preprocess_input
+from tensorflow.python.keras.applications.inception_v3 import InceptionV3, preprocess_input
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D, BatchNormalization, Activation
 # from tensorflow.python.keras.applications.resnet50 import preprocess_input
@@ -17,7 +17,7 @@ import tensorflow as tf
 
 if __name__ == "__main__":
 
-    image_size = 224
+    image_size = 299
     binary = "categorical"
     loss = "sparse_categorical_crossentropy"
     last_layer = 3
@@ -28,20 +28,18 @@ if __name__ == "__main__":
     train_folder = "/mnt/data/ltanzi/MURA/train"
     val_folder = "/mnt/data/ltanzi/MURA/valid"
     out_folder = "/mnt/data/ltanzi/MURA/"
-    name = "randomW-pre_trained_weights_MURA"
+    name = "Inception-pre_trained_weights_MURA"
 
-    tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logs/{}".format(name))
+    tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logsMURA/{}".format(name))
     es = EarlyStopping(monitor="val_acc", mode="max", verbose=1,
-                       patience=10)  # verbose to print the n of epoch in which stopped,
-    best_model_path = out_folder + name + "-best_model.h5"
-    mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
+                       patience=40)  # verbose to print the n of epoch in which stopped,
 
     my_new_model = Sequential()
-    my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=None))
+    my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=None))
     my_new_model.add(Dense(last_layer, activation=act))
     my_new_model.layers[0].trainable = True
 
-    adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, decay=0.001)
+    adam = Adam(lr=0.01, beta_1=0.9, beta_2=0.999, decay=0.01)
 
     my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
     data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
@@ -65,9 +63,9 @@ if __name__ == "__main__":
     my_new_model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=150,
+                        epochs=300,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        callbacks=[tensorboard, es, mc])
+                        callbacks=[tensorboard, es])
 
     my_new_model.save(out_folder + name + ".model")
