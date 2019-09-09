@@ -118,13 +118,13 @@ conv_layers = [3]
 layer_sizes = [32]
 dense_layers = [2]
 
-es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=20)  # verbose to print the n of epoch in which stopped,
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
 
 for dense_layer in dense_layers:
     for layer_size in layer_sizes:
         for conv_layer in conv_layers:
 
-            lr = 0.00001    
+            lr = 0.001    
             NAME = "{}conv-{}nodes-{}dense-lr{}".format(conv_layer, layer_size, dense_layer, lr)
             tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/FirstNN/logsLR/{}".format(NAME))
             model = Sequential()
