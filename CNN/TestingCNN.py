@@ -14,28 +14,23 @@ def print_img(name, img):
     cv2.destroyWindow(name)
 
 
-DATADIR = "/mnt/Data/ltanzi/Train_Val_BROUNBRO/Test"
-
-CATEGORIES = ["B", "Unbroken"]
-
-IMG_SIZE = 256
-
+datadir= "/mnt/Data/ltanzi/Train_Val/Test"
+categories = ["A", "B", "Unbroken"]
+img_size = 256
 training_data = []
 
+for category in categories:
 
-for category in CATEGORIES:
-
-    path = os.path.join(DATADIR, category)  # create path to broken and unbroken
-    class_num = CATEGORIES.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
+    path = os.path.join(datadir, category)  # create path to broken and unbroken
+    class_num = categories.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
 
     for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
         try:
             img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
-            new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))  # resize to normalize data size
+            new_array = cv2.resize(img_array, (img_size, img_size))  # resize to normalize data size
             training_data.append([new_array, class_num])  # add this to our training_data
         except Exception as e:  # in the interest in keeping the output clean...
             pass
-
 
 random.shuffle(training_data)
 
@@ -46,12 +41,11 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
-X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # we need to convert x in numpy array, last 1 because it's grayscale
+X = np.array(X).reshape(-1, img_size, img_size, 1) # we need to convert x in numpy array, last 1 because it's grayscale
 
 X = X/255.0
 
-model = tf.keras.models.load_model("2-32-2new.model")
-
+model = tf.keras.models.load_model("3-32-2.model")
 
 score = model.evaluate(X, y, verbose=0)
 print('Test loss:', score[0])
