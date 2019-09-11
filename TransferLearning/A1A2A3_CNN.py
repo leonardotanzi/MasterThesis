@@ -16,7 +16,7 @@ import os
 import tensorflow as tf
                 
 def compute_weights(input_folder):
-        dictio = {"A": 0, "B": 1, "Unbroken": 2}
+        dictio = {"A1": 0, "A2": 1, "A3": 2}
         files_per_class = []
         for folder in os.listdir(input_folder):
                 if folder.startswith('.'):
@@ -105,9 +105,9 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+                        train_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
                         out_folder = "/mnt/Data/ltanzi/"
 
                 elif run_on_server == "n":
@@ -141,8 +141,8 @@ if __name__ == "__main__":
                         last_layer = 3
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_lr00001-oneLayerMore.-pretrained-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        classes = ["A1", "A2", "A3"]
+                        name = "Fold{}_A1A2A3-lr00001-pretrained-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -183,10 +183,10 @@ if __name__ == "__main__":
                         # my_new_model.add(BatchNormalization())
                         # my_new_model.add(Activation("relu"))
                         # my_new_model.add(Dropout(0.3))
-                        my_new_model.add(Dense(4096))
-                        my_new_model.add(BatchNormalization())
-                        my_new_model.add(Activation("relu"))
-                        my_new_model.add(Dropout(0.3))
+                        # my_new_model.add(Dense(4096))
+                        # my_new_model.add(BatchNormalization())
+                        # my_new_model.add(Activation("relu"))
+                        # my_new_model.add(Dropout(0.3))
                         my_new_model.add(Dense(last_layer, activation=act))
                         my_new_model.layers[0].trainable = True
                         if fine_tune:
@@ -289,9 +289,9 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[0]),
-                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[1]),
-                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[2])]
+                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
+                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
+                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1"]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",

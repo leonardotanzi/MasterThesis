@@ -3,97 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/100_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/102_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/109_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/110_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/114_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/123_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/146_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/152_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/174_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/187_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/22_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/244_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/24_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/25_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/27_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/31_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/33_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/34_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/36_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/37_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/38_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/39_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/40_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/41_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/44_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/46_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/48_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/51_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/56_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/63_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/67_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/69_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/70_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/72_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/73_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/75_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/83_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/84_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/85_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/88_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/93_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/95_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/96_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Broken/97_left.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/PreTraining.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/PreTraining.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/100_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/11_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/11_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/14_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/15_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/15_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/16_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/16_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/17_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/2_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/30_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/34_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/36_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/37_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/38_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/39_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/3_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/41_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/43_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/45_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/47_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/49_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/52_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/54_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/57_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/58_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/59_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/62_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/63_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/64_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/65_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/66_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/66_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/67_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/68_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/69_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/72_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/75_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/7_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/83_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/84_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/85_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/8_right.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/95_left.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/Unbroken/97_right.jpg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,37 +13,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3150">
-              <caret line="254" column="52" selection-start-line="254" selection-start-column="52" selection-end-line="254" selection-end-column="52" />
+            <state relative-caret-position="2160">
+              <caret line="144" column="59" selection-start-line="144" selection-start-column="59" selection-end-line="144" selection-end-column="59" />
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
-                <element signature="e#1693#3800#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/PreTraining.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
-              <caret line="41" column="62" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
-              <folding>
-                <element signature="e#0#80#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/PreTraining2.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="-907">
+              <caret line="293" column="96" selection-start-line="293" selection-start-column="96" selection-end-line="293" selection-end-column="96" />
               <folding>
-                <element signature="e#0#78#0" expanded="true" />
+                <element signature="e#0#97#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -192,8 +90,9 @@
         <option value="$PROJECT_DIR$/TransferLearning/CAM.py" />
         <option value="$PROJECT_DIR$/CNN/PcaCNN.py" />
         <option value="$PROJECT_DIR$/CNN/CNN.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/PreTraining.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
       </list>
     </option>
   </component>
@@ -207,6 +106,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -223,7 +123,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -484,11 +383,15 @@
           <line>108</line>
           <option name="timeStamp" value="101" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py</url>
+          <line>35</line>
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Source/MatchTemplate/crop_rotate.py" />
     <entry file="file://$PROJECT_DIR$/CNN/firstModel.model" />
     <entry file="file://$PROJECT_DIR$/CNN/CNNTransferLearning.py" />
     <entry file="file://$PROJECT_DIR$/CNN/2-32-2_lr0.001_model.model" />
@@ -801,17 +704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3150">
-          <caret line="254" column="52" selection-start-line="254" selection-start-column="52" selection-end-line="254" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#97#0" expanded="true" />
-            <element signature="e#1693#3800#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/PreTraining2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -823,10 +715,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/PreTraining.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
+        <state relative-caret-position="405">
           <caret line="41" column="62" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-907">
+          <caret line="293" column="96" selection-start-line="293" selection-start-column="96" selection-end-line="293" selection-end-column="96" />
           <folding>
-            <element signature="e#0#80#0" expanded="true" />
+            <element signature="e#0#97#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2160">
+          <caret line="144" column="59" selection-start-line="144" selection-start-column="59" selection-end-line="144" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
           </folding>
         </state>
       </provider>
