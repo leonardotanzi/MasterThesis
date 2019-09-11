@@ -21,6 +21,8 @@ def compute_weights(input_folder):
         for folder in os.listdir(input_folder):
                 if folder.startswith('.'):
                         continue
+                if folder.startswith('Bro'):
+                        continue
                 if not os.path.isfile(folder):
                         a=dictio.get(folder)
                         files_per_class.insert(dictio.get(folder), (len(os.listdir(input_folder + '/' + folder))))
@@ -98,13 +100,14 @@ if __name__ == "__main__":
         best_accuracies = [[] for x in range(n_class)]
         scores = [[] for x in range(2)]
         best_scores = [[] for x in range(2)]
-
+        fine_tune = False
+        
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/FullHalfImages/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/FullHalfImages/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/FullHalfImages/Test"
+                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
                         out_folder = "/mnt/Data/ltanzi/"
 
                 elif run_on_server == "n":
@@ -139,39 +142,43 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_150epochs-FullImg--batch32-notAugValTest-retrainAll-unbalanced-{}-baseline{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_lr00001-pretrained-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
 
 
                 # BALANCING
+                print(train_folder)
                 class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
                 tensorboard = TensorBoard(log_dir=log_dir)
-                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=8)  # verbose to print the n of epoch in which stopped,
+                es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                 best_model_path = out_folder + name + "-best_model.h5"
                 mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
+                # LOAD WEIGHTS
+                weights = "imagenet"
+                   
                 #MODEL DEFINITION
                 baseline = True
 
                 if baseline:
                         my_new_model = Sequential()
                         if model_type == "VGG":
-                                my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                                my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
                                 preprocess_input = pre_process_VGG
 
                         elif model_type == "ResNet":
-                                my_new_model.add(ResNet50(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                                my_new_model.add(ResNet50(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
                                 preprocess_input = pre_process_ResNet
 
                         elif model_type == "Inception":
-                                my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights="imagenet"))
+                                my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
                                 preprocess_input = pre_process_Inception
-
+                                
                         # my_new_model.add(Dense(4096))
                         # my_new_model.add(BatchNormalization())
                         # my_new_model.add(Activation("relu"))
@@ -182,10 +189,12 @@ if __name__ == "__main__":
                         # my_new_model.add(Dropout(0.3))
                         my_new_model.add(Dense(last_layer, activation=act))
                         my_new_model.layers[0].trainable = True
+                        if fine_tune:
+                                my_new_model = load_model("/mnt/data/ltanzi/MURA/Inception-pre_trained_weights_MURA.model")
                 else:
                         my_new_model = VGG16_dropout_batchnorm()
 
-                adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)
+                adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
                 my_new_model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
 
@@ -232,7 +241,7 @@ if __name__ == "__main__":
 
                 test_generator = data_generator_notAug.flow_from_directory(test_folder,
                         target_size=(image_size, image_size),
-                        batch_size=1,
+                        batch_size=32,
                         class_mode=classmode,
                         classes=classes)
 
@@ -280,15 +289,15 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
-                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
-                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
-                                batch_size = 1
+                                test_folder = ["/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[0]),
+                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[1]),
+                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[2])]
+                                batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
                                                "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA2",
                                                "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA3"]
-                                batch_size = 1
+                                batch_size = 32
 
                         dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}
 

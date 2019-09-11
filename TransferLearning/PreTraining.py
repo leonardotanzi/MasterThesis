@@ -30,9 +30,9 @@ if __name__ == "__main__":
     out_folder = "/mnt/data/ltanzi/MURA/"
     name = "Inception-pre_trained_weights_MURA"
 
-    tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/CV/logsMURA/{}".format(name))
+    tensorboard = TensorBoard(log_dir="/mnt/data/ltanzi/logsMURA/{}".format(name))
     es = EarlyStopping(monitor="val_acc", mode="max", verbose=1,
-                       patience=40)  # verbose to print the n of epoch in which stopped,
+                       patience=7)  # verbose to print the n of epoch in which stopped,
 
     my_new_model = Sequential()
     my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=None))
