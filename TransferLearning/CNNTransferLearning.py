@@ -133,7 +133,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B"]
-                        name = "Fold{}_{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
+                        name = "Fold{}_IncV3-{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
                         binary = "categorical"
@@ -152,7 +152,7 @@ if __name__ == "__main__":
                 # class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
-                log_dir = out_folder + "logs/{}".format(name)
+                log_dir = out_folder + "logsBinary/{}".format(name)
                 tensorboard = TensorBoard(log_dir=log_dir)
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                 best_model_path = out_folder + name + "-best_model.h5"

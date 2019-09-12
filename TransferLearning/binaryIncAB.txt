@@ -1,0 +1,4 @@
+Fold number 1
+Found 1011 images belonging to 2 classes.
+Found 254 images belonging to 2 classes.
+Found 200 images belonging to 2 classes.
