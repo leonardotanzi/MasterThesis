@@ -149,8 +149,7 @@ if __name__ == "__main__":
 
 
                 # BALANCING
-                print(train_folder)
-                class_weights_train = compute_weights(train_folder)
+                # class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -183,10 +182,10 @@ if __name__ == "__main__":
                         # my_new_model.add(BatchNormalization())
                         # my_new_model.add(Activation("relu"))
                         # my_new_model.add(Dropout(0.3))
-                        my_new_model.add(Dense(4096))
-                        my_new_model.add(BatchNormalization())
-                        my_new_model.add(Activation("relu"))
-                        my_new_model.add(Dropout(0.3))
+                        # my_new_model.add(Dense(4096))
+                        # my_new_model.add(BatchNormalization())
+                        # my_new_model.add(Activation("relu"))
+                        # my_new_model.add(Dropout(0.3))
                         my_new_model.add(Dense(last_layer, activation=act))
                         my_new_model.layers[0].trainable = True
                         if fine_tune:
@@ -284,6 +283,25 @@ if __name__ == "__main__":
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
 
+
+                    avg_scores = [0, 0]
+                            for i in range(n_class):
+                                                    for j in range(n_fold):
+                                                                                    avg_accuracies[i] += accuracies[i][j]
+                                                                                                    avg_accuracies[i] /= n_fold
+
+                                                                                                            for i in range(2):
+                                                                                                                                    for j in range(n_fold):
+                                                                                                                                                                    avg_scores[i] += scores[i][j]
+                                                                                                                                                                                    avg_scores[i] /= n_fold
+
+                                                                                                                                                                                            print("MODEL")
+                                                                                                                                                                                                    print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+                                                                                                                                                                                                                                "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
+                                                                                                                                                                                                                                                                                                                                                  classes[1], avg_accuracies[1],
+                                                                                                                                                                                                                                                                                                                                                  classes[2], avg_accuracies[2],
+                                                                                                                                                                                                                                                                                                                      
+                '''
                 if run_binary == "n":
 
                         test_generator.reset()
@@ -388,3 +406,4 @@ if __name__ == "__main__":
                                                             classes[1], best_avg_accuracies[1],
                                                             classes[2], best_avg_accuracies[2],
                                                             best_avg_scores[0], best_avg_scores[1]))
+'''
