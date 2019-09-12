@@ -142,7 +142,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A2", "A3"]
-                        name = "Fold{}_A1A2A3balanced-lr00001-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_A1A2A3balanced-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
