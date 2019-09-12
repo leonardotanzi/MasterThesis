@@ -105,10 +105,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
-                        out_folder = "/mnt/Data/ltanzi/"
+                        train_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Test"
+                        out_folder = "/mnt/Data/ltanzi/A1A2A3/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -142,7 +142,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A2", "A3"]
-                        name = "Fold{}_A1A2A3-lr00001-pretrained-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_A1A2A3balanced-lr00001-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -289,9 +289,9 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
-                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
-                                               "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1"]
+                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_Proportioned/Testing/TestA1",
+                                               "/mnt/Data/ltanzi/SubgroupA_Proportioned/Testing/TestA2",
+                                               "/mnt/Data/ltanzi/SubgroupA_Proportioned/Testing/TestA1"]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
