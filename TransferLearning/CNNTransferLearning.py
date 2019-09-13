@@ -132,7 +132,7 @@ if __name__ == "__main__":
                         last_layer = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A", "B"]
+                        classes = ["Broken", "Unbroken"]
                         name = "Fold{}_IncV3-{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
