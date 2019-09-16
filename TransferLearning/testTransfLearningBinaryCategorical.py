@@ -83,3 +83,20 @@ for i, folder in enumerate(test_folder):
             x += 1
 
     print("{} classified correctly: {}%".format(classes[i], x))
+
+#ROC CURVE
+test_generator = data_generator.flow_from_directory(score_folder,
+                                                    target_size=(image_size, image_size),
+                                                    batch_size=24,
+                                                    class_mode=classmode,
+                                                    classes=classes)
+STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
+
+
+test_generator.reset()
+
+y_pred_keras = model.predict_generator(test_generator,
+                                  steps=STEP_SIZE_TEST,
+                                  verbose=1).ravel()
+
+fpr_keras, tpr_keras, thresholds_keras = roc_curve(y_test, y_pred_keras)
