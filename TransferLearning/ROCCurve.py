@@ -8,7 +8,7 @@ from scipy import interp
 import matplotlib.pyplot as plt
 from itertools import cycle
 from sklearn.metrics import roc_curve, auc
-from keras.applications.inception_v3 import preprocess_input
+from keras.applications.vgg16 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 from sklearn.preprocessing import label_binarize
@@ -30,13 +30,13 @@ def print_img(name, img):
 
 if run_on_server == 'y':
     datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
-    model_name = "/mnt/data/ltanzi/CV/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
+    model_name = "/mnt/data/ltanzi/Models/Fold4_lr00001-pretrained-retrainAll-balanced-categorical-VGG-1568111818.model"
 elif run_on_server == 'n':
     datadir = "/Users/leonardotanzi/Desktop/Test"
     model_name = "/Users/leonardotanzi/Desktop/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
 
 categories = ["A", "B", "Unbroken"]
-img_size = 299
+img_size = 224
 training_data = []
 n_classes = 3
 y_score = []
@@ -178,13 +178,13 @@ plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('InceptionV3')
+plt.title('ResNet50')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
     plt.show()
 else:
-    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc1.png")
+    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc1resnet.png")
 
 
 # Zoom in view of the upper left corner.
@@ -211,10 +211,10 @@ for i, color in zip(range(n_classes), colors):
 plt.plot([0, 1], [0, 1], 'k--', lw=lw)
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('InceptionV3')
+plt.title('ResNet50')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
     plt.show()
 else:
-    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2.png")
+    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2resnet.png")
