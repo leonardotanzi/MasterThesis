@@ -16,7 +16,6 @@ import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
-ap.add_argument("-m", "--model", required=True, help="Model used: 0 VGG, 1 ResNet, 2 Inception")
 args = vars(ap.parse_args())
 run_on_server = args["server"]
 
@@ -31,7 +30,7 @@ def print_img(name, img):
 if run_on_server == 'y':
     datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
     model = "/mnt/data/ltanzi/CV/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
-elif run_on server == 'n':
+elif run_on_server == 'n':
     datadir = "/Users/leonardotanzi/Desktop/Test"
     model = "/Users/leonardotanzi/Desktop/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
 
