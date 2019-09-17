@@ -16,7 +16,6 @@ import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
-ap.add_argument("-m", "--model", required=True, help="Model used: 0 VGG, 1 ResNet, 2 Inception")
 args = vars(ap.parse_args())
 run_on_server = args["server"]
 
@@ -30,10 +29,10 @@ def print_img(name, img):
 
 if run_on_server == 'y':
     datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
-    model = "/mnt/data/ltanzi/CV/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
-elif run_on server == 'n':
+    model_name = "/mnt/data/ltanzi/CV/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
+elif run_on_server == 'n':
     datadir = "/Users/leonardotanzi/Desktop/Test"
-    model = "/Users/leonardotanzi/Desktop/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
+    model_name = "/Users/leonardotanzi/Desktop/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
 
 categories = ["A", "B", "Unbroken"]
 img_size = 299
@@ -43,17 +42,39 @@ y_score = []
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
-model = tf.keras.models.load_model(model)
 
-for img_path in sorted(glob.glob(datadir + "/*.png"), key=os.path.getsize):
-    img = image.load_img(img_path, target_size=(img_size, img_size))
+training_data = []
 
-    x = image.img_to_array(img)
+for category in categories:
+
+    path = os.path.join(datadir, category)  # create path to broken and unbroken
+    class_num = categories.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
+
+    for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
+        try:
+            img = image.load_img(os.path.join(path, img), target_size=(img_size, img_size))
+            training_data.append([img, class_num])  # add this to our training_data
+        except Exception as e:  # in the interest in keeping the output clean...
+            pass
+
+
+random.shuffle(training_data)
+
+X = []
+y = []
+
+for features, label in training_data:
+    x = image.img_to_array(features)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
+    X.append(x)
+    y.append(label)
 
-    y_score.append(model.predict(x))
-    # y_score = model.predict(X)
+
+model = tf.keras.models.load_model(model_name)
+
+y_score.append(model.predict(x))
+# y_score = model.predict(X)
 
 '''
 for category in categories:
