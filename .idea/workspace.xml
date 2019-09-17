@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/TransferLearning/ROCCurve.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/ROCCurve.py" afterDir="false" />
-    </list>
+    <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
