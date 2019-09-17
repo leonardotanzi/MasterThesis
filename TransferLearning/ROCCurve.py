@@ -78,7 +78,11 @@ model = tf.keras.models.load_model(model_name)
 
 for x in X:
     y_score.append(model.predict(x))
-    
+
+print(y_score[0])
+y_score = np.squeeze(y_score)
+print(y_score[0])
+
 # y_score = model.predict(X)
 
 '''
