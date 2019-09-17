@@ -11,6 +11,7 @@ from sklearn.metrics import roc_curve, auc
 from keras.applications.inception_v3 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
+from sklearn.preprocessing import label_binarize
 import glob
 import argparse
 
@@ -70,10 +71,14 @@ for features, label in training_data:
     X.append(x)
     y.append(label)
 
+y = label_binarize(y, classes=[0, 1, 2])
+
 
 model = tf.keras.models.load_model(model_name)
 
-y_score.append(model.predict(x))
+for x in X:
+    y_score.append(model.predict(x))
+    
 # y_score = model.predict(X)
 
 '''
