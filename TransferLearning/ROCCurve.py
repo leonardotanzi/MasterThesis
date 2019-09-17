@@ -178,13 +178,13 @@ plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ResNet50')
+plt.title('VGG16')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
     plt.show()
 else:
-    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc1resnet.png")
+    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc1vgg.png")
 
 
 # Zoom in view of the upper left corner.
@@ -211,10 +211,10 @@ for i, color in zip(range(n_classes), colors):
 plt.plot([0, 1], [0, 1], 'k--', lw=lw)
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ResNet50')
+plt.title('VGG16')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
     plt.show()
 else:
-    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2resnet.png")
+    plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2vgg.png")
