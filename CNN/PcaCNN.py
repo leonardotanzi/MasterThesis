@@ -20,8 +20,8 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y":
-        train_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Train"
-        test_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Test"
+        train_folder = "/mnt/Data/ltanzi/A1A2A3onefold/Train"
+        test_folder = "/mnt/Data/ltanzi/A1A2A3onefold/Test"
         out_folder = "/mnt/Data/ltanzi/A1A2A3/pca/"
 
 elif run_on_server == "n":
