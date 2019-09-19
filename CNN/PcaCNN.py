@@ -20,9 +20,9 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y":
-        train_folder = "/mnt/Data/ltanzi/PcaCNN/Train"
-        test_folder = "/mnt/Data/ltanzi/PcaCNN/Test"
-        out_folder = "/mnt/Data/ltanzi/PcaCNN/"
+        train_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Train"
+        test_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned/Test"
+        out_folder = "/mnt/Data/ltanzi/A1A2A3/pca/"
 
 elif run_on_server == "n":
         train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNNsmall/Train"
@@ -41,7 +41,7 @@ if run_binary == "y":
 
 elif run_binary == "n":
         last_layer = 3
-        categories = ["A", "B", "Unbroken"]
+        categories = ["A1", "A2", "A3"]
         loss = "sparse_categorical_crossentropy"
         n_class = 3
 

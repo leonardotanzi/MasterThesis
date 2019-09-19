@@ -3,7 +3,7 @@ import glob
 import os
 from shutil import copyfile
 
-path = "/mnt/data/ltanzi/A/"
+path = "/mnt/data/ltanzi/A_flipped/"
 for image_path in glob.glob(path + "*.png"):
 	print(image_path)
 		

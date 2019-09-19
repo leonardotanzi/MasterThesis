@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/ROCCurve_original.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/ROCCurve_original.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/PcaCNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN/PcaCNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/flipImages.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/flipImages.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,50 +13,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="57" selection-start-line="54" selection-end-line="57" />
-              <folding>
-                <element signature="e#41#64#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="72" selection-start-line="72" selection-end-line="72" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="61" column="18" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
-              <folding>
-                <element signature="e#1085#1418#0" />
-                <element signature="e#3393#4239#1" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve_original.py">
+        <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+            <state relative-caret-position="360">
+              <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
               <folding>
-                <element signature="e#0#48#0" expanded="true" />
+                <element signature="e#0#53#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,7 +73,6 @@
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py" />
         <option value="$PROJECT_DIR$/Scripts/kfold_cross.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAM.py" />
-        <option value="$PROJECT_DIR$/CNN/PcaCNN.py" />
         <option value="$PROJECT_DIR$/CNN/CNN.py" />
         <option value="$PROJECT_DIR$/TransferLearning/PreTraining.py" />
         <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
@@ -120,6 +82,7 @@
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
         <option value="$PROJECT_DIR$/TransferLearning/ROCCurve.py" />
         <option value="$PROJECT_DIR$/TransferLearning/ROCCurve_original.py" />
+        <option value="$PROJECT_DIR$/CNN/PcaCNN.py" />
       </list>
     </option>
   </component>
@@ -133,6 +96,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -154,7 +118,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -313,7 +276,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -673,16 +636,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="67" column="12" selection-start-line="66" selection-start-column="12" selection-end-line="67" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
@@ -774,6 +727,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -785,22 +748,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve.py">
+    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve_original.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="213">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        <state relative-caret-position="-7">
+          <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#48#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve_original.py">
+    <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
+        <state relative-caret-position="360">
+          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
           <folding>
-            <element signature="e#0#48#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
