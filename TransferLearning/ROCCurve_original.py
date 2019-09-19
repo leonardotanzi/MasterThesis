@@ -28,10 +28,14 @@ def build_model():
     return model
 
 keras_model2 = build_model()
-keras_model2.fit(X_train, y_train, epochs=10, batch_size=100, verbose=1)
+keras_model2.fit(X_train, y_train, epochs=2, batch_size=100, verbose=1)
 
 y_score = keras_model2.predict(X_test)
-
+print(y_score)
+print(y_score[0])
+print(y_score.shape)
+print(y_test.shape)
+print(X_test.shape)
 
 import numpy as np
 from scipy import interp
