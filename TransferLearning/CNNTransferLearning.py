@@ -105,9 +105,9 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+                        train_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
                         out_folder = "/mnt/Data/ltanzi/"
 
                 elif run_on_server == "n":

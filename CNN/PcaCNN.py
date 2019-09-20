@@ -20,9 +20,9 @@ run_on_server = args["server"]
 run_binary = args["binary"]
 
 if run_on_server == "y":
-        train_folder = "/mnt/Data/ltanzi/A1A2A3onefold/Train"
-        test_folder = "/mnt/Data/ltanzi/A1A2A3onefold/Test"
-        out_folder = "/mnt/Data/ltanzi/A1A2A3/pca/"
+        train_folder = "/mnt/Data/ltanzi/A1A2A3onefoldFlipped/Train"
+        test_folder = "/mnt/Data/ltanzi/A1A2A3onefoldFlipped/Test"
+        out_folder = "/mnt/Data/ltanzi/A1A2A3/flipped/"
 
 elif run_on_server == "n":
         train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/PcaCNNsmall/Train"
@@ -35,7 +35,7 @@ else:
 
 if run_binary == "y":
         last_layer = 2
-        categories = ["Broken", "Unbroken"]
+        categories = ["A1", "A2"]
         loss = "sparse_categorical_crossentropy"
         n_class = 2
 
@@ -49,7 +49,7 @@ else:
         raise ValueError('Incorrect 2nd arg.')
 
 
-image_size = 256
+image_size = 299
 cannyWindow = 17
 
 training_data = []
@@ -85,7 +85,7 @@ X = np.array(X).reshape(-1, image_size, image_size, 1)  # we need to convert x i
 
 model_name = "EdgedNet-lr00001{}".format(int(time.time()))
 tensorboard = TensorBoard(log_dir="logs/{}".format(model_name))
-es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=30)  # verbose to print the n of epoch in which stopped,
+es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=15)  # verbose to print the n of epoch in which stopped,
 
 
 dimData = np.prod(X.shape[1:])
@@ -100,15 +100,15 @@ model.add(Dense(n_class, activation='softmax'))
 
 model.summary()
 
-adam = Adam(lr=0.00001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
+adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)  # the optimizer, as the sgd
 
 model.compile(loss=loss,
               optimizer=adam,
               metrics=["accuracy"])
 
-model.fit(X, y, batch_size=32, epochs=100, validation_split=0.33, callbacks=[tensorboard, es])
+model.fit(X, y, batch_size=32, epochs=200, validation_split=0.33, callbacks=[tensorboard, es])
 
-model.save("{}.model".format(model_name))
+# model.save("{}.model".format(model_name))
 
 
 # Test
