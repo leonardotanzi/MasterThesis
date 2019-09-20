@@ -7,14 +7,14 @@ import numpy as np
 
 K = 5
 image_size = 256
-categories = ["A1", "A2", "A3"]
+categories = ["A", "B", "Unbroken"]
 
-input_folders = ["/Users/leonardotanzi/Desktop/A/{}".format(categories[0]),
-                 "/Users/leonardotanzi/Desktop/A/{}".format(categories[1]),
-                 "/Users/leonardotanzi/Desktop/A/{}".format(categories[2])]
+input_folders = ["/mnt/data/ltanzi/flippedDataset/{}".format(categories[0]),
+                 "/mnt/data/ltanzi/flippedDataset/{}".format(categories[1]),
+                 "/mnt/data/ltanzi/flippedDataset/{}".format(categories[2])]
 
 # create the root folder
-output_path = "/Users/leonardotanzi/Desktop/KCrossVal"
+output_path = "/mnt/data/ltanzi/flippedCrossVal"
 os.mkdir(output_path)
 
 # create folders for splitting the dataset
