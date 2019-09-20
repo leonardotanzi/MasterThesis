@@ -15,11 +15,11 @@ run_on_server = args["server"]
 model_name = int(args["model"])
 
 if run_on_server == "y":
-        test_folder = ["/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA1",
-                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA2",
-                       "/mnt/Data/ltanzi/SubgroupA_folds/Testing/TestA3"]
-        score_folder = "/mnt/Data/ltanzi/SubgroupA_folds/Test"
-        model_path = "/mnt/Data/ltanzi/CV/SubgroupA_folds/"
+        test_folder = ["/mnt/Data/ltanzi/flippedCrossVal/Testing/TestA",
+                       "/mnt/Data/ltanzi/flippedCrossVal/Testing/TestB",
+                       "/mnt/Data/ltanzi/flippedCrossVal/Testing/TestUnbroken"]
+        score_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
+        model_path = "/mnt/Data/ltanzi/FlippedModels/Inception/"
 elif run_on_server == "n":
         test_folder = ["/Users/leonardotanzi/Desktop/testEdgedA1A2A3/Testing/TestA1",
                        "/Users/leonardotanzi/Desktop/testEdgedA1A2A3/Testing/TestA2",
@@ -47,7 +47,7 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 classes = ["A1", "A2", "A3"]
 dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}  
 
-model = load_model(model_path + "Fold2_A1A2A3balanced-edged-retrainAll-categorical-Inception-1568305189.model")
+model = load_model(model_path + "Fold4_lr00001-retrainAll-balanced-categorical-Inception-1568976316-best_model.h5")
 
 # Evaluate scores of the full test set
 
