@@ -105,10 +105,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned_edged/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned_edged/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/SubgroupA_Proportioned_edged/Test"
-                        out_folder = "/mnt/Data/ltanzi/A1A2A3/edged/"
+                        train_folder = "/mnt/Data/ltanzi/SubgroupA_flipped/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/SubgroupA_flipped/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/SubgroupA_flipped/Test"
+                        out_folder = "/mnt/Data/ltanzi/A1A2A3/flipped/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)

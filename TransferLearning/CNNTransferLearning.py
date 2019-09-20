@@ -108,7 +108,7 @@ if __name__ == "__main__":
                         train_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Train".format(i)
                         val_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Validation".format(i)
                         test_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/"
+                        out_folder = "/mnt/Data/ltanzi/FlippedModels/VGG/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -142,7 +142,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_lr00001-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_Flipped_lr00001-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")

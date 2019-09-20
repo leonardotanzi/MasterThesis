@@ -2,7 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/CNN/PcaCNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN/PcaCNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/BaselineNet-1567174690/events.out.tfevents.1567174692.vpnclient86.remote-access.kth.se" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/BaselineNet-1567175340/events.out.tfevents.1567175342.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/BaselineNet-lr000011567175608/events.out.tfevents.1567175610.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011567176106/events.out.tfevents.1567176108.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011567176436/events.out.tfevents.1567176439.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011567176567/events.out.tfevents.1567176569.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011567176744/events.out.tfevents.1567176746.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568906187/events.out.tfevents.1568906188.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568906723/events.out.tfevents.1568906724.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907052/events.out.tfevents.1568907054.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907165/events.out.tfevents.1568907167.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907272/events.out.tfevents.1568907273.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907416/events.out.tfevents.1568907418.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907479/events.out.tfevents.1568907481.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907513/events.out.tfevents.1568907516.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907569/events.out.tfevents.1568907571.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907730/events.out.tfevents.1568907731.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907790/events.out.tfevents.1568907797.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907842/events.out.tfevents.1568907845.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568907944/events.out.tfevents.1568907947.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568908007/events.out.tfevents.1568908009.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568968886/events.out.tfevents.1568968889.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568969062/events.out.tfevents.1568969064.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568969121/events.out.tfevents.1568969123.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568969246/events.out.tfevents.1568969249.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN/logs/EdgedNet-lr000011568969296/events.out.tfevents.1568969298.JC" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,24 +41,25 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
+            <state relative-caret-position="324">
+              <caret line="110" column="73" selection-start-line="110" selection-start-column="73" selection-end-line="110" selection-end-column="73" />
               <folding>
-                <element signature="e#0#53#0" expanded="true" />
+                <element signature="e#0#97#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1425">
-              <caret line="95" column="8" selection-start-line="95" selection-end-line="96" />
+            <state relative-caret-position="387">
+              <caret line="110" column="61" lean-forward="true" selection-start-line="110" selection-start-column="61" selection-end-line="110" selection-end-column="61" />
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
+                <element signature="e#1767#3874#0" />
               </folding>
             </state>
           </provider>
@@ -86,14 +115,14 @@
         <option value="$PROJECT_DIR$/TransferLearning/CAM.py" />
         <option value="$PROJECT_DIR$/CNN/CNN.py" />
         <option value="$PROJECT_DIR$/TransferLearning/PreTraining.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearningBinaryCategorical.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
         <option value="$PROJECT_DIR$/TransferLearning/ROCCurve.py" />
         <option value="$PROJECT_DIR$/TransferLearning/ROCCurve_original.py" />
         <option value="$PROJECT_DIR$/CNN/PcaCNN.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
       </list>
     </option>
   </component>
@@ -107,7 +136,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,6 +157,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -378,11 +407,6 @@
           <url>file://$PROJECT_DIR$/CNN/PcaCNN.py</url>
           <line>108</line>
           <option name="timeStamp" value="101" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py</url>
-          <line>35</line>
-          <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
@@ -647,16 +671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="293" column="103" selection-start-line="293" selection-start-column="103" selection-end-line="293" selection-end-column="103" />
-          <folding>
-            <element signature="e#0#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinary.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="601">
@@ -759,22 +773,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+    <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1425">
-          <caret line="95" column="8" selection-start-line="95" selection-end-line="96" />
+        <state relative-caret-position="345">
+          <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
           <folding>
-            <element signature="e#0#97#0" expanded="true" />
+            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
+    <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
+        <state relative-caret-position="387">
+          <caret line="110" column="61" lean-forward="true" selection-start-line="110" selection-start-column="61" selection-end-line="110" selection-end-column="61" />
           <folding>
-            <element signature="e#0#53#0" expanded="true" />
+            <element signature="e#0#97#0" expanded="true" />
+            <element signature="e#1767#3874#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="110" column="73" selection-start-line="110" selection-start-column="73" selection-end-line="110" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
           </folding>
         </state>
       </provider>
