@@ -7,14 +7,14 @@ import numpy as np
 
 K = 5
 image_size = 256
-categories = ["A", "B", "Unbroken"]
+categories = ["A1", "A2", "A3"]
 
-input_folders = ["/mnt/data/ltanzi/flippedDataset/{}".format(categories[0]),
-                 "/mnt/data/ltanzi/flippedDataset/{}".format(categories[1]),
-                 "/mnt/data/ltanzi/flippedDataset/{}".format(categories[2])]
+input_folders = ["/mnt/data/ltanzi/SubgroupA_flipped/{}".format(categories[0]),
+                 "/mnt/data/ltanzi/SubgroupA_flipped/{}".format(categories[1]),
+                 "/mnt/data/ltanzi/SubgroupA_flipped/{}".format(categories[2])]
 
 # create the root folder
-output_path = "/mnt/data/ltanzi/flippedCrossVal"
+output_path = "/mnt/data/ltanzi/flippedA1A2A3CrossVal"
 os.mkdir(output_path)
 
 # create folders for splitting the dataset

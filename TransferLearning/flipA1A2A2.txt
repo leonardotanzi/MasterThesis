@@ -1,0 +1,6 @@
+Fold number 1
+/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold1/Train
+Found 433 images belonging to 3 classes.
+Found 109 images belonging to 3 classes.
+Found 122 images belonging to 3 classes.
+Epoch 1/150
