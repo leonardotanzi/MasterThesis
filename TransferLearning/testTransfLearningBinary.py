@@ -33,7 +33,7 @@ image_size = 224
 dict_classes = {class1: 0, class2: 1}
 classes = [class1, class2]
 
-data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1, horizontal_flip=True, preprocessing_function=preprocess_input)
+data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 model = load_model(model_path + "Broken_Unbroken-binary-baselineVGG-1562672986-best_model.h5")
 
