@@ -44,10 +44,10 @@ elif model_name == 2:
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
-classes = ["A1", "A2", "A3"]
+classes = ["A", "B", "Unbroken"]
 dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}  
 
-model = load_model(model_path + "Fold4_lr00001-retrainAll-balanced-categorical-Inception-1568976316-best_model.h5")
+model = load_model(model_path + "Fold1_lr00001-retrainAll-balanced-categorical-Inception-1568970850.model")
 
 # Evaluate scores of the full test set
 

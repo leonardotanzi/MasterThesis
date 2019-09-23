@@ -108,7 +108,7 @@ if __name__ == "__main__":
                         train_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Train".format(i)
                         val_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Validation".format(i)
                         test_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/FlippedModels/VGG/"
+                        out_folder = "/mnt/Data/ltanzi/FlippedModels/Inception/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -199,7 +199,7 @@ if __name__ == "__main__":
 
                 # Fit model
                 data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
-                        horizontal_flip=True, preprocessing_function=preprocess_input)
+                        preprocessing_function=preprocess_input)
                 data_generator_notAug = ImageDataGenerator(preprocessing_function=preprocess_input)
 
                 '''
@@ -289,9 +289,9 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[0]),
-                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[1]),
-                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[2])]
+                                test_folder = ["/mnt/Data/ltanzi/flippedCrossVal/Testing/Test{}".format(classes[0]),
+                                               "/mnt/Data/ltanzi/flippedCrossVal/Testing/Test{}".format(classes[1]),
+                                               "/mnt/Data/ltanzi/flippedCrossVal/Testing/Test{}".format(classes[2])]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
@@ -302,7 +302,7 @@ if __name__ == "__main__":
                         dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}
 
                         for k, folder in enumerate(test_folder):
-                                test_generator = data_generator.flow_from_directory(folder,
+                                test_generator = data_generator_notAug.flow_from_directory(folder,
                                                                         target_size=(image_size, image_size),
                                                                         batch_size=batch_size,
                                                                         class_mode=classmode)
