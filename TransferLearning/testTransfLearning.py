@@ -47,7 +47,7 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 classes = ["A", "B", "Unbroken"]
 dict_classes = {classes[0]: 0, classes[1]: 1, classes[2]: 2}  
 
-model = load_model(model_path + "Fold1_lr00001-retrainAll-balanced-categorical-Inception-1568970850.model")
+model = load_model(model_path + "Fold5_Flipped_lr00001-retrainAll-balanced-categorical-Inception-1569005609.model")
 
 # Evaluate scores of the full test set
 
