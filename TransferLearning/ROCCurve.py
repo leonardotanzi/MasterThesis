@@ -85,43 +85,6 @@ print(y_score[0])
 
 # y_score = model.predict(X)
 
-'''
-for category in categories:
-
-    path = os.path.join(datadir, category)  # create path to broken and unbroken
-    class_num = categories.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
-
-    for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
-        try:
-            img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
-            new_array = cv2.resize(img_array, (img_size, img_size))  # resize to normalize data size
-            training_data.append([new_array, class_num])  # add this to our training_data
-        except Exception as e:  # in the interest in keeping the output clean...
-            pass
-
-random.shuffle(training_data)
-
-X = []
-y = []
-
-for features, label in training_data:
-    X.append(features)
-    y.append(label)
-
-# X = np.array(X).reshape(-1, img_size, img_size, 1) # we need to convert x in numpy array, last 1 because it's grayscale
-
-# X = X/255.0
-
-for x in X:
-    x = preprocess_input(x)
-
-model = tf.keras.models.load_model("/Users/leonardotanzi/Desktop/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
-
-score = model.evaluate(X, y, verbose=0)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
-'''
-
 # Plot linewidth.
 lw = 2
 
@@ -218,3 +181,27 @@ if run_on_server == 'n':
     plt.show()
 else:
     plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2vgg.png")
+
+
+# PRECISION RECALL
+
+probs = model.predict_proba(testX)
+# keep probabilities for the positive outcome only
+probs = probs[:, 1]
+# predict class values
+yhat = model.predict(testX)
+# calculate precision-recall curve
+precision, recall, thresholds = precision_recall_curve(testy, probs)
+# calculate F1 score
+f1 = f1_score(testy, yhat)
+# calculate precision-recall AUC
+auc = auc(recall, precision)
+# calculate average precision score
+ap = average_precision_score(testy, probs)
+print('f1=%.3f auc=%.3f ap=%.3f' % (f1, auc, ap))
+# plot no skill
+pyplot.plot([0, 1], [0.5, 0.5], linestyle='--')
+# plot the precision-recall curve for the model
+pyplot.plot(recall, precision, marker='.')
+# show the plot
+pyplot.show()

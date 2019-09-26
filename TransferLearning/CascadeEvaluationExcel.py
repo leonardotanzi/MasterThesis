@@ -8,6 +8,8 @@ import numpy as np
 import glob
 import cv2
 import os
+import xlwt
+from xlwt import Workbook
 
 
 ap = argparse.ArgumentParser()
@@ -22,7 +24,17 @@ subclass1 = "A"
 subclass2 = "B"
 subclass3 = "Unbroken"
 
-label = "Unbroken"
+wb = Workbook()
+
+sheet = wb.add_sheet('Predictions')
+
+sheet.write(0, 0, "Name")
+sheet.write(0, 1, "Broken Probability")
+sheet.write(0, 2, "Unbroken Probability")
+sheet.write(0, 3, "A Probability")
+sheet.write(0, 4, "B Probability")
+sheet.write(0, 5, "Prediction")
+
 
 if run_on_server == "y":
     score_folder = "/mnt/Data/ltanzi/Train_Val/Test"
@@ -32,7 +44,7 @@ if run_on_server == "y":
 
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
-    score_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/{}".format(label)
+    score_folder = "/Users/leonardotanzi/Desktop/TestBiomeccanica/Original"
     # score_folder_A1A2A3 = "/Users/leonardotanzi/Desktop/SubgroupA_Proportioned/Test/A3"
     test_folder = ["/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Testing/Test" + subclass1,
                    "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Testing/Test" + subclass2,
@@ -47,23 +59,20 @@ output_path_AB = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputAB/"
 
 classmode = "sparse"
 image_size = 299
-# dict_classes = {class1: 0, class2: 1}
-# classes = [class1, class2]
 
 data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 first_model = load_model(model_path + "Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
 second_model = load_model(model_path + "Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
-# third_model = load_model(model_path + "Fold1_A1A2A3balanced-retrainAll-categorical-Inception-1568302055-best_model.h5")
 
-i = 0
-j = 0
+num_row = 1
 
 for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
 
     img = image.load_img(img_path, target_size=(image_size, image_size))
     X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
     original_name = img_path.split("/")[-1].split(".")[0]
+    sheet.write(num_row, 0, original_name)
 
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
@@ -73,81 +82,31 @@ for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
 
     class_idx = np.argmax(preds, axis=1)
 
+    sheet.write(num_row, 1, "{0:6.4f}".format(preds[0][0]))  # perchè preds[0] si riferisce ad Broken
+    sheet.write(num_row, 2, "{0:6.4f}".format(preds[0][1]))  # perchè preds[1] si riferisce ad Unbroken
+
     if class_idx == 1:
         print("Unbroken")
-        cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/UnbrokenPredicted/{}-Label{}-PredictedUnbroken.png".format(original_name, label), X_original)
-        i += 1
+        sheet.write(num_row, 5, "Unbroken")
 
     elif class_idx == 0:
         print("Broken")
-        j += 1
-        name_out = output_path + "{}".format(img_path.split("/")[-1])
-        cv2.imwrite(name_out, X_original)
 
+        preds2 = second_model.predict(x)
 
-print("Unbroken {} - Broken {}".format(i, j))
+        class_idx = np.argmax(preds2, axis=1)
 
-i = 0
-j = 0
-for img_path in sorted(glob.glob(output_path + "*.png"), key=os.path.getsize):
+        sheet.write(num_row, 3, "{0:6.4f}".format(preds2[0][0]))  # perchè preds[0] si riferisce ad A
+        sheet.write(num_row, 4, "{0:6.4f}".format(preds2[0][1]))  # perchè preds[1] si riferisce a B
 
-    img = image.load_img(img_path, target_size=(image_size, image_size))
-    X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
-    original_name = img_path.split("/")[-1].split(".")[0]
+        if class_idx == 0:
+            #cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/APredicted/{}-PredictedA.png".format(original_name),X_original)
+            sheet.write(num_row, 5, "A")
 
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
+        elif class_idx == 1:
+            #cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/BPredicted/{}-PredictedB.png".format(original_name),X_original)
+            sheet.write(num_row, 5, "B")
 
-    preds = second_model.predict(x)
+    num_row += 1
 
-    class_idx = np.argmax(preds, axis=1)
-
-    if class_idx == 0:
-        print("A")
-        i += 1
-        cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/APredicted/{}-Label{}-PredictedA.png".format(original_name, label), X_original)
-        # name_out = output_path_AB + "{}".format(img_path.split("/")[-1])
-        # cv2.imwrite(name_out, X_original)
-
-    elif class_idx == 1:
-        # print("B")
-        j += 1
-        cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/BPredicted/{}-Label{}-PredictedB.png".format(original_name, label), X_original)
-
-
-
-print("A {} - B {}".format(i, j))
-
-
-i = 0
-j = 0
-k = 0
-'''
-for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize):
-
-    img = image.load_img(img_path, target_size=(image_size, image_size))
-    X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
-
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
-
-    preds = third_model.predict(x)
-
-    class_idx = np.argmax(preds, axis=1)
-
-    if class_idx == 0:
-        print("A1")
-        i += 1
-
-    elif class_idx == 1:
-        print("A2")
-        j += 1
-
-    elif class_idx == 2:
-        print("A3")
-        k += 1
-
-print("A1 {} - A2 {} - A3 {}".format(i, j, k))
-'''
+wb.save('/Users/leonardotanzi/Desktop/Prediction.xls')
