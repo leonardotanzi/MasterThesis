@@ -39,10 +39,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/A1A2A3/flipped/"
+                        train_folder = "/mnt/data/ltanzi/SubgroupA_Proportioned_edged/Fold{}/Train".format(i)  #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Train".format(i)
+                        val_folder = "/mnt/data/ltanzi/SubgroupA_Proportioned_edged/Fold{}/Validation".format(i) #/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/data/ltanzi/SubgroupA_Proportioned_edged/Test" #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Test"
+                        out_folder = "/mnt/Data/ltanzi/A1A2A3/edged/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
                         last_layer = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A1", "A3"]
+                        classes = ["A1", "A2"]
                         name = "Fold{}_{}_{}-binary-baseline{}-{}".format(i, classes[0], classes[1], model_type, int(time.time()))
 
                 elif run_binary == "n":
@@ -76,7 +76,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A2", "A3"]
-                        name = "Fold{}_A1A2A3balanced-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_A1A2A3_notflipped-edged-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -201,9 +201,9 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA1",
-                                               "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA2",
-                                               "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA3"]
+                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_Proportioned_edged/Testing/TestA1",
+                                               "/mnt/Data/ltanzi/SubgroupA_Proportioned_edged/Testing/TestA2",
+                                               "/mnt/Data/ltanzi/SubgroupA_Proportioned_edged/Testing/TestA3"]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
@@ -343,13 +343,13 @@ if __name__ == "__main__":
 
         print("MODEL")
 
-        if binary == "n":
+        if run_binary == "n":
                 print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
                       "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
                                                                     classes[1], avg_accuracies[1],
                                                                     classes[2], avg_accuracies[2],
                                                                     avg_scores[0], avg_scores[1]))
-        elif binary == "y":
+        elif run_binary == "y":
                 print("Average:\n {} classified correctly {}%, {} classified correctly {}%.\n"
                       "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
                                                                       classes[1], avg_accuracies[1],
@@ -369,13 +369,13 @@ if __name__ == "__main__":
 
         print("BEST MODEL")
 
-        if binary == "n":
+        if run_binary == "n":
                 print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
                       "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0], classes[1],
                                                                     best_avg_accuracies[1], classes[2],
                                                                     best_avg_accuracies[2], best_avg_scores[0],
                                                                     best_avg_scores[1]))
-        elif binary == "y":
+        elif run_binary == "y":
                 print("Average:\n {} classified correctly {}%, {} classified correctly {}%.\n"
                       "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0],
                                                                     classes[1], best_avg_accuracies[1],
