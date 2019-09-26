@@ -342,11 +342,18 @@ if __name__ == "__main__":
                 avg_scores[i] /= n_fold
 
         print("MODEL")
-        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+
+        if binary == "n":
+                print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
                       "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
                                                                     classes[1], avg_accuracies[1],
                                                                     classes[2], avg_accuracies[2],
                                                                     avg_scores[0], avg_scores[1]))
+        elif binary == "y":
+                print("Average:\n {} classified correctly {}%, {} classified correctly {}%.\n"
+                      "Average loss {}, average accuracy {}".format(classes[0], avg_accuracies[0],
+                                                                      classes[1], avg_accuracies[1],
+                                                                      avg_scores[0], avg_scores[1]))
 
         best_avg_accuracies = [0, 0, 0]
         best_avg_scores = [0, 0]
@@ -361,8 +368,15 @@ if __name__ == "__main__":
                 best_avg_scores[i] /= n_fold
 
         print("BEST MODEL")
-        print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
-              "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0],
-                                                            classes[1], best_avg_accuracies[1],
-                                                            classes[2], best_avg_accuracies[2],
-                                                            best_avg_scores[0], best_avg_scores[1]))
+
+        if binary == "n":
+                print("Average:\n {} classified correctly {}%, {} classified correctly {}%, {} Classified correctly {}%.\n"
+                      "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0], classes[1],
+                                                                    best_avg_accuracies[1], classes[2],
+                                                                    best_avg_accuracies[2], best_avg_scores[0],
+                                                                    best_avg_scores[1]))
+        elif binary == "y":
+                print("Average:\n {} classified correctly {}%, {} classified correctly {}%.\n"
+                      "Average loss {}, average accuracy {}".format(classes[0], best_avg_accuracies[0],
+                                                                    classes[1], best_avg_accuracies[1],
+                                                                    best_avg_scores[0], best_avg_scores[1]))
