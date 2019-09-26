@@ -95,7 +95,6 @@ if __name__ == "__main__":
         model_type = models[run_model]
         image_size = 224 if run_model == 0 or run_model == 1 else 299
         n_fold = 5
-        n_class = 3
         accuracies = [[] for x in range(n_class)]
         best_accuracies = [[] for x in range(n_class)]
         scores = [[] for x in range(2)]
@@ -130,15 +129,17 @@ if __name__ == "__main__":
                         binary = "categorical"
                         loss = "sparse_categorical_crossentropy"
                         last_layer = 2
+                        n_class = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A1", "A2"]
+                        classes = ["A1", "A3"]
                         name = "Fold{}_{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
                         binary = "categorical"
                         loss = "sparse_categorical_crossentropy"
                         last_layer = 3
+                        n_class = 3
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A2", "A3"]
@@ -291,7 +292,7 @@ if __name__ == "__main__":
                         if run_on_server == "y":
                                 test_folder = ["/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA1",
                                                "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA2",
-                                               "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA1"]
+                                               "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/TestA3"]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
