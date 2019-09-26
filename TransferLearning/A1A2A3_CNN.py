@@ -14,24 +14,6 @@ import numpy as np
 import time
 import os
 import tensorflow as tf
-                
-def compute_weights(input_folder):
-        dictio = {"A1": 0, "A2": 1, "A3": 2}
-        files_per_class = []
-        for folder in os.listdir(input_folder):
-                if folder.startswith('.'):
-                        continue
-                if folder.startswith('Bro'):
-                        continue
-                if not os.path.isfile(folder):
-                        a=dictio.get(folder)
-                        files_per_class.insert(dictio.get(folder), (len(os.listdir(input_folder + '/' + folder))))
-        total_files = sum(files_per_class)
-        class_weights = {}
-        for i in range(len(files_per_class)):
-                class_weights[i] = 1 - (float(files_per_class[i]) / total_files)
-        return class_weights
-
 
 if __name__ == "__main__":
 
@@ -85,7 +67,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A3"]
-                        name = "Fold{}_{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
+                        name = "Fold{}_{}_{}-binary-baseline{}-{}".format(i, classes[0], classes[1], model_type, int(time.time()))
 
                 elif run_binary == "n":
                         binary = "categorical"
@@ -98,10 +80,6 @@ if __name__ == "__main__":
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
-
-
-                # BALANCING
-                class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -195,7 +173,6 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
