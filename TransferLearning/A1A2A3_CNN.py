@@ -33,53 +33,6 @@ def compute_weights(input_folder):
         return class_weights
 
 
-def VGG16_dropout_batchnorm():
-        input_shape = (224, 224, 3)
-
-        model = Sequential([
-                Conv2D(64, (3, 3), input_shape=input_shape, padding='same',
-                       activation='relu'),
-                Conv2D(64, (3, 3), activation='relu', padding='same'),
-                BatchNormalization(),
-                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-                Dropout(0.5),
-                Conv2D(128, (3, 3), activation='relu', padding='same'),
-                Conv2D(128, (3, 3), activation='relu', padding='same', ),
-                BatchNormalization(),
-                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-                Dropout(0.5),
-                Conv2D(256, (3, 3), activation='relu', padding='same', ),
-                Conv2D(256, (3, 3), activation='relu', padding='same', ),
-                Conv2D(256, (3, 3), activation='relu', padding='same', ),
-                BatchNormalization(),
-                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-                Dropout(0.5),
-                Conv2D(512, (3, 3), activation='relu', padding='same', ),
-                Conv2D(512, (3, 3), activation='relu', padding='same', ),
-                Conv2D(512, (3, 3), activation='relu', padding='same', ),
-                BatchNormalization(),
-                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-                Dropout(0.5),
-                Conv2D(512, (3, 3), activation='relu', padding='same', ),
-                Conv2D(512, (3, 3), activation='relu', padding='same', ),
-                Conv2D(512, (3, 3), activation='relu', padding='same', ),
-                BatchNormalization(),
-                MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-                Dropout(0.5),
-                Flatten(),
-                # Dense(4096),
-                # Activation('relu'),
-                # BatchNormalization(),
-                # Dropout(0.5),
-                # Dense(4096),
-                # Activation('relu'),
-                # BatchNormalization(),
-                # Dropout(0.5),
-                Dense(3, activation='softmax')
-        ])
-        return model
-
-
 if __name__ == "__main__":
 
         ap = argparse.ArgumentParser()
@@ -94,13 +47,13 @@ if __name__ == "__main__":
         models = ["VGG", "ResNet", "Inception"]
         model_type = models[run_model]
         image_size = 224 if run_model == 0 or run_model == 1 else 299
+        n_class = 2 if run_binary == "y" else 3
         n_fold = 5
         accuracies = [[] for x in range(n_class)]
         best_accuracies = [[] for x in range(n_class)]
         scores = [[] for x in range(2)]
         best_scores = [[] for x in range(2)]
-        fine_tune = False
-        
+
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
@@ -129,7 +82,6 @@ if __name__ == "__main__":
                         binary = "categorical"
                         loss = "sparse_categorical_crossentropy"
                         last_layer = 2
-                        n_class = 2
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A3"]
@@ -139,7 +91,6 @@ if __name__ == "__main__":
                         binary = "categorical"
                         loss = "sparse_categorical_crossentropy"
                         last_layer = 3
-                        n_class = 3
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A2", "A3"]
@@ -150,7 +101,6 @@ if __name__ == "__main__":
 
 
                 # BALANCING
-                print(train_folder)
                 class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
@@ -162,38 +112,22 @@ if __name__ == "__main__":
 
                 # LOAD WEIGHTS
                 weights = "imagenet"
-                   
-                #MODEL DEFINITION
-                baseline = True
 
-                if baseline:
-                        my_new_model = Sequential()
-                        if model_type == "VGG":
-                                my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
-                                preprocess_input = pre_process_VGG
+                my_new_model = Sequential()
+                if model_type == "VGG":
+                        my_new_model.add(VGG16(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
+                        preprocess_input = pre_process_VGG
 
-                        elif model_type == "ResNet":
-                                my_new_model.add(ResNet50(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
-                                preprocess_input = pre_process_ResNet
+                elif model_type == "ResNet":
+                        my_new_model.add(ResNet50(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
+                        preprocess_input = pre_process_ResNet
 
-                        elif model_type == "Inception":
-                                my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
-                                preprocess_input = pre_process_Inception
-                                
-                        # my_new_model.add(Dense(4096))
-                        # my_new_model.add(BatchNormalization())
-                        # my_new_model.add(Activation("relu"))
-                        # my_new_model.add(Dropout(0.3))
-                        # my_new_model.add(Dense(4096))
-                        # my_new_model.add(BatchNormalization())
-                        # my_new_model.add(Activation("relu"))
-                        # my_new_model.add(Dropout(0.3))
-                        my_new_model.add(Dense(last_layer, activation=act))
-                        my_new_model.layers[0].trainable = True
-                        if fine_tune:
-                                my_new_model = load_model("/mnt/data/ltanzi/MURA/Inception-pre_trained_weights_MURA.model")
-                else:
-                        my_new_model = VGG16_dropout_batchnorm()
+                elif model_type == "Inception":
+                        my_new_model.add(InceptionV3(include_top=False, input_shape=(image_size, image_size, 3), pooling="avg", weights=weights))
+                        preprocess_input = pre_process_Inception
+
+                my_new_model.add(Dense(last_layer, activation=act))
+                my_new_model.layers[0].trainable = True
 
                 adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
@@ -351,6 +285,72 @@ if __name__ == "__main__":
 
                                 best_accuracies[k].append(percentage)
 
+                elif run_binary == "y":
+
+                        test_generator.reset()
+
+                        if run_on_server == "y":
+                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_flipped/Testing/Test{}".format(classes[0]),
+                                               "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/Test{}".format(classes[1])]
+                                batch_size = 32
+                        elif run_on_server == "n":
+                                test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
+                                               "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA2",
+                                               "/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA3"]
+                                batch_size = 32
+
+                        dict_classes = {classes[0]: 0, classes[1]: 1}
+
+                        for k, folder in enumerate(test_folder):
+                                test_generator = data_generator_notAug.flow_from_directory(folder,
+                                                                                           target_size=(
+                                                                                           image_size,
+                                                                                           image_size),
+                                                                                           batch_size=batch_size,
+                                                                                           class_mode=classmode)
+
+                                STEP_SIZE_TEST = test_generator.n // test_generator.batch_size
+
+                                test_generator.reset()
+
+                                pred = my_new_model.predict_generator(test_generator,
+                                                                      steps=STEP_SIZE_TEST,
+                                                                      verbose=1)
+
+                                best_pred = best_model.predict_generator(test_generator,
+                                                                         steps=STEP_SIZE_TEST,
+                                                                         verbose=1)
+
+                                predicted_class_indices = np.argmax(pred, axis=1)
+                                best_predicted_class_indices = np.argmax(best_pred, axis=1)
+
+                                labels = dict_classes
+                                labels = dict((v, k) for k, v in labels.items())
+                                predictions = [labels[k] for k in predicted_class_indices]
+                                best_predictions = [labels[k] for k in best_predicted_class_indices]
+
+                                tot = 0
+                                x = 0
+                                for j in predictions:
+                                        tot += 1
+                                        if j == classes[k]:
+                                                x += 1
+
+                                percentage = x * 100 / tot
+                                print("Model:{} classified correctly: {}%".format(classes[k], percentage))
+                                accuracies[k].append(percentage)
+
+                                tot = 0
+                                x = 0
+                                for j in best_predictions:
+                                        tot += 1
+                                        if j == classes[k]:
+                                                x += 1
+
+                                percentage = x * 100 / tot
+                                print("Best Model: {} classified correctly: {}%".format(classes[k], percentage))
+
+                                best_accuracies[k].append(percentage)
 
         avg_accuracies = [0, 0, 0]
         avg_scores = [0, 0]

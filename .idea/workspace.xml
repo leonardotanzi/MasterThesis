@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/ROCCurve.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/ROCCurve.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +51,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluationExcel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
+            <state relative-caret-position="870">
               <caret line="69" column="59" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="79" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -65,8 +63,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-742">
-              <caret line="10" column="48" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
+            <state relative-caret-position="3390">
+              <caret line="226" column="97" lean-forward="true" selection-start-line="226" selection-start-column="97" selection-end-line="226" selection-end-column="97" />
+              <folding>
+                <element signature="e#0#97#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -143,6 +144,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -164,7 +166,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -697,16 +698,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinaryCategorical.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="85" selection-start-line="85" selection-end-line="101" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
@@ -805,8 +796,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluationExcel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
+        <state relative-caret-position="870">
           <caret line="69" column="59" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="79" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/testTransfLearningBinaryCategorical.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="101" column="72" lean-forward="true" selection-start-line="101" selection-start-column="72" selection-end-line="101" selection-end-column="72" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -815,8 +816,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-742">
-          <caret line="10" column="48" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
+        <state relative-caret-position="3390">
+          <caret line="226" column="97" lean-forward="true" selection-start-line="226" selection-start-column="97" selection-end-line="226" selection-end-column="97" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
