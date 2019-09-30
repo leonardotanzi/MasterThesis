@@ -105,10 +105,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/FlippedModels/Inception/"
+                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+                        out_folder = "/mnt/Data/ltanzi/ResNetModels/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -142,7 +142,7 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B", "Unbroken"]
-                        name = "Fold{}_Flipped_lr00001-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_lr00001-retrainAll-balanced-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")
@@ -259,7 +259,7 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        # class_weight=class_weights_train,
+                        class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
@@ -289,9 +289,9 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/flippedCrossVal/Testing/Test{}".format(classes[0]),
-                                               "/mnt/Data/ltanzi/flippedCrossVal/Testing/Test{}".format(classes[1]),
-                                               "/mnt/Data/ltanzi/flippedCrossVal/Testing/Test{}".format(classes[2])]
+                                test_folder = ["/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[0]),
+                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[1]),
+                                               "/mnt/Data/ltanzi/Train_Val_CV/Testing/Test{}".format(classes[2])]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
