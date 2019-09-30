@@ -8,6 +8,7 @@ import numpy as np
 import glob
 import cv2
 import os
+import shutil
 
 
 ap = argparse.ArgumentParser()
@@ -33,7 +34,7 @@ if run_on_server == "y":
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
     score_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/{}".format(label)
-    # score_folder_A1A2A3 = "/Users/leonardotanzi/Desktop/SubgroupA_Proportioned/Test/A3"
+    score_folder_A1A2A3 = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Test/A3"
     test_folder = ["/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Testing/Test" + subclass1,
                    "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Testing/Test" + subclass2,
                    "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Testing/Test" + subclass3]
@@ -54,12 +55,12 @@ data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 first_model = load_model(model_path + "Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
 second_model = load_model(model_path + "Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
-# third_model = load_model(model_path + "Fold1_A1A2A3balanced-retrainAll-categorical-Inception-1568302055-best_model.h5")
+third_model = load_model(model_path + "Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model")
 
 i = 0
 j = 0
 
-for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
+for img_path in sorted(glob.glob(score_folder_A1A2A3 + "/*.png"), key=os.path.getsize):
 
     img = image.load_img(img_path, target_size=(image_size, image_size))
     X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
@@ -75,7 +76,7 @@ for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
 
     if class_idx == 1:
         print("Unbroken")
-        cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/UnbrokenPredicted/{}-Label{}-PredictedUnbroken.png".format(original_name, label), X_original)
+        # cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/UnbrokenPredicted/{}-Label{}-PredictedUnbroken.png".format(original_name, label), X_original)
         i += 1
 
     elif class_idx == 0:
@@ -84,11 +85,11 @@ for img_path in sorted(glob.glob(score_folder + "/*.png"), key=os.path.getsize):
         name_out = output_path + "{}".format(img_path.split("/")[-1])
         cv2.imwrite(name_out, X_original)
 
-
 print("Unbroken {} - Broken {}".format(i, j))
 
 i = 0
 j = 0
+
 for img_path in sorted(glob.glob(output_path + "*.png"), key=os.path.getsize):
 
     img = image.load_img(img_path, target_size=(image_size, image_size))
@@ -106,24 +107,22 @@ for img_path in sorted(glob.glob(output_path + "*.png"), key=os.path.getsize):
     if class_idx == 0:
         print("A")
         i += 1
-        cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/APredicted/{}-Label{}-PredictedA.png".format(original_name, label), X_original)
-        # name_out = output_path_AB + "{}".format(img_path.split("/")[-1])
-        # cv2.imwrite(name_out, X_original)
+        # cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/APredicted/{}-Label{}-PredictedA.png".format(original_name, label), X_original)
+        name_out = output_path_AB + "{}".format(img_path.split("/")[-1])
+        cv2.imwrite(name_out, X_original)
 
     elif class_idx == 1:
         # print("B")
         j += 1
-        cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/BPredicted/{}-Label{}-PredictedB.png".format(original_name, label), X_original)
-
+        # cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/BPredicted/{}-Label{}-PredictedB.png".format(original_name, label), X_original)
 
 
 print("A {} - B {}".format(i, j))
 
-
 i = 0
 j = 0
 k = 0
-'''
+
 for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize):
 
     img = image.load_img(img_path, target_size=(image_size, image_size))
@@ -150,4 +149,9 @@ for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize)
         k += 1
 
 print("A1 {} - A2 {} - A3 {}".format(i, j, k))
-'''
+
+
+shutil.rmtree(output_path)
+shutil.rmtree(output_path_AB)
+os.mkdir(output_path)
+os.mkdir(output_path_AB)

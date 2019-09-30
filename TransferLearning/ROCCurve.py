@@ -7,8 +7,8 @@ import numpy as np
 from scipy import interp
 import matplotlib.pyplot as plt
 from itertools import cycle
-from sklearn.metrics import roc_curve, auc
-from keras.applications.resnet50 import preprocess_input
+from sklearn.metrics import roc_curve, auc, confusion_matrix
+from keras.applications.inception_v3 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 from sklearn.preprocessing import label_binarize
@@ -33,10 +33,10 @@ if run_on_server == 'y':
     model_name = "/mnt/data/ltanzi/Fold2_lr00001-retrainAll-balanced-categorical-ResNet-1568739612.model"
 elif run_on_server == 'n':
     datadir = "/Users/leonardotanzi/Desktop/Test"
-    model_name = "/Users/leonardotanzi/Desktop/Fold1_lr00001-batch32-notAugValTest-retrainAll-balanced-categorical-baselineInception-1563972372.model"
+    model_name = "/Users/leonardotanzi/Desktop/InceptionModels/Fold5_lr00001-retrainAll-balanced-categorical-Inception-1568751083.model"
 
 categories = ["A", "B", "Unbroken"]
-img_size = 224
+img_size = 299
 training_data = []
 n_classes = 3
 y_score = []
@@ -84,6 +84,9 @@ y_score = np.squeeze(y_score)
 print(y_score[0])
 
 # y_score = model.predict(X)
+
+matrix = confusion_matrix(y.argmax(axis=1), y_score.argmax(axis=1))
+print(matrix)
 
 # Plot linewidth.
 lw = 2
@@ -141,11 +144,11 @@ plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ResNet50')
+plt.title('InceptionV3 - Fold5')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
-    plt.show()
+    plt.savefig("/Users/leonardotanzi/Desktop/InceptionModels/Fold5.png")
 else:
     plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc1vgg.png")
 
@@ -174,34 +177,12 @@ for i, color in zip(range(n_classes), colors):
 plt.plot([0, 1], [0, 1], 'k--', lw=lw)
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
-plt.title('ResNet50')
+plt.title('InceptionV3 - Fold5')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
-    plt.show()
+    plt.savefig("/Users/leonardotanzi/Desktop/InceptionModels/Fold5zoom.png")
 else:
     plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2vgg.png")
 
 
-# PRECISION RECALL
-
-probs = model.predict_proba(testX)
-# keep probabilities for the positive outcome only
-probs = probs[:, 1]
-# predict class values
-yhat = model.predict(testX)
-# calculate precision-recall curve
-precision, recall, thresholds = precision_recall_curve(testy, probs)
-# calculate F1 score
-f1 = f1_score(testy, yhat)
-# calculate precision-recall AUC
-auc = auc(recall, precision)
-# calculate average precision score
-ap = average_precision_score(testy, probs)
-print('f1=%.3f auc=%.3f ap=%.3f' % (f1, auc, ap))
-# plot no skill
-pyplot.plot([0, 1], [0.5, 0.5], linestyle='--')
-# plot the precision-recall curve for the model
-pyplot.plot(recall, precision, marker='.')
-# show the plot
-pyplot.show()
