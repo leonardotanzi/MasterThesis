@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/ROCCurve.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/ROCCurve.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,26 +12,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2340">
-              <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
+            <state relative-caret-position="-1547">
+              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="473">
-              <caret line="183" column="67" selection-start-line="183" selection-start-column="67" selection-end-line="183" selection-end-column="67" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-                <element signature="e#842#994#0" />
               </folding>
             </state>
           </provider>
@@ -59,6 +44,8 @@
       <find>num_classes</find>
       <find>test_folder</find>
       <find>classes</find>
+      <find>classmode</find>
+      <find>data_generator</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -96,8 +83,8 @@
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluationExcel.py" />
         <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
         <option value="$PROJECT_DIR$/TransferLearning/ROCCurve.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
       </list>
     </option>
   </component>
@@ -151,7 +138,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ROCCurve">
+  <component name="RunManager" selected="Python.CascadeEvaluation">
     <configuration name="CascadeEvaluation" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -266,8 +253,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ROCCurve" />
         <item itemvalue="Python.CascadeEvaluation" />
+        <item itemvalue="Python.ROCCurve" />
         <item itemvalue="Python.CascadeEvaluationExcel" />
         <item itemvalue="Python.ROCCurve_original" />
         <item itemvalue="Python.testTransfLearning" />
@@ -296,7 +283,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4988086" weight="0.31678832" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.40145984" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.40145984" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -388,11 +375,6 @@
           <option name="timeStamp" value="103" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py</url>
-          <line>127</line>
-          <option name="timeStamp" value="109" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/ROCCurve.py</url>
           <line>77</line>
           <option name="timeStamp" value="118" />
@@ -401,11 +383,6 @@
           <url>file://$PROJECT_DIR$/TransferLearning/ROCCurve_original.py</url>
           <line>90</line>
           <option name="timeStamp" value="122" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py</url>
-          <line>66</line>
-          <option name="timeStamp" value="125" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CascadeEvaluationExcel.py</url>
@@ -420,6 +397,11 @@
           <url>file://$PROJECT_DIR$/TransferLearning/ROCCurve.py</url>
           <line>91</line>
           <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py</url>
+          <line>113</line>
+          <option name="timeStamp" value="131" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -700,16 +682,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve_original.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="93" column="23" selection-start-line="93" selection-start-column="23" selection-end-line="93" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve_original.py" />
     <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -777,16 +750,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2340">
-          <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/sklearn/metrics/classification.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="611">
@@ -794,13 +757,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve.py">
+    <entry file="file://$PROJECT_DIR$/TransferLearning/ROCCurve.py" />
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="183" column="67" selection-start-line="183" selection-start-column="67" selection-end-line="183" selection-end-column="67" />
+        <state relative-caret-position="-1547">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#842#994#0" />
           </folding>
         </state>
       </provider>

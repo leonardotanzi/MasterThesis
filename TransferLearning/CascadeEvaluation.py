@@ -46,16 +46,10 @@ output_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputBroUnbro
 output_path_AB = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputAB/"
 
 
-classmode = "sparse"
 image_size = 299
-# dict_classes = {class1: 0, class2: 1}
-# classes = [class1, class2]
-
-data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 first_model = load_model(model_path + "Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
 second_model = load_model(model_path + "Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
-third_model = load_model(model_path + "Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model")
 
 i = 0
 j = 0
@@ -123,35 +117,80 @@ i = 0
 j = 0
 k = 0
 
-for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize):
+classic_cascade = False
 
-    img = image.load_img(img_path, target_size=(image_size, image_size))
-    X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
+if classic_cascade:
 
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
+    third_model = load_model(model_path + "Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model")
 
-    preds = third_model.predict(x)
+    for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize):
 
-    class_idx = np.argmax(preds, axis=1)
+        img = image.load_img(img_path, target_size=(image_size, image_size))
+        X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
 
-    if class_idx == 0:
-        print("A1")
-        i += 1
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
 
-    elif class_idx == 1:
-        print("A2")
-        j += 1
+        preds = third_model.predict(x)
 
-    elif class_idx == 2:
-        print("A3")
-        k += 1
+        class_idx = np.argmax(preds, axis=1)
+
+        if class_idx == 0:
+            print("A1")
+            i += 1
+
+        elif class_idx == 1:
+            print("A2")
+            j += 1
+
+        elif class_idx == 2:
+            print("A3")
+            k += 1
+else:
+
+    third_model_A1A2 = load_model(model_path + "Fold1_A1_A2-binary-baselineInception-1569514982.model")
+    third_model_A1A3 = load_model(model_path + "Fold1_A1_A3-binary-baselineInception-1569535118.model")
+    third_model_A2A3 = load_model(model_path + "Fold3_A2_A3-binary-baselineInception-1569598028.model")
+
+    for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize):
+
+        img = image.load_img(img_path, target_size=(image_size, image_size))
+        X_original = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # convert to array
+
+        x = image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
+
+        predsA1A2 = third_modelA1A2.predict(x)  # 0 se A1, 1 se A2
+        predsA1A3 = third_modelA1A3.predict(x)  # 0 se A1, 1 se A3
+        predsA2A3 = third_modelA2A3.predict(x)  # 0 se A2, 1 se A3
+
+        A1val = predsA1A2[0] + predsA1A3[0]
+        A2val = predsA1A2[1] + predsA2A3[0]
+        A3val = predsA1A3[1] + predsA2A3[1]
+
+        values = [A1val, A2val, A3val]
+
+        class_idx = np.argmax(values, axis=1)
+
+        if class_idx == 0:
+            print("A1")
+            i += 1
+
+        elif class_idx == 1:
+            print("A2")
+            j += 1
+
+        elif class_idx == 2:
+            print("A3")
+            k += 1
 
 print("A1 {} - A2 {} - A3 {}".format(i, j, k))
 
-
+'''
 shutil.rmtree(output_path)
 shutil.rmtree(output_path_AB)
 os.mkdir(output_path)
 os.mkdir(output_path_AB)
+'''
