@@ -108,7 +108,7 @@ if __name__ == "__main__":
                         train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
                         val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
                         test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-                        out_folder = "/mnt/Data/ltanzi/InceptionModels/New/"
+                        out_folder = "/mnt/Data/ltanzi/VGGmodels/New/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
