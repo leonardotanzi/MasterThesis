@@ -36,7 +36,7 @@ else:
     path = "/mnt/data/ltanzi/Prostata/"
 
 
-csv = path + "data.xls"
+csv = "/mnt/data/ltanzi/MasterThesis/Prostata/data.xls"
 train_path = path + "Train/"
 
 wb = xlrd.open_workbook(csv) 

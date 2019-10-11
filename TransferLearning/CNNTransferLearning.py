@@ -230,7 +230,8 @@ if __name__ == "__main__":
                         target_size=(image_size, image_size),
                         batch_size=32,
                         class_mode=classmode,
-                        classes=classes)
+                        classes=classes
+                )
 
                 validation_generator = data_generator_notAug.flow_from_directory(val_folder,
                         target_size=(image_size, image_size),
