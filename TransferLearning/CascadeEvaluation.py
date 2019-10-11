@@ -48,6 +48,7 @@ output_path_AB = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputAB/"
 
 image_size = 299
 
+
 first_model = load_model(model_path + "Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
 second_model = load_model(model_path + "Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
 
@@ -113,6 +114,7 @@ for img_path in sorted(glob.glob(output_path + "*.png"), key=os.path.getsize):
 
 print("A {} - B {}".format(i, j))
 
+
 i = 0
 j = 0
 k = 0
@@ -152,6 +154,7 @@ else:
     third_model_A1A2 = load_model(model_path + "Fold1_A1_A2-binary-baselineInception-1569514982.model")
     third_model_A1A3 = load_model(model_path + "Fold1_A1_A3-binary-baselineInception-1569535118.model")
     third_model_A2A3 = load_model(model_path + "Fold3_A2_A3-binary-baselineInception-1569598028.model")
+    third_model = load_model(model_path + "Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model")
 
     for img_path in sorted(glob.glob(output_path_AB + "*.png"), key=os.path.getsize):
 
@@ -162,15 +165,17 @@ else:
         x = np.expand_dims(x, axis=0)
         x = preprocess_input(x)
 
-        predsA1A2 = third_modelA1A2.predict(x)  # 0 se A1, 1 se A2
-        predsA1A3 = third_modelA1A3.predict(x)  # 0 se A1, 1 se A3
-        predsA2A3 = third_modelA2A3.predict(x)  # 0 se A2, 1 se A3
+        predsA1A2 = third_model_A1A2.predict(x)  # 0 se A1, 1 se A2
+        predsA1A3 = third_model_A1A3.predict(x)  # 0 se A1, 1 se A3
+        predsA2A3 = third_model_A2A3.predict(x)  # 0 se A2, 1 se A3
 
-        A1val = predsA1A2[0] + predsA1A3[0]
-        A2val = predsA1A2[1] + predsA2A3[0]
-        A3val = predsA1A3[1] + predsA2A3[1]
+        preds = third_model.predict(x)
 
-        values = [A1val, A2val, A3val]
+        A1val = predsA1A2[0][0] + predsA1A3[0][0] + preds[0][0]
+        A2val = predsA1A2[0][1] + predsA2A3[0][0] + preds[0][1]
+        A3val = predsA1A3[0][1] + predsA2A3[0][1] + preds[0][2]
+
+        values = [[A1val, A2val, A3val]]
 
         class_idx = np.argmax(values, axis=1)
 
@@ -188,9 +193,8 @@ else:
 
 print("A1 {} - A2 {} - A3 {}".format(i, j, k))
 
-'''
+
 shutil.rmtree(output_path)
 shutil.rmtree(output_path_AB)
 os.mkdir(output_path)
 os.mkdir(output_path_AB)
-'''
