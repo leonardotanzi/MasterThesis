@@ -108,7 +108,7 @@ if __name__ == "__main__":
                         train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
                         val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
                         test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-                        out_folder = "/mnt/Data/ltanzi/VGGmodels/New/"
+                        out_folder = "/mnt/Data/ltanzi/binaryBroUnbro/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
                         last_layer = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["B", "Unbroken"]
+                        classes = ["A", "B"]
                         name = "Fold{}_IncV3-{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
@@ -149,7 +149,7 @@ if __name__ == "__main__":
 
 
                 # BALANCING
-                class_weights_train = compute_weights(train_folder)
+                # class_weights_train = compute_weights(train_folder)
 
                 # CALLBACKS
                 log_dir = out_folder + "logs/{}".format(name)
@@ -260,7 +260,7 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        class_weight=class_weights_train,
+                        # class_weight=class_weights_train,
                         callbacks=[tensorboard, es, mc])
 
                 # my_new_model.summary()
