@@ -8,7 +8,7 @@ from scipy import interp
 import matplotlib.pyplot as plt
 from itertools import cycle
 from sklearn.metrics import roc_curve, auc, confusion_matrix
-from keras.applications.inception_v3 import preprocess_input
+from keras.applications.resnet50 import preprocess_input
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing import image
 from sklearn.preprocessing import label_binarize
@@ -33,15 +33,15 @@ if run_on_server == 'y':
     model_name = "/mnt/data/ltanzi/Fold2_lr00001-retrainAll-balanced-categorical-ResNet-1568739612.model"
 elif run_on_server == 'n':
     datadir = "/Users/leonardotanzi/Desktop/Test"
-    model_name = "/Users/leonardotanzi/Desktop/InceptionModels/Fold5_lr00001-retrainAll-balanced-categorical-Inception-1568751083.model"
+    model_name = "/Users/leonardotanzi/Desktop/Fold2_lr00001-retrainAll-balanced-categorical-ResNet-1570106091.model"
 
 categories = ["A", "B", "Unbroken"]
-img_size = 299
+img_size = 224
 training_data = []
 n_classes = 3
 y_score = []
 
-data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
+# data_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
 
 training_data = []
@@ -148,7 +148,7 @@ plt.title('InceptionV3 - Fold5')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
-    plt.savefig("/Users/leonardotanzi/Desktop/InceptionModels/Fold5.png")
+    plt.savefig("/Users/leonardotanzi/Desktop/Fold1.png")
 else:
     plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc1vgg.png")
 
@@ -181,7 +181,7 @@ plt.title('InceptionV3 - Fold5')
 plt.legend(loc="lower right")
 
 if run_on_server == 'n':
-    plt.savefig("/Users/leonardotanzi/Desktop/InceptionModels/Fold5zoom.png")
+    plt.savefig("/Users/leonardotanzi/Desktop/Fold5zoom.png")
 else:
     plt.savefig("/mnt/data/ltanzi/MasterThesis/TransferLearning/Roc2vgg.png")
 
