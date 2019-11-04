@@ -27,7 +27,7 @@ precisions = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
 
 if run_on_server == "y":
-    model_path = "/mnt/Data/ltanzi/Cascade/Models"
+    model_path = "/mnt/Data/ltanzi/Cascade/Models/"
     test_folder = "/mnt/data/ltanzi/Train_Val_CV/Test/"
     output_path = "/mnt/data/ltanzi/Cascade/OutputBroUnbro/"
     output_path_AB = "/mnt/data/ltanzi/Cascade/OutputAB/"
@@ -51,7 +51,7 @@ else:
 image_size = 299
 
 for fold_n in range(5):
-    first_model = load_model(model_path + "Fold{}_broUnbro.model".format(fold_n + 1))
+    first_model = load_model(model_path + "Fold{}_BroUnbro.model".format(fold_n + 1))
     second_model = load_model(model_path + "Fold{}_AB.model".format(fold_n + 1))
 
     # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
