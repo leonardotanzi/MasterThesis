@@ -24,6 +24,7 @@ classes = [class1, class2, class3]
 sensitivities = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 specificities = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 precisions = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+accuracies = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
 
 if run_on_server == "y":
@@ -157,17 +158,22 @@ for fold_n in range(5):
     FP_U = z1 + z2
     FN_U = x3 + y3
 
+
+
     sens_A = TP_A / (TP_A + FN_A)
     spec_A = TN_A / (TN_A + FP_A)
     prec_A = TP_A / (TP_A + FP_A)
+    accu_A = (TP_A + TN_A) / (TP_A + TN_A + FN_A + FP_A)
 
     sens_B = TP_B / (TP_B + FN_B)
     spec_B = TN_B / (TN_B + FP_B)
     prec_B = TP_B / (TP_B + FP_B)
+    accu_B = (TP_B + TN_B) / (TP_B + TN_B + FN_B + FP_B)
 
     sens_U = TP_U / (TP_U + FN_U)
     spec_U = TN_U / (TN_U + FP_U)
     prec_U = TP_U / (TP_U + FP_U)
+    accu_U = (TP_U + TN_U) / (TP_U + TN_U + FN_U + FP_U)
 
     sensitivities[0][fold_n] = sens_A
     sensitivities[1][fold_n] = sens_B
@@ -181,9 +187,15 @@ for fold_n in range(5):
     precisions[1][fold_n] = prec_B
     precisions[2][fold_n] = prec_U
 
+    accuracies[0][fold_n] = accu_A
+    accuracies[1][fold_n] = accu_B
+    accuracies[2][fold_n] = accu_U
+
+
 print(sensitivities)
 print(specificities)
 print(precisions)
+print(accuracies)
 
 '''
 Matrix format:
@@ -199,6 +211,8 @@ file.write("\nSpecificities\n")
 file.write(str(specificities))
 file.write("\nPrecisions\n")
 file.write(str(precisions))
+file.write("\nAccuracies\n")
+file.write(str(accuracis))
 
 avg_sens_A = np.mean(sensitivities[0])
 std_sens_A = np.std(sensitivities[0])
@@ -221,13 +235,29 @@ std_prec_B = np.std(precisions[1])
 avg_prec_U = np.mean(precisions[2])
 std_prec_U = np.std(precisions[2])
 
+avg_accu_A = np.mean(accuracies[0])
+std_accu_A = np.std(accuracies[0])
+avg_accu_B = np.mean(accuracies[1])
+std_accu_B = np.std(accuracies[1])
+avg_accu_U = np.mean(accuracies[2])
+std_accu_U = np.std(accuracies[2])
 
-tab = "Class\t\tSensitivity\t\tSpecificity\t\tPrecision\n" \
-      "A\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
-      "B\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
-      "U\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n".format(avg_sens_A, std_sens_A, avg_sens_B, std_sens_B, avg_sens_U, std_sens_U,
-                                                    avg_spec_A, std_spec_A, avg_spec_B, std_spec_B, avg_spec_U, std_spec_U,
-                                                    avg_prec_A, std_prec_A, avg_prec_B, std_prec_B, avg_prec_U, std_prec_U)
+
+tab = "Class\t\tSensitivity\t\tSpecificity\t\tPrecision\t\tAccuracy\n" \
+      "A\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
+      "B\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
+      "U\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n".format(avg_sens_A, std_sens_A,
+                                                                                                       avg_spec_A, std_spec_A,
+                                                                                                       avg_prec_A, std_prec_A,
+                                                                                                       avg_accu_A, std_accu_A,
+                                                                                                       avg_sens_B, std_sens_B,
+                                                                                                       avg_spec_B, std_spec_B,
+                                                                                                       avg_prec_B, std_prec_B,
+                                                                                                       avg_accu_B, std_accu_B,
+                                                                                                       avg_sens_U, std_sens_U,
+                                                                                                       avg_spec_U, std_spec_U,
+                                                                                                       avg_prec_U, std_prec_U,
+                                                                                                       avg_accu_U, std_accu_U)
 
 print(tab)
 

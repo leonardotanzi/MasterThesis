@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Metrics/CascadeMetrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/Metrics/CascadeMetrics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Metrics/Folds.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/Metrics/Folds.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Metrics/~$Folds.xlsx" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Metrics/ROCCurve.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
+            <state relative-caret-position="300">
               <caret line="35" column="116" selection-start-line="35" selection-start-column="116" selection-end-line="35" selection-end-column="116" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
@@ -28,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="54" column="75" selection-start-line="54" selection-start-column="75" selection-end-line="54" selection-end-column="75" />
+            <state relative-caret-position="357">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -40,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Metrics/ComputeMeanStd.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="22" selection-end-column="25" />
+            <state relative-caret-position="300">
+              <caret line="20" selection-start-line="20" selection-end-line="22" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -124,7 +126,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -151,6 +152,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -779,7 +781,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Metrics/ROCCurve.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
+        <state relative-caret-position="300">
           <caret line="35" column="116" selection-start-line="35" selection-start-column="116" selection-end-line="35" selection-end-column="116" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
@@ -789,15 +791,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Metrics/ComputeMeanStd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="22" selection-end-column="25" />
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="22" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="75" selection-start-line="54" selection-start-column="75" selection-end-line="54" selection-end-column="75" />
+        <state relative-caret-position="357">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
