@@ -28,11 +28,11 @@ accuracies = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
 
 if run_on_server == "y":
-    model_path = "/mnt/Data/ltanzi/Cascade/Models/"
+    model_path = "/mnt/Data/ltanzi/Cascade/BestModels/"
     test_folder = "/mnt/data/ltanzi/Train_Val_CV/Test/"
     output_path = "/mnt/data/ltanzi/Cascade/OutputBroUnbro/"
     output_path_AB = "/mnt/data/ltanzi/Cascade/OutputAB/"
-    file_path = "/mnt/data/ltanzi/Cascade/metrics.txt"
+    file_path = "/mnt/data/ltanzi/Cascade/metricsBest.txt"
 
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
@@ -52,8 +52,8 @@ else:
 image_size = 299
 
 for fold_n in range(5):
-    first_model = load_model(model_path + "Fold{}_BroUnbro.model".format(fold_n + 1))
-    second_model = load_model(model_path + "Fold{}_AB.model".format(fold_n + 1))
+    first_model = load_model(model_path + "Fold{}_BroUnbro.h5".format(fold_n + 1))
+    second_model = load_model(model_path + "Fold{}_AB.h5".format(fold_n + 1))
 
     # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
     # second_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
@@ -158,8 +158,6 @@ for fold_n in range(5):
     FP_U = z1 + z2
     FN_U = x3 + y3
 
-
-
     sens_A = TP_A / (TP_A + FN_A)
     spec_A = TN_A / (TN_A + FP_A)
     prec_A = TP_A / (TP_A + FP_A)
@@ -212,7 +210,7 @@ file.write(str(specificities))
 file.write("\nPrecisions\n")
 file.write(str(precisions))
 file.write("\nAccuracies\n")
-file.write(str(accuracis))
+file.write(str(accuracies))
 
 avg_sens_A = np.mean(sensitivities[0])
 std_sens_A = np.std(sensitivities[0])

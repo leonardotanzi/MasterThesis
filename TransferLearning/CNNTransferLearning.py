@@ -105,10 +105,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-                        out_folder = "/mnt/Data/ltanzi/binaryBroUnbro/AB/"
+                        train_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
+                        out_folder = "/mnt/Data/ltanzi/flipCascade/AB/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -133,7 +133,8 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A", "B"]
-                        name = "Fold{}_IncV3-{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
+                        name = "Fold{}_AB".format(i)
+                        # name = "Fold{}_IncV3-{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
                         binary = "categorical"

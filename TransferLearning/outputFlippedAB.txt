@@ -1,0 +1,4 @@
+Fold number 1
+Found 0 images belonging to 2 classes.
+Found 0 images belonging to 2 classes.
+Found 200 images belonging to 2 classes.
