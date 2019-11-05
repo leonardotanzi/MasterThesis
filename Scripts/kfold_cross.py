@@ -7,14 +7,14 @@ import numpy as np
 
 K = 5
 image_size = 256
-categories = ["A1", "A2", "A3"]
+categories = ["A", "B", "Unbroken"]
 
-input_folders = ["/mnt/data/ltanzi/SubgroupA_flipped/{}".format(categories[0]),
-                 "/mnt/data/ltanzi/SubgroupA_flipped/{}".format(categories[1]),
-                 "/mnt/data/ltanzi/SubgroupA_flipped/{}".format(categories[2])]
+input_folders = ["/mnt/data/ltanzi/flippedDataset/{}".format(categories[0]),
+                 "/mnt/data/ltanzi/flippedDataset/{}".format(categories[1]),
+                 "/mnt/data/ltanzi/flippedDataset/{}".format(categories[2])]
 
 # create the root folder
-output_path = "/mnt/data/ltanzi/flippedA1A2A3CrossVal"
+output_path = "/mnt/data/ltanzi/flippedCrossVal"
 os.mkdir(output_path)
 
 # create folders for splitting the dataset
@@ -41,7 +41,7 @@ for enum, path in enumerate(input_folders):
     names = []
     shapes = []
 
-    for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
+    for img in tqdm(os.listdir(path)):
         try:
             img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)  # convert to array
             new_array = cv2.resize(img_array, (image_size, image_size))  # resize to normalize data size
@@ -64,3 +64,4 @@ for enum, path in enumerate(input_folders):
         for i in test_index:
             cv2.imwrite(output_path + "/Fold{}/Validation/{}/{}".format(nFold, categories[enum], names[i]), X_original[i])
         nFold += 1
+
