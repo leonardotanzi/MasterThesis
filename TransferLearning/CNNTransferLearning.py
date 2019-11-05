@@ -108,7 +108,7 @@ if __name__ == "__main__":
                         train_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Train".format(i)
                         val_folder = "/mnt/Data/ltanzi/flippedCrossVal/Fold{}/Validation".format(i)
                         test_folder = "/mnt/Data/ltanzi/flippedCrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/flipCascade/AB/"
+                        out_folder = "/mnt/Data/ltanzi/flipCascade/BroUnbro/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -132,8 +132,8 @@ if __name__ == "__main__":
                         last_layer = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A", "B"]
-                        name = "Fold{}_AB".format(i)
+                        classes = ["Broken", "Unbroken"]
+                        name = "Fold{}_BroUnbro".format(i)
                         # name = "Fold{}_IncV3-{}_{}-{}-baseline{}-{}".format(i, classes[0], classes[1], binary, model_type, int(time.time()))
 
                 elif run_binary == "n":
