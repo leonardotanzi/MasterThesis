@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Scripts/kfold_cross.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scripts/kfold_cross.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,10 +13,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Metrics/ROCCurve.py">
+        <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="35" column="116" selection-start-line="35" selection-start-column="116" selection-end-line="35" selection-end-column="116" />
+            <state relative-caret-position="257">
+              <caret line="27" selection-start-line="27" selection-end-line="28" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -25,13 +25,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Scripts/kfold_cross.py">
+        <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1005">
-              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="675">
+              <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -99,8 +96,9 @@
         <option value="$PROJECT_DIR$/Metrics/ROCCurve.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
-        <option value="$PROJECT_DIR$/Metrics/CascadeMetrics.py" />
         <option value="$PROJECT_DIR$/Scripts/kfold_cross.py" />
+        <option value="$PROJECT_DIR$/Metrics/CascadeMetrics.py" />
+        <option value="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" />
       </list>
     </option>
   </component>
@@ -130,12 +128,7 @@
             <path>
               <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
               <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="Prostata" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="Scripts" type="462c0819:PsiDirectoryNode" />
+              <item name="TransferLearning" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -146,6 +139,11 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Metrics" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -159,7 +157,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CascadeMetrics">
+  <component name="RunManager" selected="Python.CascadeMetricsA1A2A3">
     <configuration name="CNNProstata" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -223,6 +221,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="CascadeMetricsA1A2A3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MasterThesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Metrics" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" />
+      <option name="PARAMETERS" value="-s n" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="ROCCurve (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -244,41 +263,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="ROCCurve" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MasterThesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/TransferLearning" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TransferLearning/ROCCurve.py" />
-      <option name="PARAMETERS" value="-s n" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.CascadeEvaluation" />
-      <item itemvalue="Python.ROCCurve" />
       <item itemvalue="Python.CNNProstata" />
       <item itemvalue="Python.ROCCurve (1)" />
       <item itemvalue="Python.CascadeMetrics" />
+      <item itemvalue="Python.CascadeMetricsA1A2A3" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.CascadeMetricsA1A2A3" />
         <item itemvalue="Python.CascadeMetrics" />
         <item itemvalue="Python.ROCCurve (1)" />
         <item itemvalue="Python.CNNProstata" />
         <item itemvalue="Python.CascadeEvaluation" />
-        <item itemvalue="Python.ROCCurve" />
       </list>
     </recent_temporary>
   </component>
@@ -299,7 +297,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -425,17 +423,15 @@
           <line>77</line>
           <option name="timeStamp" value="142" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py</url>
+          <line>151</line>
+          <option name="timeStamp" value="144" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/keras/initializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1720">
-          <caret line="194" selection-start-line="194" selection-end-line="194" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CNN/CAM.py" />
     <entry file="file://$PROJECT_DIR$/CNN/CAMoriginal.py" />
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/tokenize.py">
@@ -748,11 +744,19 @@
     <entry file="file://$PROJECT_DIR$/Metrics/ConfusionMatrix.tgn">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
+    <entry file="file://$PROJECT_DIR$/Metrics/ComputeMeanStd.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="22" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scripts/kfold_cross.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
           <folding>
-            <element signature="e#2#25#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -767,30 +771,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Metrics/ComputeMeanStd.py">
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" selection-start-line="20" selection-end-line="22" selection-end-column="25" />
+        <state relative-caret-position="1502">
+          <caret line="150" column="18" lean-forward="true" selection-start-line="125" selection-start-column="4" selection-end-line="150" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="257">
+          <caret line="27" selection-start-line="27" selection-end-line="28" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/kfold_cross.py">
+    <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="675">
+          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
         </state>
       </provider>
     </entry>

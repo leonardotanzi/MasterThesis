@@ -39,10 +39,10 @@ if __name__ == "__main__":
         for i in range(1, n_fold+1):
 
                 if run_on_server == "y":
-                        train_folder = "/mnt/data/ltanzi/SubgroupA_Proportioned/Fold{}/Train".format(i)  #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Train".format(i)
-                        val_folder = "/mnt/data/ltanzi/SubgroupA_Proportioned/Fold{}/Validation".format(i) #/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/data/ltanzi/SubgroupA_Proportioned/Test" #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/A1A2A3/binary/"
+                        train_folder = "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Train".format(i)  #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Train".format(i)
+                        val_folder = "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Validation".format(i) #/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Test" #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Test"
+                        out_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/modelsA1A2vsA3/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -66,8 +66,9 @@ if __name__ == "__main__":
                         last_layer = 2
                         classmode = "sparse"
                         act = "softmax"
-                        classes = ["A2", "A3"]
-                        name = "Fold{}_{}_{}-binary-baseline{}-{}".format(i, classes[0], classes[1], model_type, int(time.time()))
+                        classes = ["A1_A2", "A3"]
+                        name = "Fold{}_A1A2vsA3".format(i)
+                        # name = "Fold{}_{}_{}-binary-baseline{}-{}".format(i, classes[0], classes[1], model_type, int(time.time()))
 
                 elif run_binary == "n":
                         binary = "categorical"
@@ -267,8 +268,8 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_flipped/Testing/Test{}".format(classes[0]),
-                                               "/mnt/Data/ltanzi/SubgroupA_flipped/Testing/Test{}".format(classes[1])]
+                                test_folder = ["/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Testing/Test{}".format(classes[0]),
+                                               "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Testing/Test{}".format(classes[1])]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",
