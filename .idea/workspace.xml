@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Metrics/CascadeMetrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/Metrics/CascadeMetrics.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,8 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
-              <caret line="54" column="64" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
+            <state relative-caret-position="93">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -148,7 +149,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CascadeMetricsA1A2A3">
+  <component name="RunManager" selected="Python.CascadeMetrics">
     <configuration name="CNNProstata" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -263,8 +264,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.CascadeMetricsA1A2A3" />
         <item itemvalue="Python.CascadeMetrics" />
+        <item itemvalue="Python.CascadeMetricsA1A2A3" />
         <item itemvalue="Python.ROCCurve (1)" />
         <item itemvalue="Python.CNNProstata" />
         <item itemvalue="Python.CascadeEvaluation" />
@@ -288,7 +289,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -621,16 +622,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1659">
-          <caret line="373" column="104" selection-start-line="373" selection-start-column="104" selection-end-line="373" selection-end-column="104" />
-          <folding>
-            <element signature="e#0#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluationExcel.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
@@ -776,10 +767,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="373" column="104" selection-start-line="373" selection-start-column="104" selection-end-line="373" selection-end-column="104" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="64" selection-start-line="54" selection-start-column="64" selection-end-line="54" selection-end-column="64" />
+        <state relative-caret-position="93">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
