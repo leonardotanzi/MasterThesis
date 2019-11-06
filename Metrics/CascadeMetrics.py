@@ -28,11 +28,11 @@ accuracies = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
 
 if run_on_server == "y":
-    model_path = "/mnt/Data/ltanzi/Cascade/BestModels/"
-    test_folder = "/mnt/data/ltanzi/Train_Val_CV/Test/"
-    output_path = "/mnt/data/ltanzi/Cascade/OutputBroUnbro/"
-    output_path_AB = "/mnt/data/ltanzi/Cascade/OutputAB/"
-    file_path = "/mnt/data/ltanzi/Cascade/metricsBest.txt"
+    model_path = "/mnt/Data/ltanzi/flipCascade/Models/"
+    test_folder = "/mnt/data/ltanzi/flippedCrossVal/Test/"
+    output_path = "/mnt/data/ltanzi/flipCascade/OutputBroUnbro/"
+    output_path_AB = "/mnt/data/ltanzi/flipCascade/OutputAB/"
+    file_path = "/mnt/data/ltanzi/flipCascade/metrics.txt"
 
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
@@ -52,8 +52,8 @@ else:
 image_size = 299
 
 for fold_n in range(5):
-    first_model = load_model(model_path + "Fold{}_BroUnbro.h5".format(fold_n + 1))
-    second_model = load_model(model_path + "Fold{}_AB.h5".format(fold_n + 1))
+    first_model = load_model(model_path + "Fold{}_BroUnbro.model".format(fold_n + 1))
+    second_model = load_model(model_path + "Fold{}_AB.model".format(fold_n + 1))
 
     # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
     # second_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
