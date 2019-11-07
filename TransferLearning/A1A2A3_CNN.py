@@ -42,7 +42,7 @@ if __name__ == "__main__":
                         train_folder = "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Train".format(i)  #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Train".format(i)
                         val_folder = "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Validation".format(i) #/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Fold{}/Validation".format(i)
                         test_folder = "/mnt/data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Test" #"/mnt/Data/ltanzi/flippedA1A2A3CrossVal/Test"
-                        out_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/modelsA1A2vsA3/"
+                        out_folder = "/mnt/Data/ltanzi/Cascade/A1A2A3provvisorio/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/SubgroupA_folds/Fold{}/Train".format(i)
@@ -77,7 +77,8 @@ if __name__ == "__main__":
                         classmode = "sparse"
                         act = "softmax"
                         classes = ["A1", "A2", "A3"]
-                        name = "Fold{}_A1A2A3_notflipped-edged-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
+                        name = "Fold{}_A1A2A3.model".format(i)
+                        # name = "Fold{}_A1A2A3_notflipped-edged-retrainAll-{}-{}-{}".format(i, binary, model_type, int(time.time()))
 
                 else:
                         raise ValueError("Incorrect 2nd arg")

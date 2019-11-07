@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Metrics/CascadeMetrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/Metrics/CascadeMetrics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/#outputFlippedAB.txt#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/ABbinary.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/BroUnbroBinary.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/outputFlippedAB.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TransferLearning/outputFlippedBroUnbro.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,10 +20,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="58" column="62" selection-start-line="58" selection-start-column="62" selection-end-line="58" selection-end-column="62" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1200">
+              <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#97#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="2803">
+              <caret line="231" column="8" selection-start-line="231" selection-start-column="8" selection-end-line="231" selection-end-column="8" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -81,7 +108,6 @@
         <option value="$PROJECT_DIR$/CNN/PcaCNN.py" />
         <option value="$PROJECT_DIR$/TransferLearning/testTransfLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluationExcel.py" />
-        <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
         <option value="$PROJECT_DIR$/TransferLearning/ROCCurve.py" />
         <option value="$PROJECT_DIR$/CNNProstata.py" />
         <option value="$PROJECT_DIR$/Prostata/CNNProstata.py" />
@@ -89,8 +115,9 @@
         <option value="$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py" />
         <option value="$PROJECT_DIR$/Scripts/kfold_cross.py" />
-        <option value="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" />
         <option value="$PROJECT_DIR$/Metrics/CascadeMetrics.py" />
+        <option value="$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py" />
+        <option value="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" />
       </list>
     </option>
   </component>
@@ -149,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CascadeMetrics">
+  <component name="RunManager" selected="Python.CascadeMetricsA1A2A3">
     <configuration name="CNNProstata" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -264,8 +291,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.CascadeMetrics" />
         <item itemvalue="Python.CascadeMetricsA1A2A3" />
+        <item itemvalue="Python.CascadeMetrics" />
         <item itemvalue="Python.ROCCurve (1)" />
         <item itemvalue="Python.CNNProstata" />
         <item itemvalue="Python.CascadeEvaluation" />
@@ -289,7 +316,7 @@
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -648,17 +675,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CNNProstata.py" />
-    <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="61" column="18" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
-          <folding>
-            <element signature="e#1085#1418#0" />
-            <element signature="e#3393#4239#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CNN/TestingCNN.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
@@ -675,16 +691,6 @@
           <caret line="49" column="113" selection-start-line="49" selection-start-column="113" selection-end-line="49" selection-end-column="113" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="53" selection-start-line="23" selection-start-column="53" selection-end-line="23" selection-end-column="53" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -760,17 +766,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py">
+    <entry file="file://$PROJECT_DIR$/CNN/PcaCNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="55" column="21" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
+        <state relative-caret-position="1635">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CNN/CNN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="61" column="18" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="18" />
+          <folding>
+            <element signature="e#1085#1418#0" />
+            <element signature="e#3393#4239#1" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/A1A2A3_CNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="373" column="104" selection-start-line="373" selection-start-column="104" selection-end-line="373" selection-end-column="104" />
+        <state relative-caret-position="1200">
+          <caret line="80" column="26" selection-start-line="80" selection-start-column="26" selection-end-line="80" selection-end-column="26" />
           <folding>
             <element signature="e#0#97#0" expanded="true" />
           </folding>
@@ -779,11 +799,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetrics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="2803">
+          <caret line="231" column="8" selection-start-line="231" selection-start-column="8" selection-end-line="231" selection-end-column="8" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="58" column="62" selection-start-line="58" selection-start-column="62" selection-end-line="58" selection-end-column="62" />
         </state>
       </provider>
     </entry>

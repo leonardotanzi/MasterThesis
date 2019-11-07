@@ -26,7 +26,7 @@ classes = [class1, class2, class3, class4, class5]
 sensitivities = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 specificities = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 precisions = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
-accuracies = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+accuracies = [0, 0, 0, 0, 0]
 
 
 if run_on_server == "y":
@@ -41,7 +41,7 @@ elif run_on_server == "n":
     test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/"
     output_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputBroUnbro/"
     output_path_AB = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputAB/"
-    file_path = "/Users/leonardotanzi/Desktop/metrics.txt"
+    file_path = "/Users/leonardotanzi/Desktop/metricsdacanc.txt"
 
     # score_folder_A1A2A3 = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Test/A3"
     # test_folder_A1A2A3 = ["/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Testing/Test" + subclass1,
@@ -54,13 +54,13 @@ else:
 image_size = 299
 
 for fold_n in range(5):
-    # first_model = load_model(model_path + "Fold{}_BroUnbro.h5".format(fold_n + 1))
-    # second_model = load_model(model_path + "Fold{}_AB.h5".format(fold_n + 1))
-    # third_model = load_model(model_path + "Fold{}_A1A2A3".format(fold_n + 1))
+    first_model = load_model(model_path + "Fold{}_BroUnbro.model".format(fold_n + 1))
+    second_model = load_model(model_path + "Fold{}_AB.model".format(fold_n + 1))
+    third_model = load_model(model_path + "Fold{}_A1A2A3.model".format(fold_n + 1))
 
-    first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
-    second_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
-    third_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model")
+    # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
+    # second_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
+    # third_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model")
 
     confusion_matrix = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
@@ -150,18 +150,17 @@ for fold_n in range(5):
     file.write("\n")
     file.write(str(confusion_matrix[2]))
     file.write("\n\n")
+    file.write(str(confusion_matrix[3]))
+    file.write("\n\n")
+    file.write(str(confusion_matrix[4]))
+    file.write("\n\n")
 
-
-
-'''
-x1 y1 z1
-x2 y2 z2
-x3 y3 z3
-'''
-
-
-    # confusion_matrix = [[32, 11, 2, 3, 2], [9, 25, 5, 1, 0], [6, 3, 28, 3, 0], [2, 6, 0, 83, 9], [1, 1, 0, 7, 91]]
-
+    '''
+    for fold_n in range(1):
+        file_path = "/Users/leonardotanzi/Desktop/metricsdacanc.txt"
+        file = open(file_path, "a")
+        confusion_matrix = [[32, 11, 2, 3, 2], [9, 25, 5, 1, 0], [6, 3, 28, 3, 0], [2, 6, 0, 83, 9], [1, 1, 0, 7, 91]]
+    '''
     x1 = confusion_matrix[0][0]
     x2 = confusion_matrix[1][0]
     x3 = confusion_matrix[2][0]
@@ -192,55 +191,61 @@ x3 y3 z3
     j4 = confusion_matrix[3][4]
     j5 = confusion_matrix[4][4]
 
+    TP = x1 + y2 + z3 + k4 + j5
+    TOT = x1 + x2 + x3 + x4 + x5 +\
+          y1 + y2 + y3 + y4 + y5 +\
+          z1 + z2 + z3 + z4 + z5 +\
+          k1 + k2 + k3 + k4 + k5 +\
+          j1 + j2 + j3 + j4 + j5
+
+
+    acc = TP / TOT
+    accuracies[fold_n] = acc
+
     TP_A1 = x1  # corrects
-    TN_A1 = y2 + z3 + k4 + k5  # all the other on the diagonal
+    TN_A1 = y2 + y3 + y4 + y5 + z2 + z3 + z4 + z5 + k2 + k3 + k4 + k5 + j2 + j3 + j4 + j5  # all the other expect row and column of TP
     FP_A1 = x2 + x3 + x4 + x5  # classified as A1 but not A1, vertical
     FN_A1 = y1 + z1 + k1 + j1  # not classified as A1 but A1, horizontal
 
     TP_A2 = y2
-    TN_A2 = x1 + z3 + k4 + k5
+    TN_A2 = x1 + x3 + x4 + x5 + z1 + z3 + z4 + z5 + k1 + k3 + k4 + k5 + j1 + j3 + j4 + j5
     FP_A2 = y1 + y3 + y4 + y5
     FN_A2 = x2 + z2 + k2 + j2
 
     TP_A3 = z3
-    TN_A3 = x1 + y2 + k4 + k5
+    TN_A3 = x1 + x2 + x4 + x5 + y1 + y2 + y4 + y5 + k1 + k2 + k4 + k5 + j1 + j2 + j4 + j5
     FP_A3 = z1 + z2 + z4 + z5
     FN_A3 = x3 + y3 + k3 + j3
 
     TP_B = k4
-    TN_B = x1 + y2 + z3 +j5
+    TN_B = x1 + x2 + x3 + x5 + y1 + y2 + y3 + y5 + z1 + z2 + z3 + z5 + j1 + j2 + j3 + j5
     FP_B = k1 + k2 + k3 + k5
     FN_B = x4 + y4 + z4 + j4
 
     TP_U = j5
-    TN_U = x1 + y2 + z3 + k4
+    TN_U = x1 + x2 + x3 + x4 + y1 + y2 + y3 + y4 + z1 + z2 + z3 + z4 + k1 + k2 + k3 + k4
     FP_U = j1 + j2 + j3 + j4
-    FN_U = x5 + y5 + z5 + j5
+    FN_U = x5 + y5 + z5 + k5
 
     sens_A1 = TP_A1 / (TP_A1 + FN_A1)
     spec_A1 = TN_A1 / (TN_A1 + FP_A1)
     prec_A1 = TP_A1 / (TP_A1 + FP_A1)
-    accu_A1 = (TP_A1 + TN_A1) / (TP_A1 + TN_A1 + FN_A1 + FP_A1)
 
     sens_A2 = TP_A2 / (TP_A2 + FN_A2)
     spec_A2 = TN_A2 / (TN_A2 + FP_A2)
     prec_A2 = TP_A2 / (TP_A2 + FP_A2)
-    accu_A2 = (TP_A2 + TN_A2) / (TP_A2 + TN_A2 + FN_A2 + FP_A2)
 
     sens_A3 = TP_A3 / (TP_A3 + FN_A3)
     spec_A3 = TN_A3 / (TN_A3 + FP_A3)
     prec_A3 = TP_A3 / (TP_A3 + FP_A3)
-    accu_A3 = (TP_A3 + TN_A3) / (TP_A3 + TN_A3 + FN_A3 + FP_A3)
 
     sens_B = TP_B / (TP_B + FN_B)
     spec_B = TN_B / (TN_B + FP_B)
     prec_B = TP_B / (TP_B + FP_B)
-    accu_B = (TP_B + TN_B) / (TP_B + TN_B + FN_B + FP_B)
 
     sens_U = TP_U / (TP_U + FN_U)
     spec_U = TN_U / (TN_U + FP_U)
     prec_U = TP_U / (TP_U + FP_U)
-    accu_U = (TP_U + TN_U) / (TP_U + TN_U + FN_U + FP_U)
 
     sensitivities[0][fold_n] = sens_A1
     sensitivities[1][fold_n] = sens_A2
@@ -260,11 +265,6 @@ x3 y3 z3
     precisions[3][fold_n] = prec_B
     precisions[4][fold_n] = prec_U
 
-    accuracies[0][fold_n] = accu_A1
-    accuracies[1][fold_n] = accu_A2
-    accuracies[2][fold_n] = accu_A3
-    accuracies[3][fold_n] = accu_B
-    accuracies[4][fold_n] = accu_U
 
 
 print(sensitivities)
@@ -322,48 +322,48 @@ std_prec_B = np.std(precisions[3])
 avg_prec_U = np.mean(precisions[4])
 std_prec_U = np.std(precisions[4])
 
-avg_accu_A1 = np.mean(accuracies[0])
-std_accu_A1 = np.std(accuracies[0])
-avg_accu_A2 = np.mean(accuracies[1])
-std_accu_A2 = np.std(accuracies[1])
-avg_accu_A3 = np.mean(accuracies[2])
-std_accu_A3 = np.std(accuracies[2])
-avg_accu_B = np.mean(accuracies[3])
-std_accu_B = np.std(accuracies[3])
-avg_accu_U = np.mean(accuracies[4])
-std_accu_U = np.std(accuracies[4])
 
 
-tab = "Class\t\tSensitivity\t\tSpecificity\t\tPrecision\t\tAccuracy\n" \
-      "A1\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
-      "A2\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
-      "A3\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
-      "B\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
-      "U\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n".format(avg_sens_A1, std_sens_A1,
+tab = "Class\t\tSensitivity(Recall)\t\tSpecificity\t\tPrecision\t\tAccuracy\n" \
+      "A1\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
+      "A2\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
+      "A3\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
+      "B\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
+      "U\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n".format(avg_sens_A1, std_sens_A1,
                                                                                                        avg_spec_A1, std_spec_A1,
                                                                                                        avg_prec_A1, std_prec_A1,
-                                                                                                       avg_accu_A1, std_accu_A1,
                                                                                                        avg_sens_A2, std_sens_A2,
                                                                                                        avg_spec_A2, std_spec_A2,
                                                                                                        avg_prec_A2, std_prec_A2,
-                                                                                                       avg_accu_A2, std_accu_A2,
                                                                                                        avg_sens_A3, std_sens_A3,
                                                                                                        avg_spec_A3, std_spec_A3,
                                                                                                        avg_prec_A3, std_prec_A3,
-                                                                                                       avg_accu_A3, std_accu_A3,
                                                                                                        avg_sens_B, std_sens_B,
                                                                                                        avg_spec_B, std_spec_B,
                                                                                                        avg_prec_B, std_prec_B,
-                                                                                                       avg_accu_B, std_accu_B,
                                                                                                        avg_sens_U, std_sens_U,
                                                                                                        avg_spec_U, std_spec_U,
-                                                                                                       avg_prec_U, std_prec_U,
-                                                                                                       avg_accu_U, std_accu_U)
+                                                                                                       avg_prec_U, std_prec_U)
 
 print(tab)
 
 file.write("\n\n")
 file.write(tab)
+
+avg_precision = (avg_prec_A1 + avg_prec_A2 + avg_prec_A3 + avg_prec_B + avg_prec_U) / 3
+avg_recall = (avg_sens_A1 + avg_sens_A2 + avg_sens_A3 + avg_sens_B + avg_sens_U) / 3
+avg_acc = np.mean(accuracies)
+std_acc = np.std(accuracies)
+f1_score = 2 * (avg_precision * avg_recall) / (avg_precision + avg_recall)
+
+metrics = "Average precision: {:0.2f}\nAverage recall: {:0.2f}\nF1 score: {:0.2f}\nAverage accuracy: {:0.2f}({:0.2f})\n".format(
+    avg_precision, avg_recall, f1_score, avg_acc, std_acc)
+
+print(metrics)
+
+file.write("\n\n")
+file.write(metrics)
+
 
 file.close()
 
