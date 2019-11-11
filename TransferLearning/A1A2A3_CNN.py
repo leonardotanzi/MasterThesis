@@ -203,9 +203,9 @@ if __name__ == "__main__":
                         test_generator.reset()
 
                         if run_on_server == "y":
-                                test_folder = ["/mnt/Data/ltanzi/SubgroupA_Proportioned/Testing/TestA1",
-                                               "/mnt/Data/ltanzi/SubgroupA_Proportioned/Testing/TestA2",
-                                               "/mnt/Data/ltanzi/SubgroupA_Proportioned/Testing/TestA3"]
+                                test_folder = ["/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Testing/TestA1",
+                                               "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Testing/TestA2",
+                                               "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Testing/TestA3"]
                                 batch_size = 32
                         elif run_on_server == "n":
                                 test_folder = ["/Users/leonardotanzi/Desktop/SubgroupA_folds/Testing/TestA1",

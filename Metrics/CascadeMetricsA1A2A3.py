@@ -21,6 +21,7 @@ class3 = "A3"
 class4 = "B"
 class5 = "Unbroken"
 classes = [class1, class2, class3, class4, class5]
+number_classes = 5
 
 # in order to avg the values for each class and fold
 sensitivities = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
@@ -30,15 +31,15 @@ accuracies = [0, 0, 0, 0, 0]
 
 
 if run_on_server == "y":
-    model_path = "/mnt/Data/ltanzi/Cascade/BestModels/"
-    test_folder = "/mnt/data/ltanzi/Train_Val_CV/Test/"
+    model_path = "/mnt/Data/ltanzi/Cascade/Models/"
+    test_folder = "/mnt/data/ltanzi/Cascade/Test/"
     output_path = "/mnt/data/ltanzi/Cascade/OutputBroUnbro/"
     output_path_AB = "/mnt/data/ltanzi/Cascade/OutputAB/"
-    file_path = "/mnt/data/ltanzi/Cascade/metricsA1_A2_A3_B_U.txt"
+    file_path = "/mnt/data/ltanzi/Cascade/metrics5classes.txt"
 
 elif run_on_server == "n":
     model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
-    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/"
+    test_folder_BU = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/"
     output_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputBroUnbro/"
     output_path_AB = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/OutputAB/"
     file_path = "/Users/leonardotanzi/Desktop/metricsdacanc.txt"
@@ -64,7 +65,7 @@ for fold_n in range(5):
 
     confusion_matrix = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
 
-    for class_n in range(5):
+    for class_n in range(number_classes):
         for img_path in sorted(glob.glob(test_folder + "{}/*.png".format(classes[class_n])), key=os.path.getsize):
 
             img = image.load_img(img_path, target_size=(image_size, image_size))
@@ -324,7 +325,7 @@ std_prec_U = np.std(precisions[4])
 
 
 
-tab = "Class\t\tSensitivity(Recall)\t\tSpecificity\t\tPrecision\t\tAccuracy\n" \
+tab = "Class\t\tSensitivity(Recall)\t\tSpecificity\t\tPrecision\n" \
       "A1\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
       "A2\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
       "A3\t\t{:0.2f}({:0.2f})%\t\t\t{:0.2f}({:0.2f})%\t\t{:0.2f}({:0.2f})%\n" \
@@ -350,8 +351,8 @@ print(tab)
 file.write("\n\n")
 file.write(tab)
 
-avg_precision = (avg_prec_A1 + avg_prec_A2 + avg_prec_A3 + avg_prec_B + avg_prec_U) / 3
-avg_recall = (avg_sens_A1 + avg_sens_A2 + avg_sens_A3 + avg_sens_B + avg_sens_U) / 3
+avg_precision = (avg_prec_A1 + avg_prec_A2 + avg_prec_A3 + avg_prec_B + avg_prec_U) / number_classes
+avg_recall = (avg_sens_A1 + avg_sens_A2 + avg_sens_A3 + avg_sens_B + avg_sens_U) / number_classes
 avg_acc = np.mean(accuracies)
 std_acc = np.std(accuracies)
 f1_score = 2 * (avg_precision * avg_recall) / (avg_precision + avg_recall)
