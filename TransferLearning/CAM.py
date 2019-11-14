@@ -62,7 +62,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
     # extract the first layer of the model that is the convolutional layers of the VGG model
     extracted_vgg_model = model.layers[0]
-    # extracted_vgg_model.summary()
+    extracted_vgg_model.summary()
 
     # get the last convolutional layer of the model
     last_conv_layer = extracted_vgg_model.get_layer("block5_conv3")

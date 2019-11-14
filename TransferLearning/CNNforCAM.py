@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
                 input_shape = (224, 224, 3)
 
-                initial_model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape)
+                initial_model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape, pooling="avg")
                 last = initial_model.output
                 prediction = Dense(3, activation="softmax")(last)
                 model = Model(initial_model.input, prediction)
