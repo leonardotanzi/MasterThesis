@@ -24,7 +24,7 @@ if __name__ == "__main__":
         run_on_server = args["server"]
 
         image_size = 224
-        n_fold = 5
+        n_fold = 2
         n_class = 3
         accuracies = [[] for x in range(n_class)]
         best_accuracies = [[] for x in range(n_class)]
@@ -114,7 +114,6 @@ if __name__ == "__main__":
                         epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
-                        # class_weight=class_weights_train,
                         callbacks=[es, mc])
 
                 # my_new_model.summary()
