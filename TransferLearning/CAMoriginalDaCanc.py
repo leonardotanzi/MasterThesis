@@ -4,9 +4,6 @@ import keras.backend as K
 from tensorflow.python.keras.callbacks import TensorBoard
 from tensorflow.python.keras.models import Sequential
 from keras.models import load_model
-from tensorflow.python.keras.layers import Dense
-from keras.models import Model
-
 
 import numpy as np
 import cv2
@@ -14,9 +11,11 @@ import glob
 import os
 import time
 
+model_path = "/Users/leonardotanzi/Desktop/Fold4_lr00001-retrainAll-balanced-categorical-VGG-1568811742.model"
 test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/Unbroken"
+out_folder = "/Users/leonardotanzi/Desktop/Cam_output"
 
-model = VGG16(weights="imagenet")
+model = load_model(model_path)
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -33,7 +32,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     print(model.output)
     print(class_output)
 
-    last_conv_layer = model.get_layer("block5_conv3")
+    last_conv_layer = model.layers[0].get_layer("block5_conv3")
     conv_out = last_conv_layer.output
     print(last_conv_layer)
     print(last_conv_layer.output)

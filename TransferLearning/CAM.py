@@ -24,14 +24,15 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/Fold1_150epochs-FullImg--batch32-notAugValTest-retrainAll-unbalanced-categorical-baselineVGG-1566820752.model"
-    test_folder = "/Users/leonardotanzi/Desktop/FullHalfImages/Test/Unbroken"
-    out_folder = "/Users/leonardotanzi/Desktop/FullHalfImages/"
+    model_path = "/Users/leonardotanzi/Desktop/Fold4_lr00001-retrainAll-balanced-categorical-VGG-1568811742.model"
+    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/Unbroken"
+    out_folder = "/Users/leonardotanzi/Desktop/Cam_output"
 
 else:
     raise ValueError("Incorrect 1st arg.")
 
 model = load_model(model_path)
+img_size = 224
 
 if run_binary == "n":
     name_indexes = ["A", "B", "Unbroken"]
@@ -40,27 +41,41 @@ elif run_binary == "y":
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
-    img = image.load_img(img_path, target_size=(224, 224))
-    print(img_path)
+    img = image.load_img(img_path, target_size=(img_size, img_size))
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
 
     preds = model.predict(x)
+    model.summary()
 
     if run_binary == "n":
         class_idx = np.argmax(preds[0])
     elif run_binary == "y":
         class_idx = int(round(preds[0][0])) #per far funzionare binary devo re-train con softmax e non binary
 
+    # model.output è ciò che esce dalla softmax per tre classi, io vado a prendere la strided slice relativa alla
+    # posizione della classe predetta, nel riassunto di teoria fatto da me sarebbe Yc
     class_output = model.output[:, class_idx]
+    print(model.output)
+    print(class_output)
 
+    # extract the first layer of the model that is the convolutional layers of the VGG model
     extracted_vgg_model = model.layers[0]
+    # extracted_vgg_model.summary()
+
+    # get the last convolutional layer of the model
     last_conv_layer = extracted_vgg_model.get_layer("block5_conv3")
 
+    # get the output of the last convolutional layer
+    # si sarebbe potuto fare anche cosi conv_out = last_conv_layer.output
+    # nei miei appunti conv_out è Ak
     conv_out = [l for l in model.layers[0].layers if l.name == "block5_conv3"][0].output
+    print(last_conv_layer)
+    print(conv_out)
 
-    grads = K.gradients(last_conv_layer.output, conv_out)[0]
+    #compute the gradient between the output Yc and Ak
+    grads = K.gradients(class_output, conv_out)[0]
 
     a = model.layers[0].layers[0].input
     pooled_grads = K.mean(grads, axis=(0, 1, 2))
@@ -78,7 +93,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     heatmap /= np.max(heatmap)
 
     img = cv2.imread(img_path)
-    img = cv2.resize(img, (224, 224))
+    img = cv2.resize(img, (img_size, img_size))
     heatmap = cv2.resize(heatmap, (img.shape[1], img.shape[0]))
     heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
