@@ -11,6 +11,7 @@ from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelC
 from tensorflow.python.keras import backend as K
 import argparse
 import numpy as np
+from sklearn.metrics import confusion_matrix
 import time
 import os
 import tensorflow as tf
@@ -20,14 +21,17 @@ if __name__ == "__main__":
 
         ap = argparse.ArgumentParser()
         ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+        ap.add_argument("-m", "--model", required=True,
+                        help="Select the network (0 for VGG, 1 for ResNet, 2 for InceptionV3)")
         args = vars(ap.parse_args())
         run_on_server = args["server"]
+        run_model = int(args["model"])
 
-        image_size = 224
+        models = ["VGG", "ResNet", "Inception"]
+        model_type = models[run_model]
+        image_size = 224 if run_model == 0 or run_model == 1 else 299
         n_fold = 2
         n_class = 3
-        accuracies = [[] for x in range(n_class)]
-        best_accuracies = [[] for x in range(n_class)]
         scores = [[] for x in range(2)]
         best_scores = [[] for x in range(2)]
 
@@ -41,7 +45,7 @@ if __name__ == "__main__":
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Train".format(i)
                         val_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Validation".format(i)
-                        test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Test".format(i)
+                        test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Test"
                         out_folder = "/Users/leonardotanzi/Desktop/"
 
                 else:
@@ -55,21 +59,31 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = ["A1", "A2", "A3"]
-                name = "Fold{}_VGGforCAMA1A2A3".format(i)
+                name = "Fold{}_{}forCAMA1A2A3".format(i, model_type)
 
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                 best_model_path = out_folder + name + "-best_model.h5"
                 mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
 
-                input_shape = (224, 224, 3)
+                input_shape = (image_size, image_size, 3)
 
-                initial_model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape, pooling="avg")
+                if model_type == "VGG":
+                        initial_model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape,
+                                              pooling="avg")
+                        preprocess_input = pre_process_VGG
+                elif model_type == "ResNet":
+                        initial_model = ResNet50(weights="imagenet", include_top=False, input_shape=input_shape,
+                                              pooling="avg")
+                        preprocess_input = pre_process_ResNet
+                elif model_type == "Inception":
+                        initial_model = InceptionV3(weights="imagenet", include_top=False, input_shape=input_shape,
+                                              pooling="avg")
+                        preprocess_input = pre_process_Inception
+
                 last = initial_model.output
                 prediction = Dense(3, activation="softmax")(last)
                 model = Model(initial_model.input, prediction)
                 model.summary()
-
-                preprocess_input = pre_process_VGG
 
                 adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, decay=0.0)
 
@@ -111,7 +125,7 @@ if __name__ == "__main__":
                 model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=150,
+                        epochs=1,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         callbacks=[es, mc])
@@ -136,3 +150,11 @@ if __name__ == "__main__":
                 print("Test accuracy:", best_score[1])
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
+
+        ''''
+        Y_pred = model.predict_generator(test_generator, STEP_SIZE_TEST // 32 + 1)
+        y_pred = np.argmax(Y_pred, axis=1)
+        print('Confusion Matrix')
+        a = test_generator.classes
+        print(confusion_matrix(test_generator.classes, y_pred))
+        '''

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9fec705e-57ba-4618-916f-80d4464bb219" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TransferLearning/CAMoriginalDaCanc.py" beforeDir="false" afterPath="$PROJECT_DIR$/TransferLearning/CAMoriginalDaCanc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CAM/CNNforCAM.py" beforeDir="false" afterPath="$PROJECT_DIR$/CAM/CNNforCAM.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,34 +13,25 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CAM.py">
+        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
-              <caret line="115" lean-forward="true" selection-start-line="114" selection-start-column="4" selection-end-line="115" />
+            <state relative-caret-position="-3698">
+              <caret line="96" column="7" lean-forward="true" selection-start-line="93" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
               <folding>
-                <element signature="e#0#80#0" expanded="true" />
+                <element signature="e#0#97#0" expanded="true" />
+                <element signature="e#1025#1729#0" />
+                <element signature="e#1771#3878#0" />
+                <element signature="e#10232#12105#1" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginalDaCanc.py">
+        <entry file="file://$PROJECT_DIR$/CAM/CNNforCAM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="66" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
-              <folding>
-                <element signature="e#0#80#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNforCAM.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
+            <state relative-caret-position="480">
+              <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
               <folding>
                 <element signature="e#0#97#0" expanded="true" />
               </folding>
@@ -50,14 +40,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+        <entry file="file://$PROJECT_DIR$/Metrics/ROCCurve.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4980">
-              <caret line="353" selection-start-line="353" selection-end-line="353" />
-              <folding>
-                <element signature="e#0#97#0" expanded="true" />
-                <element signature="e#10232#12105#1" />
-              </folding>
+            <state relative-caret-position="135">
+              <caret line="9" column="60" lean-forward="true" selection-start-line="9" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -130,6 +116,7 @@
         <option value="$PROJECT_DIR$/TransferLearning/CNNforCAM.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAMoriginal.py" />
         <option value="$PROJECT_DIR$/TransferLearning/CAMoriginalDaCanc.py" />
+        <option value="$PROJECT_DIR$/CAM/CNNforCAM.py" />
       </list>
     </option>
   </component>
@@ -143,7 +130,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -154,17 +140,18 @@
             <path>
               <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
               <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="Metrics" type="462c0819:PsiDirectoryNode" />
+              <item name="CAM" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MasterThesis" type="b2602c69:ProjectViewProjectNode" />
               <item name="MasterThesis" type="462c0819:PsiDirectoryNode" />
-              <item name="TransferLearning" type="462c0819:PsiDirectoryNode" />
+              <item name="Metrics" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -189,7 +176,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.CAMoriginalDaCanc">
+  <component name="RunManager" selected="Python.CNNforCAM (1)">
     <configuration name="CAM" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -253,6 +240,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="CNNforCAM (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MasterThesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/CAM" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CAM/CNNforCAM.py" />
+      <option name="PARAMETERS" value="-s n -m 0" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="CNNforCAM" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MasterThesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -274,41 +282,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="CascadeMetricsA1A2A3" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MasterThesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Metrics" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Metrics/CascadeMetricsA1A2A3.py" />
-      <option name="PARAMETERS" value="-s n" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.CascadeMetricsA1A2A3" />
       <item itemvalue="Python.CAM" />
       <item itemvalue="Python.CAMoriginal" />
       <item itemvalue="Python.CAMoriginalDaCanc" />
       <item itemvalue="Python.CNNforCAM" />
+      <item itemvalue="Python.CNNforCAM (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.CNNforCAM (1)" />
         <item itemvalue="Python.CAMoriginalDaCanc" />
         <item itemvalue="Python.CNNforCAM" />
         <item itemvalue="Python.CAM" />
         <item itemvalue="Python.CAMoriginal" />
-        <item itemvalue="Python.CascadeMetricsA1A2A3" />
       </list>
     </recent_temporary>
   </component>
@@ -327,6 +314,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1477363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -405,11 +393,6 @@
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py</url>
-          <line>40</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py</url>
           <line>295</line>
           <option name="timeStamp" value="91" />
@@ -469,31 +452,14 @@
           <option name="timeStamp" value="144" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CAM.py</url>
-          <line>74</line>
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CNNforCAM.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="154" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/TransferLearning/CAM.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="155" />
+          <url>file://$PROJECT_DIR$/CAM/CNNforCAM.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="156" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/tensorflow/python/ops/standard_ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/numpy/lib/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -718,16 +684,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Metrics/ROCCurve.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="35" column="116" selection-start-line="35" selection-start-column="116" selection-end-line="35" selection-end-column="116" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CascadeEvaluation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1502">
@@ -818,27 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4980">
-          <caret line="353" selection-start-line="353" selection-end-line="353" />
-          <folding>
-            <element signature="e#0#97#0" expanded="true" />
-            <element signature="e#10232#12105#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNforCAM.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#97#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -851,20 +786,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CAM.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="115" lean-forward="true" selection-start-line="114" selection-start-column="4" selection-end-line="115" />
+        <state relative-caret-position="548">
+          <caret line="115" selection-start-line="114" selection-start-column="4" selection-end-line="115" />
           <folding>
             <element signature="e#0#80#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNforCAM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TransferLearning/CAMoriginalDaCanc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
+        <state relative-caret-position="270">
           <caret line="29" column="66" selection-start-line="29" selection-start-column="66" selection-end-line="29" selection-end-column="66" />
           <folding>
             <element signature="e#0#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TransferLearning/CNNTransferLearning.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3698">
+          <caret line="96" column="7" lean-forward="true" selection-start-line="93" selection-start-column="7" selection-end-line="96" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
+            <element signature="e#1025#1729#0" />
+            <element signature="e#1771#3878#0" />
+            <element signature="e#10232#12105#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Metrics/ROCCurve.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="60" lean-forward="true" selection-start-line="9" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CAM/CNNforCAM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#97#0" expanded="true" />
           </folding>
         </state>
       </provider>
