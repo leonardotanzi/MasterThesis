@@ -54,7 +54,7 @@ if __name__ == "__main__":
                 last_layer = 3
                 classmode = "sparse"
                 act = "softmax"
-                classes = ["A", "B", "Unbroken"]
+                classes = ["A1", "A2", "A3"]
                 name = "Fold{}_VGGforCAMA1A2A3".format(i)
 
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
