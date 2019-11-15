@@ -33,10 +33,10 @@ if __name__ == "__main__":
 
         for i in range(1, n_fold+1):
                 if run_on_server == "y":
-                        train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
-                        val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
-                        test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-                        out_folder = "/mnt/Data/ltanzi/newVGG/"
+                        train_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Train".format(i)
+                        val_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Validation".format(i)
+                        test_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Test"
+                        out_folder = "/mnt/Data/ltanzi/networksForCam/"
 
                 elif run_on_server == "n":
                         train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Train".format(i)
@@ -55,7 +55,7 @@ if __name__ == "__main__":
                 classmode = "sparse"
                 act = "softmax"
                 classes = ["A", "B", "Unbroken"]
-                name = "Fold{}_VGGforCAM".format(i)
+                name = "Fold{}_VGGforCAMA1A2A3".format(i)
 
                 es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
                 best_model_path = out_folder + name + "-best_model.h5"
