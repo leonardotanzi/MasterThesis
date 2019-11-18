@@ -125,7 +125,7 @@ if __name__ == "__main__":
                 model.fit_generator(
                         train_generator,
                         steps_per_epoch=STEP_SIZE_TRAIN,
-                        epochs=1,
+                        epochs=150,
                         validation_data=validation_generator,
                         validation_steps=STEP_SIZE_VALID,
                         callbacks=[es, mc])
