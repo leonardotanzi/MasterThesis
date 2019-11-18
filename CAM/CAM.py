@@ -1,4 +1,6 @@
-from keras.applications.vgg16 import VGG16, preprocess_input, decode_predictions
+from tensorflow.python.keras.applications.vgg16 import preprocess_input as pre_process_VGG
+from tensorflow.python.keras.applications.resnet50 import preprocess_input as pre_process_ResNet
+from tensorflow.python.keras.applications.inception_v3 import preprocess_input as pre_process_Inception
 from keras.preprocessing import image
 import keras.backend as K
 from tensorflow.python.keras.callbacks import TensorBoard
@@ -14,10 +16,14 @@ import argparse
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
 ap.add_argument("-b", "--binary", required=True, help="Running the code on a binary dataset or not (y/n)")
+ap.add_argument("-m", "--model", required=True, help="Select the network (0 for VGG, 1 for ResNet, 2 for InceptionV3)")
+ap.add_argument("-c", "--classification", required=True, help="Tackling A, B, U (0) or A1, A2, A3 classification (1)")
 args = vars(ap.parse_args())
 
 run_on_server = args["server"]
 run_binary = args["binary"]
+run_model = int(args["model"])
+run_classification = int(args["classification"])
 
 if run_on_server == "y":
     model_path = "/mnt/data/ltanzi/retrainAll-categorical-baselineVGG-1562590231.model"
@@ -25,22 +31,40 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/Fold1_VGGforCAM-best_model.h5"
-    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/Unbroken"
-    out_folder = "/Users/leonardotanzi/Desktop/Cam_output/Unbroken/"
+    model_path = "/Users/leonardotanzi/Desktop/Fold1_InceptionforCAMA1A2A3.model"
+    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/A3"
+    out_folder = "/Users/leonardotanzi/Desktop/Cam_output/A3/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
 
 
-if run_binary == "n":
+if run_binary == "n" and run_classification == 0:
     name_indexes = ["A", "B", "Unbroken"]
-elif run_binary == "y":
+elif run_binary == "n" and run_classification == 1:
+        name_indexes = ["A1", "A2", "A3"]
+elif run_binary == "y" and run_classification == 0:
     name_indexes = ["A", "B"]
+elif run_binary == "y" and run_classification == 1:
+    name_indexes = ["A1", "A2"]
 
+models = ["VGG", "ResNet", "Inception"]
+model_type = models[run_model]
+img_size = 224 if run_model == 0 or run_model == 1 else 299
+
+if model_type == "VGG":
+    preprocess_input = pre_process_VGG
+    last_layer_name = "block5_conv3"
+
+elif model_type == "ResNet":
+    preprocess_input = pre_process_ResNet
+    last_layer_name = "activation_49"
+
+elif model_type == "Inception":
+    preprocess_input = pre_process_Inception
+    last_layer_name = "mixed10"
 
 model = load_model(model_path)
-img_size = 224
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
@@ -63,7 +87,7 @@ for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
     class_output = model.output[:, class_idx]
 
     # estraggo l'ultimo livello convoluzionale e prendo l'output, sono gli Ak
-    last_conv_layer = model.get_layer("block5_conv3")
+    last_conv_layer = model.get_layer(last_layer_name)
     conv_out = last_conv_layer.output
 
     # calcolo il gradiente tra Yc e Ak, quanto varia la score assegnata alla classe c in relazione alle varie maps
