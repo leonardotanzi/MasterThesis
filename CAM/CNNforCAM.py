@@ -43,12 +43,12 @@ if __name__ == "__main__":
             train_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Test"
-            out_folder = "/mnt/Data/ltanzi/networksForCam/Inception/"
+            out_folder = "/mnt/Data/ltanzi/networksForCam/ResNet/"
         elif run_on_server == "y" and run_classification == 0:
             train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-            out_folder = "/mnt/Data/ltanzi/networksForCam/Inception/"
+            out_folder = "/mnt/Data/ltanzi/networksForCam/ResNet/"
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Train".format(i)
             val_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Validation".format(i)

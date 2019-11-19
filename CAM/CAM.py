@@ -31,9 +31,9 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/Fold1_InceptionforCAMA1A2A3.model"
-    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/A3"
-    out_folder = "/Users/leonardotanzi/Desktop/Cam_output/A3/"
+    model_path = "/Users/leonardotanzi/Desktop/CAM/Inception/Models/Fold1_InceptionforCAM_ABU-best_model.h5"
+    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/Unbroken"
+    out_folder = "/Users/leonardotanzi/Desktop/CAM/Inception/Output/Unbroken/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
