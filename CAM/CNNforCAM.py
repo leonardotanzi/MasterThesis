@@ -43,12 +43,12 @@ if __name__ == "__main__":
             train_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/SUBGROUPS_A/SubgroupA_Proportioned/Test"
-            out_folder = "/mnt/Data/ltanzi/networksForCam/"
+            out_folder = "/mnt/Data/ltanzi/networksForCam/Inception/"
         elif run_on_server == "y" and run_classification == 0:
             train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
-            out_folder = "/mnt/Data/ltanzi/networksForCam/"
+            out_folder = "/mnt/Data/ltanzi/networksForCam/Inception/"
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Train".format(i)
             val_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Proportioned/Fold{}/Validation".format(i)
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         last_layer = 3
         classmode = "sparse"
         act = "softmax"
-        classes = ["A1", "A2", "A3"] if run_classification == 1 else classes = ["A", "B", "Unbroken"]
+        classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A", "B", "Unbroken"]
         name = "Fold{}_{}forCAM_ABU".format(i, model_type)
 
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=10)  # verbose to print the n of epoch in which stopped,
