@@ -4,7 +4,7 @@ from tensorflow.python.keras.applications.inception_v3 import InceptionV3, prepr
 from tensorflow.python.keras.models import Sequential, load_model, Model
 from tensorflow.python.keras.layers import Dense, Flatten, MaxPooling2D, Dropout, Conv2D, BatchNormalization, Activation
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.python.keras.optimizers import Adam
+from tensorflow.python.keras.optimizers import Adam, SGD
 from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelCheckpoint
 import argparse
 import numpy as np
@@ -44,10 +44,10 @@ if __name__ == "__main__":
     loss = "sparse_categorical_crossentropy"
     classmode = "sparse"
     act = "softmax"
-    n_epochs = 150
+    n_epochs = 100
     patience_es = 10
-    batch_size = 32
-    learning_rate = 0.0001
+    batch_size = 64
+    learning_rate = 0.01
 
     # TESTING
     n_class = 3 if run_binary == "n" else 2
@@ -61,10 +61,10 @@ if __name__ == "__main__":
         print("Fold number {}".format(i))
 
         if run_on_server == "y":
-            train_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Train".format(i)
-            val_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Validation".format(i)
-            test_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Test"
-            out_folder = "/mnt/Data/ltanzi/PAPER/Output"
+            train_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Train".format(i)
+            val_folder = "/mnt/Data/ltanzi/Train_Val_CV/Fold{}/Validation".format(i)
+            test_folder = "/mnt/Data/ltanzi/Train_Val_CV/Test"
+            out_folder = "/mnt/Data/ltanzi/outputPaperIns/"
 
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Folds_Proportioned/Fold{}/Train".format(i)
@@ -79,11 +79,14 @@ if __name__ == "__main__":
             name = "Fold{}_{}_{}{}{}".format(i, model_type, classes[0], classes[1], classes[2])
             final_model_name = "{}_{}{}{}".format(model_type, classes[0], classes[1], classes[2])
             last_layer = 3
+            file_path = out_folder + "{}summary.txt".format(final_model_name)
+
         elif run_binary == "y":
             classes = ["A1", "A2"] if run_classification == 1 else ["A", "B"]
             name = "Fold{}_{}_{}{}".format(i, model_type, classes[0], classes[1])
             final_model_name = "{}_{}{}".format(model_type, classes[0], classes[1])
             last_layer = 2
+
 
         # CALLBACKS
         log_dir = out_folder + "logs/{}".format(name)
@@ -112,9 +115,9 @@ if __name__ == "__main__":
         model = Model(initial_model.input, prediction)
         model.summary()
 
-        adam = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, decay=0.0)
+        sgd = SGD(lr=learning_rate, momentum=0.9)
 
-        model.compile(optimizer=adam, loss=loss, metrics=["accuracy"])
+        model.compile(optimizer=sgd, loss=loss, metrics=["accuracy"])
 
         # Fit model
         data_generator = ImageDataGenerator(rotation_range=10, width_shift_range=0.1, height_shift_range=0.1,
@@ -207,7 +210,6 @@ if __name__ == "__main__":
     print(model_out_text)
     print(best_model_out_text)
 
-    file_path = "/Users/leonardotanzi/Desktop/{}summary.txt".format(final_model_name)
     file = open(file_path, "a")
     file.write("Run the model {}\nEpochs: {}\nPatience: {}\nBatch size: {}\nLearning Rate: {}\n".format(
         final_model_name, n_epochs, patience_es, batch_size, learning_rate))

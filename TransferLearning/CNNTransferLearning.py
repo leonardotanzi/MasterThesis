@@ -285,7 +285,6 @@ if __name__ == "__main__":
                 best_scores[0].append(best_score[0])
                 best_scores[1].append(best_score[1])
 
-
                 if run_binary == "n":
 
                         test_generator.reset()

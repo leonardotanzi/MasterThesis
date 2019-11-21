@@ -31,9 +31,9 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/CAM/Inception/Models/Fold1_InceptionforCAM_ABU-best_model.h5"
-    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/Unbroken"
-    out_folder = "/Users/leonardotanzi/Desktop/CAM/Inception/Output/Unbroken/"
+    model_path = "/Users/leonardotanzi/Desktop/CAM/ResNet/Models/Fold2_ResNetforCAM_ABU.model"
+    test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/B"
+    out_folder = "/Users/leonardotanzi/Desktop/CAM/ResNet/Output/B/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
@@ -58,13 +58,15 @@ if model_type == "VGG":
 
 elif model_type == "ResNet":
     preprocess_input = pre_process_ResNet
-    last_layer_name = "activation_49"
+    last_layer_name = "activation_98"
 
 elif model_type == "Inception":
     preprocess_input = pre_process_Inception
     last_layer_name = "mixed10"
 
 model = load_model(model_path)
+
+model.summary()
 
 for img_path in sorted(glob.glob(test_folder + "/*.png"), key=os.path.getsize):
 
