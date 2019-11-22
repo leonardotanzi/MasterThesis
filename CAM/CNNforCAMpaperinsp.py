@@ -9,6 +9,8 @@ from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelC
 import argparse
 import numpy as np
 import scipy.stats
+from sklearn.utils import class_weight
+
 
 
 def mean_confidence_interval(data, confidence=0.95):
@@ -44,10 +46,10 @@ if __name__ == "__main__":
     loss = "sparse_categorical_crossentropy"
     classmode = "sparse"
     act = "softmax"
-    n_epochs = 100
+    n_epochs = 1
     patience_es = 10
-    batch_size = 64
-    learning_rate = 0.01
+    batch_size = 5
+    learning_rate = 0.1
 
     # TESTING
     n_class = 3 if run_binary == "n" else 2
@@ -152,6 +154,11 @@ if __name__ == "__main__":
 
         # fit_generator calls train_generator that generate a batch of images from train_folder
 
+        class_weights = class_weight.compute_class_weight(
+            'balanced',
+            np.unique(train_generator.classes),
+            train_generator.classes)
+
         model.fit_generator(
             train_generator,
             steps_per_epoch=STEP_SIZE_TRAIN,
@@ -178,11 +185,11 @@ if __name__ == "__main__":
         best_scores[0].append(best_score[0])
         best_scores[1].append(best_score[1])
 
-    loss_m, CIlos_m_low, CIlos_m_high = mean_confidence_interval(scores[1], confidence=0.95)
-    loss_bm, CIlos_bm_low, CIlos_bm_high = mean_confidence_interval(best_scores[1], confidence=0.95)
+    loss_m, CIlos_m_low, CIlos_m_high = mean_confidence_interval(scores[0], confidence=0.95)
+    loss_bm, CIlos_bm_low, CIlos_bm_high = mean_confidence_interval(best_scores[0], confidence=0.95)
 
-    acc_m, CIacc_m_low, CIacc_m_high = mean_confidence_interval(scores[0], confidence=0.95)
-    acc_bm, CIacc_bm_low, CIacc_bm_high = mean_confidence_interval(best_scores[0], confidence=0.95)
+    acc_m, CIacc_m_low, CIacc_m_high = mean_confidence_interval(scores[1], confidence=0.95)
+    acc_bm, CIacc_bm_low, CIacc_bm_high = mean_confidence_interval(best_scores[1], confidence=0.95)
 
     CI_out_m = "MODEL: average loss {:0.2f} (CI {:0.2f}-{:0.2f}) average accuracy {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(
         loss_m, CIlos_m_low, CIlos_m_high, acc_m, CIacc_m_low, CIacc_m_high)

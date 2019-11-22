@@ -7,8 +7,9 @@ from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.callbacks import TensorBoard, EarlyStopping, ModelCheckpoint
 import argparse
-import numpy as np
 import scipy.stats
+from sklearn.utils import class_weight
+import numpy as np
 
 
 def mean_confidence_interval(data, confidence=0.95):
@@ -51,8 +52,6 @@ if __name__ == "__main__":
 
     # TESTING
     n_class = 3 if run_binary == "n" else 2
-    accuracies = [[] for x in range(n_class)]
-    best_accuracies = [[] for x in range(n_class)]
     scores = [[] for x in range(2)]
     best_scores = [[] for x in range(2)]
 
@@ -149,12 +148,18 @@ if __name__ == "__main__":
 
         # fit_generator calls train_generator that generate a batch of images from train_folder
 
+        class_weights = class_weight.compute_class_weight(
+            'balanced',
+            np.unique(train_generator.classes),
+            train_generator.classes)
+
         model.fit_generator(
             train_generator,
             steps_per_epoch=STEP_SIZE_TRAIN,
             epochs=n_epochs,
             validation_data=validation_generator,
             validation_steps=STEP_SIZE_VALID,
+            class_weights=class_weights,
             callbacks=[tb, es, mc])
 
         model.save(out_folder + name + ".model")
@@ -175,11 +180,11 @@ if __name__ == "__main__":
         best_scores[0].append(best_score[0])
         best_scores[1].append(best_score[1])
 
-    loss_m, CIlos_m_low, CIlos_m_high = mean_confidence_interval(scores[1], confidence=0.95)
-    loss_bm, CIlos_bm_low, CIlos_bm_high = mean_confidence_interval(best_scores[1], confidence=0.95)
+    loss_m, CIlos_m_low, CIlos_m_high = mean_confidence_interval(scores[0], confidence=0.95)
+    loss_bm, CIlos_bm_low, CIlos_bm_high = mean_confidence_interval(best_scores[0], confidence=0.95)
 
-    acc_m, CIacc_m_low, CIacc_m_high = mean_confidence_interval(scores[0], confidence=0.95)
-    acc_bm, CIacc_bm_low, CIacc_bm_high = mean_confidence_interval(best_scores[0], confidence=0.95)
+    acc_m, CIacc_m_low, CIacc_m_high = mean_confidence_interval(scores[1], confidence=0.95)
+    acc_bm, CIacc_bm_low, CIacc_bm_high = mean_confidence_interval(best_scores[1], confidence=0.95)
 
     CI_out_m = "MODEL: average loss {:0.2f} (CI {:0.2f}-{:0.2f}) average accuracy {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(
         loss_m, CIlos_m_low, CIlos_m_high, acc_m, CIacc_m_low, CIacc_m_high)
