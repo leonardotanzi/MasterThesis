@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
         # CALLBACKS
         log_dir = out_folder + "logs/{}".format(name)
-        tb = TensorBoard(log_dir=log_dir)
+        tb = TensorBoard(log_dir=log_dir,  write_graph=True, write_grads=True, write_images=True)
         es = EarlyStopping(monitor="val_acc", mode="max", verbose=1, patience=patience_es)  # verbose to print the n of epoch in which stopped,
         best_model_path = out_folder + name + "-best_model.h5"
         mc = ModelCheckpoint(best_model_path, monitor="val_acc", save_best_only=True, mode='max', verbose=1)
@@ -159,7 +159,7 @@ if __name__ == "__main__":
             epochs=n_epochs,
             validation_data=validation_generator,
             validation_steps=STEP_SIZE_VALID,
-            class_weights=class_weights,
+            class_weight=class_weights,
             callbacks=[tb, es, mc])
 
         model.save(out_folder + name + ".model")

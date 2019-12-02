@@ -31,9 +31,9 @@ if run_on_server == "y":
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
-    model_path = "/Users/leonardotanzi/Desktop/CAM/ResNet/Models/Fold2_ResNetforCAM_ABU.model"
+    model_path = "/Users/leonardotanzi/Desktop/CAM/VGGnew/Fold2_VGGforCAM.model"
     test_folder = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Test/B"
-    out_folder = "/Users/leonardotanzi/Desktop/CAM/ResNet/Output/B/"
+    out_folder = "/Users/leonardotanzi/Desktop/CAM/VGGnew/B/"
 
 else:
     raise ValueError("Incorrect 1st arg.")
