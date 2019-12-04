@@ -37,145 +37,222 @@ def mean_confidence_interval(data, confidence=0.95):
     return m, m-h, m+h
 
 
-if run_on_server == 'y':
-    datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
-    model_path = "/mnt/data/ltanzi/"
-    out_path = "/mnt/data/ltanzi/MasterThesis/Metrics/"
+if __name__ == "__main__":
 
-elif run_on_server == 'n':
-    datadir = "/Users/leonardotanzi/Desktop/Test"
-    model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
-    out_path = "/Users/leonardotanzi/Desktop/"
+    if run_on_server == 'y':
+        datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
+        model_path = "/mnt/data/ltanzi/"
+        out_path = "/mnt/data/ltanzi/MasterThesis/Metrics/"
 
-classes = ["A1", "A2", "A3"]
-img_size = 299
-training_data = []
-n_classes = 3
-accuracies = []
-precisions = [[] for x in range(n_classes)]
-recalls = [[] for x in range(n_classes)]
-f1scores = [[] for x in range(n_classes)]
-y_score_ROC = []
+    elif run_on_server == 'n':
+        datadir = "/Users/leonardotanzi/Desktop/Test"
+        model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
+        out_path = "/Users/leonardotanzi/Desktop/"
 
-for category in classes:
+    classes = ["A1", "A2", "A3"]
+    img_size = 299
+    training_data = []
+    n_classes = len(classes)
+    n_fold = 5
+    accuracies = []
+    precisions = [[] for x in range(n_classes)]
+    recalls = [[] for x in range(n_classes)]
+    f1scores = [[] for x in range(n_classes)]
+    y_score_ROC = []
+    roc_avg = [[] for x in range(n_classes)]
 
-    path = os.path.join(datadir, category)  # create path to broken and unbroken
-    class_num = classes.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
+    for category in classes:
 
-    for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
-        try:
-            img = image.load_img(os.path.join(path, img), target_size=(img_size, img_size))
-            training_data.append([img, class_num])  # add this to our training_data
-        except Exception as e:  # in the interest in keeping the output clean...
-            pass
+        path = os.path.join(datadir, category)  # create path to broken and unbroken
+        class_num = classes.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
 
-random.shuffle(training_data)
+        for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
+            try:
+                img = image.load_img(os.path.join(path, img), target_size=(img_size, img_size))
+                training_data.append([img, class_num])  # add this to our training_data
+            except Exception as e:  # in the interest in keeping the output clean...
+                pass
 
-X = []
-y = []
+    random.shuffle(training_data)
 
-for features, label in training_data:
-    x = image.img_to_array(features)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
-    X.append(x)
-    y.append(label)
+    X = []
+    y = []
 
-y = label_binarize(y, classes=[0, 1, 2])
+    for features, label in training_data:
+        x = image.img_to_array(features)
+        x = np.expand_dims(x, axis=0)
+        x = preprocess_input(x)
+        X.append(x)
+        y.append(label)
 
-model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
-model = tf.keras.models.load_model(model_name)
+    y = label_binarize(y, classes=[0, 1, 2])
+    y_ROC = np.concatenate((y, y, y, y, y), axis=0)
 
-for fold_n in range(5):
+    model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
+    model = tf.keras.models.load_model(model_name)
 
-    #model_name = model_path + "Fold{}_modelblabla.model".format(fold_n)
-    y_score = []
+    for fold_n in range(n_fold):
 
-    print("Model {}".format(model_name))
-    # model = tf.keras.models.load_model(model_name)
+        #model_name = model_path + "Fold{}_modelblabla.model".format(fold_n)
+        y_score = []
 
-    for x in X:
-        pred = model.predict(x)
-        y_score.append(pred)
-        y_score_ROC.append(pred)
+        print("Model {}".format(model_name))
+        # model = tf.keras.models.load_model(model_name)
 
-    y_score = np.squeeze(y_score)
-    actual_values = y.argmax(axis=1)
-    predicted_values = y_score.argmax(axis=1)
+        for x in X:
+            pred = model.predict(x)
+            y_score.append(pred)
+            y_score_ROC.append(pred)
 
-    matrix = confusion_matrix(actual_values, predicted_values)
-    accuracy = accuracy_score(actual_values, predicted_values)
-    classification_report_out = classification_report(y_true=actual_values, y_pred=predicted_values)
-    classification_report_dict = classification_report(actual_values, predicted_values, output_dict=True)
+        y_score = np.squeeze(y_score)
+        actual_values = y.argmax(axis=1)
+        predicted_values = y_score.argmax(axis=1)
 
-    print('Confusion Matrix :')
-    print(matrix)
-    print('Accuracy Score:', )
-    print(accuracy)
-    print('Classification Report : ')
-    print(classification_report_out)
+        matrix = confusion_matrix(actual_values, predicted_values)
+        accuracy = accuracy_score(actual_values, predicted_values)
+        classification_report_out = classification_report(y_true=actual_values, y_pred=predicted_values)
+        classification_report_dict = classification_report(actual_values, predicted_values, output_dict=True)
 
-    accuracies.append(accuracy)
+        print('Confusion Matrix :')
+        print(matrix)
+        print('Accuracy Score:', )
+        print(accuracy)
+        print('Classification Report : ')
+        print(classification_report_out)
 
-    for i in range(n_classes)
-        precisions[i].append(classification_report_dict['{}'.format(i)]['precision'])
-        recalls[i].append(classification_report_dict['{}'.format(i)]['recall')]
-        f1scores[i].append(classification_report_dict['{}'.format(i)]['f1-score'])
-    recall1 = classification_report_dict['0']['recall']
-    recalls[0].append(recall1)
-    recall2 = classification_report_dict['1']['recall']
-    recalls[1].append(recall2)
-    recall3 = classification_report_dict['2']['recall']
-    recalls[2].append(recall2)
+        accuracies.append(accuracy)
 
-    f1score1 = classification_report_dict['0']['f1-score']
-    f1scores[0].append(f1score1)
-    f1score2 = classification_report_dict['1']['f1-score']
-    f1scores[1].append(f1score2)
-    f1score3 = classification_report_dict['2']['f1-score']
-    f1scores[2].append(f1score2)
+        for i in range(n_classes):
+            precisions[i].append(classification_report_dict['{}'.format(i)]['precision'])
+            recalls[i].append(classification_report_dict['{}'.format(i)]['recall'])
+            f1scores[i].append(classification_report_dict['{}'.format(i)]['f1-score'])
 
+        # Plot linewidth.
+        lw = 2
 
-    # Plot linewidth.
-    lw = 2
+        # Compute ROC curve and ROC area for each class
+        fpr = dict()
+        tpr = dict()
+        roc_auc = dict()
+        for i in range(n_classes):
+            fpr[i], tpr[i], _ = roc_curve(y[:, i], y_score[:, i])
+            roc_auc[i] = auc(fpr[i], tpr[i])
+            roc_avg[i].append(roc_auc[i])
 
-    # Compute ROC curve and ROC area for each class
-    fpr = dict()
-    tpr = dict()
-    roc_auc = dict()
-    roc_avg = [for i in classes]
+        # Compute micro-average ROC curve and ROC area
+        fpr["micro"], tpr["micro"], _ = roc_curve(y.ravel(), y_score.ravel())
+        roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+        # Compute macro-average ROC curve and ROC area
+
+        # First aggregate all false positive rates
+        all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
+
+        # Then interpolate all ROC curves at this points
+        mean_tpr = np.zeros_like(all_fpr)
+        for i in range(n_classes):
+            mean_tpr += interp(all_fpr, fpr[i], tpr[i])
+
+        # Finally average it and compute AUC
+        mean_tpr /= n_classes
+
+        fpr["macro"] = all_fpr
+        tpr["macro"] = mean_tpr
+        roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
+
+        # Plot all ROC curves
+        plt.figure(1)
+        colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
+        for i, color in zip(range(n_classes), colors):
+            plt.plot(fpr[i], tpr[i], color=color, lw=lw,
+                     label='ROC of {0} class (AUC = {1:0.2f})'
+                     ''.format(classes[i], roc_auc[i]))
+
+        plt.plot([0, 1], [0, 1], 'k--', lw=lw)
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Fold{}'.format(fold_n))
+        plt.legend(loc="lower right")
+
+        plt.savefig(out_path + "Fold{}_ROC.png".format(fold_n))
+        plt.close()
+
+        # Zoom in view of the upper left corner.
+        plt.figure(2)
+        plt.xlim(0, 0.2)
+        plt.ylim(0.8, 1)
+        colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
+        for i, color in zip(range(n_classes), colors):
+            plt.plot(fpr[i], tpr[i], color=color, lw=lw,
+                     label='ROC of {0} class (AUC = {1:0.2f})'
+                     ''.format(classes[i], roc_auc[i]))
+
+        plt.plot([0, 1], [0, 1], 'k--', lw=lw)
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Fold{}'.format(fold_n))
+        plt.legend(loc="lower right")
+
+        plt.savefig(out_path + "Fold{}zoom.png".format(fold_n))
+        plt.close()
+
+    # Print accuracies
+    mean_acc, CI_acc_low, CI_acc_high = mean_confidence_interval(accuracies)
+    print("Avg accuracy: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(mean_acc, CI_acc_low, CI_acc_high))
+
+    # Print precision, recall, f1-score
     for i in range(n_classes):
-        fpr[i], tpr[i], _ = roc_curve(y[:, i], y_score[:, i])
-        roc_auc[i] = auc(fpr[i], tpr[i])
-        roc_tot += roc_auc[i]
+        mean_prec, CI_prec_low, CI_prec_high = mean_confidence_interval(precisions[i])
+        mean_rec, CI_rec_low, CI_rec_high = mean_confidence_interval(recalls[i])
+        mean_f1, CI_f1_low, CI_f1_high = mean_confidence_interval(f1scores[i])
 
-    roc_mean =
+        print("Avg precision class {}: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(classes[i], mean_prec, CI_prec_low, CI_prec_high))
+        print("Avg recall class {}: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(classes[i], mean_rec, CI_rec_low, CI_rec_high))
+        print("Avg f1-score class {}: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(classes[i], mean_f1, CI_f1_low, CI_f1_high))
+
+    for i in range(n_classes):
+        mean_auc, CI_low, CI_high = mean_confidence_interval(roc_avg[i])
+        print("Avg AUC class {}: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(classes[i], mean_auc, CI_low, CI_high))
+
+    # print avg roc
+    lw = 2
+    y_score_ROC = np.squeeze(y_score_ROC)
+    # Compute ROC curve and ROC area for each class
+    fpr_avg = dict()
+    tpr_avg = dict()
+    roc_auc = dict()
+    for i in range(n_classes):
+        fpr_avg[i], tpr_avg[i], _ = roc_curve(y_ROC[:, i], y_score_ROC[:, i])
+        roc_auc[i] = auc(fpr_avg[i], tpr_avg[i])
+
     # Compute micro-average ROC curve and ROC area
-    fpr["micro"], tpr["micro"], _ = roc_curve(y.ravel(), y_score.ravel())
-    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+    fpr_avg["micro"], tpr_avg["micro"], _ = roc_curve(y_ROC.ravel(), y_score_ROC.ravel())
+    roc_auc["micro"] = auc(fpr_avg["micro"], tpr_avg["micro"])
 
     # Compute macro-average ROC curve and ROC area
 
     # First aggregate all false positive rates
-    all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
+    all_fpr_avg = np.unique(np.concatenate([fpr_avg[i] for i in range(n_classes)]))
 
     # Then interpolate all ROC curves at this points
-    mean_tpr = np.zeros_like(all_fpr)
+    mean_tpr = np.zeros_like(all_fpr_avg)
     for i in range(n_classes):
-        mean_tpr += interp(all_fpr, fpr[i], tpr[i])
+        mean_tpr += interp(all_fpr_avg, fpr_avg[i], tpr_avg[i])
 
     # Finally average it and compute AUC
     mean_tpr /= n_classes
 
-    fpr["macro"] = all_fpr
-    tpr["macro"] = mean_tpr
-    roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
+    fpr_avg["macro"] = all_fpr_avg
+    tpr_avg["macro"] = mean_tpr
+    roc_auc["macro"] = auc(fpr_avg["macro"], tpr_avg["macro"])
 
     # Plot all ROC curves
     plt.figure(1)
     colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
     for i, color in zip(range(n_classes), colors):
-        plt.plot(fpr[i], tpr[i], color=color, lw=lw,
+        plt.plot(fpr_avg[i], tpr_avg[i], color=color, lw=lw,
                  label='ROC of {0} class (AUC = {1:0.2f})'
                  ''.format(classes[i], roc_auc[i]))
 
@@ -184,53 +261,7 @@ for fold_n in range(5):
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('Fold{}'.format(fold_n))
+    plt.title('AVG ROC')
     plt.legend(loc="lower right")
 
-    plt.savefig(out_path + "Fold{}_ROC.png".format(fold_n))
-
-    # Zoom in view of the upper left corner.
-    plt.figure(2)
-    plt.xlim(0, 0.2)
-    plt.ylim(0.8, 1)
-    colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
-    for i, color in zip(range(n_classes), colors):
-        plt.plot(fpr[i], tpr[i], color=color, lw=lw,
-                 label='ROC of {0} class (AUC = {1:0.2f})'
-                 ''.format(classes[i], roc_auc[i]))
-
-    plt.plot([0, 1], [0, 1], 'k--', lw=lw)
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('Fold{}'.format(fold_n))
-    plt.legend(loc="lower right")
-
-    plt.savefig(out_path + "Fold{}zoom.png".format(fold_n))
-
-mean_acc, CI_acc_low, CI_acc_high = mean_confidence_interval(accuracies)
-
-mean_prec_1, CI_prec_low_1, CI_prec_high_1 = mean_confidence_interval(precisions[0])
-mean_prec_2, CI_prec_low_2, CI_prec_high_2 = mean_confidence_interval(precisions[1])
-mean_prec_3, CI_prec_low_3, CI_prec_high_3 = mean_confidence_interval(precisions[2])
-
-mean_rec_1, CI_rec_low_1, CI_rec_high_1 = mean_confidence_interval(recalls[0])
-mean_rec_2, CI_rec_low_2, CI_rec_high_2 = mean_confidence_interval(recalls[1])
-mean_rec_3, CI_rec_low_3, CI_rec_high_3 = mean_confidence_interval(recalls[2])
-
-mean_f1_1, CI_f1_low_1, CI_f1_high_1 = mean_confidence_interval(f1scores[0])
-mean_f1_2, CI_f1_low_2, CI_f1_high_2 = mean_confidence_interval(f1scores[1])
-mean_f1_3, CI_f1_low_3, CI_f1_high_3 = mean_confidence_interval(f1scores[2])
-
-print("Avg accuracy: {} (CI {}-{}\n".format(mean_acc, CI_acc_low, CI_acc_high))
-
-print("Avg precision class {}: {} (CI {}-{}\n".format(classes[0], mean_prec_1, CI_prec_low_1, CI_prec_high_1))
-print("Avg precision class {}: {} (CI {}-{}\n".format(classes[1], mean_prec_2, CI_prec_low_2, CI_prec_high_2))
-print("Avg precision class {}: {} (CI {}-{}\n".format(classes[2], mean_prec_3, CI_prec_low_3, CI_prec_high_3))
-
-print("Avg recall class {}: {} (CI {}-{}\n".format(classes[0], mean_rec_1, CI_rec_low_1, CI_rec_high_1))
-print("Avg recall class {}: {} (CI {}-{}\n".format(classes[1], mean_rec_2, CI_rec_low_2, CI_rec_high_2))
-print("Avg recall class {}: {} (CI {}-{}\n".format(classes[2], mean_rec_3, CI_rec_low_3, CI_rec_high_3))
-
-print("Avg f1-score class {}: {} (CI {}-{}\n".format(classes[0], mean_f1_1, CI_f1_low_1, CI_f1_high_1))
-print("Avg f1-score class {}: {} (CI {}-{}\n".format(classes[1], mean_f1_2, CI_f1_low_2, CI_f1_high_2))
-print("Avg f1-score class {}: {} (CI {}-{}\n".format(classes[2], mean_f1_3, CI_f1_low_3, CI_f1_high_3))
+    plt.savefig(out_path + "AVG_ROC.png")
