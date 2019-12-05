@@ -27,7 +27,7 @@ run_classification = int(args["classification"])
 
 if run_on_server == "y":
     model_path = "/mnt/data/ltanzi/retrainAll-categorical-baselineVGG-1562590231.model"
-    test_folder = "/mnt/data/ltanzi/Train_Val/Test/A"
+    test_folder = "/mnt/data/ltanzi/PAPER/All_Train_Val/Test/A"
     out_folder = "/mnt/data/ltanzi/Cam_output"
 
 elif run_on_server == "n":
