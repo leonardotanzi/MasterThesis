@@ -42,7 +42,7 @@ if __name__ == "__main__":
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
         model_path = "/mnt/data/ltanzi/"
-        out_path = "/mnt/data/ltanzi/MasterThesis/Metrics/"
+        out_path = "/mnt/data/ltanzi/MasterThesis/Paper/Metrics/Classic"
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -88,17 +88,16 @@ if __name__ == "__main__":
     y = label_binarize(y, classes=[0, 1, 2])
     y_ROC = np.concatenate((y, y, y, y, y), axis=0)
 
-    model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
-    model = tf.keras.models.load_model(model_name)
+    # model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
+    # model = tf.keras.models.load_model(model_name)
 
     for fold_n in range(n_fold):
 
-        #model_name = model_path + "Fold{}_modelblabla.model".format(fold_n)
+        model_name = model_path + "Fold{}_modelblabla.model".format(fold_n)
         y_score = []
 
-        print("Model {}".format(model_name))
-        # model = tf.keras.models.load_model(model_name)
-
+        print("\n\nFold number {}".format(fold_n + 1))
+        
         for x in X:
             pred = model.predict(x)
             y_score.append(pred)
@@ -198,6 +197,8 @@ if __name__ == "__main__":
         plt.savefig(out_path + "Fold{}zoom.png".format(fold_n))
         plt.close()
 
+
+    print("\n\nAveraged results among 5 folds:")
     # Print accuracies
     mean_acc, CI_acc_low, CI_acc_high = mean_confidence_interval(accuracies)
     print("Avg accuracy: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(mean_acc, CI_acc_low, CI_acc_high))
@@ -261,7 +262,7 @@ if __name__ == "__main__":
     plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
-    plt.title('AVG ROC')
+    plt.title('Averaged ROC')
     plt.legend(loc="lower right")
 
     plt.savefig(out_path + "AVG_ROC.png")
