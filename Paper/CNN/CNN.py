@@ -63,7 +63,7 @@ if __name__ == "__main__":
             train_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Test"
-            out_folder = "/mnt/Data/ltanzi/PAPER/Output"
+            out_folder = "mnt/data/ltanzi/PAPER/Output/Classic/Inception/3classes/"
 
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Folds_Proportioned/Fold{}/Train".format(i)
