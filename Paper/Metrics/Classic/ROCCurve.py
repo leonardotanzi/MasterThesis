@@ -42,7 +42,7 @@ if __name__ == "__main__":
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
         model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/Inception/3classes/"
-        out_path = "/mnt/data/ltanzi/MasterThesis/Paper/Metrics/Classic/Result/"
+        out_path = "/mnt/data/ltanzi/MasterThesis/Paper/Metrics/Classic/Result/Best/"
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_Inception_ABUnbroken.model".format(fold_n + 1)
+        model_name = model_path + "Fold{}_Inception_ABUnbroken-best_model.h5".format(fold_n + 1)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 
