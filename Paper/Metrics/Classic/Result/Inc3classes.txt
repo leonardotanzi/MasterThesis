@@ -1,0 +1,129 @@
+
+
+Fold number 1
+Confusion Matrix :
+[[ 94  15   5]
+ [ 11 129  10]
+ [  3  19 204]]
+Accuracy Score:
+0.8714285714285714
+Classification Report : 
+              precision    recall  f1-score   support
+
+           0       0.87      0.82      0.85       114
+           1       0.79      0.86      0.82       150
+           2       0.93      0.90      0.92       226
+
+    accuracy                           0.87       490
+   macro avg       0.86      0.86      0.86       490
+weighted avg       0.87      0.87      0.87       490
+
+
+
+Fold number 2
+Confusion Matrix :
+[[ 92  18   4]
+ [  7 129  14]
+ [  6  14 206]]
+Accuracy Score:
+0.8714285714285714
+Classification Report : 
+              precision    recall  f1-score   support
+
+           0       0.88      0.81      0.84       114
+           1       0.80      0.86      0.83       150
+           2       0.92      0.91      0.92       226
+
+    accuracy                           0.87       490
+   macro avg       0.87      0.86      0.86       490
+weighted avg       0.87      0.87      0.87       490
+
+
+
+Fold number 3
+Confusion Matrix :
+[[ 95  14   5]
+ [ 16 125   9]
+ [ 14  27 185]]
+Accuracy Score:
+0.826530612244898
+Classification Report : 
+              precision    recall  f1-score   support
+
+           0       0.76      0.83      0.79       114
+           1       0.75      0.83      0.79       150
+           2       0.93      0.82      0.87       226
+
+    accuracy                           0.83       490
+   macro avg       0.81      0.83      0.82       490
+weighted avg       0.84      0.83      0.83       490
+
+
+
+Fold number 4
+Confusion Matrix :
+[[ 82  20  12]
+ [ 13 125  12]
+ [  1  19 206]]
+Accuracy Score:
+0.8428571428571429
+Classification Report : 
+              precision    recall  f1-score   support
+
+           0       0.85      0.72      0.78       114
+           1       0.76      0.83      0.80       150
+           2       0.90      0.91      0.90       226
+
+    accuracy                           0.84       490
+   macro avg       0.84      0.82      0.83       490
+weighted avg       0.85      0.84      0.84       490
+
+
+
+Fold number 5
+Confusion Matrix :
+[[102   8   4]
+ [ 14 126  10]
+ [  8  13 205]]
+Accuracy Score:
+0.8836734693877552
+Classification Report : 
+              precision    recall  f1-score   support
+
+           0       0.82      0.89      0.86       114
+           1       0.86      0.84      0.85       150
+           2       0.94      0.91      0.92       226
+
+    accuracy                           0.88       490
+   macro avg       0.87      0.88      0.88       490
+weighted avg       0.89      0.88      0.88       490
+
+
+
+Averaged results among 5 folds:
+Avg accuracy: 0.86 (CI 0.83-0.89)
+
+Avg precision class A: 0.84 (CI 0.78-0.90)
+
+Avg recall class A: 0.82 (CI 0.74-0.89)
+
+Avg f1-score class A: 0.82 (CI 0.78-0.87)
+
+Avg precision class B: 0.79 (CI 0.74-0.84)
+
+Avg recall class B: 0.85 (CI 0.83-0.86)
+
+Avg f1-score class B: 0.82 (CI 0.79-0.85)
+
+Avg precision class Unbroken: 0.92 (CI 0.90-0.94)
+
+Avg recall class Unbroken: 0.89 (CI 0.84-0.94)
+
+Avg f1-score class Unbroken: 0.91 (CI 0.88-0.93)
+
+Avg AUC class A: 0.95 (CI 0.94-0.96)
+
+Avg AUC class B: 0.93 (CI 0.92-0.94)
+
+Avg AUC class Unbroken: 0.96 (CI 0.96-0.97)
+

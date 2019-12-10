@@ -46,10 +46,10 @@ if __name__ == "__main__":
     loss = "sparse_categorical_crossentropy"
     classmode = "sparse"
     act = "softmax"
-    n_epochs = 1
+    n_epochs = 100
     patience_es = 10
-    batch_size = 5
-    learning_rate = 0.1
+    batch_size = 32
+    learning_rate = 0.0001
 
     # TESTING
     n_class = 3 if run_binary == "n" else 2
@@ -79,9 +79,9 @@ if __name__ == "__main__":
         if run_binary == "n":
             classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A", "B", "Unbroken"]
             name = "Fold{}_{}_{}{}{}".format(i, model_type, classes[0], classes[1], classes[2])
-            final_model_name = "{}_{}{}{}".format(model_type, classes[0], classes[1], classes[2])
+            final_model_name = "{}_{}{}{}notbalanced".format(model_type, classes[0], classes[1], classes[2])
             last_layer = 3
-            file_path = out_folder + "{}summary.txt".format(final_model_name)
+            file_path = out_folder + "{}summarynotbalanced.txt".format(final_model_name)
 
         elif run_binary == "y":
             classes = ["A1", "A2"] if run_classification == 1 else ["A", "B"]
@@ -115,7 +115,7 @@ if __name__ == "__main__":
         last = initial_model.output
         prediction = Dense(last_layer, activation=act)(last)
         model = Model(initial_model.input, prediction)
-        model.summary()
+        # model.summary()
 
         sgd = SGD(lr=learning_rate, momentum=0.9)
 
@@ -159,12 +159,15 @@ if __name__ == "__main__":
             np.unique(train_generator.classes),
             train_generator.classes)
 
+        print(class_weights)
+        
         model.fit_generator(
             train_generator,
             steps_per_epoch=STEP_SIZE_TRAIN,
             epochs=n_epochs,
             validation_data=validation_generator,
             validation_steps=STEP_SIZE_VALID,
+            # class_weight=class_weights,
             callbacks=[tb, es, mc])
 
         model.save(out_folder + name + ".model")

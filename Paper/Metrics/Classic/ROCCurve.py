@@ -40,16 +40,16 @@ if __name__ == "__main__":
     run_on_server = args["server"]
 
     if run_on_server == 'y':
-        datadir = "/mnt/data/ltanzi/Train_Val_CV/Test"
-        model_path = "/mnt/data/ltanzi/"
-        out_path = "/mnt/data/ltanzi/MasterThesis/Paper/Metrics/Classic"
+        datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
+        model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/Inception/3classes/"
+        out_path = "/mnt/data/ltanzi/MasterThesis/Paper/Metrics/Classic/Result/"
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
         model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
         out_path = "/Users/leonardotanzi/Desktop/"
 
-    classes = ["A1", "A2", "A3"]
+    classes = ["A", "B", "Unbroken"]
     img_size = 299
     training_data = []
     n_classes = len(classes)
@@ -93,7 +93,8 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_modelblabla.model".format(fold_n)
+        model_name = model_path + "Fold{}_Inception_ABUnbroken.model".format(fold_n + 1)
+        model = tf.keras.models.load_model(model_name)
         y_score = []
 
         print("\n\nFold number {}".format(fold_n + 1))

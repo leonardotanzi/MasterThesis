@@ -63,7 +63,7 @@ if __name__ == "__main__":
             train_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Test"
-            out_folder = "mnt/data/ltanzi/PAPER/Output/Classic/Inception/3classes/"
+            out_folder = "/mnt/data/ltanzi/PAPER/Output/Classic/Inception/3classes/"
 
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Folds_Proportioned/Fold{}/Train".format(i)
@@ -109,7 +109,7 @@ if __name__ == "__main__":
         last = initial_model.output
         prediction = Dense(last_layer, activation=act)(last)
         model = Model(initial_model.input, prediction)
-        model.summary()
+        # model.summary()
 
         adam = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, decay=0.0)
 
