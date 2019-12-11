@@ -8,8 +8,9 @@ from scipy import interp
 import matplotlib.pyplot as plt
 from itertools import cycle
 from sklearn.metrics import roc_curve, auc, confusion_matrix, accuracy_score, classification_report
-from keras.applications.inception_v3 import preprocess_input
-from keras.preprocessing import image
+from tensorflow.python.keras.applications.vgg16 import preprocess_input as pre_process_VGG
+from tensorflow.python.keras.applications.resnet50 import preprocess_input as pre_process_ResNet
+from tensorflow.python.keras.applications.inception_v3 import preprocess_input as pre_process_Inception
 from sklearn.preprocessing import label_binarize
 import glob
 import argparse
@@ -36,13 +37,29 @@ if __name__ == "__main__":
 
     ap = argparse.ArgumentParser()
     ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+    ap.add_argument("-m", "--model", required=True, help="Select the network (0 for VGG, 1 for ResNet, 2 for InceptionV3)")
     args = vars(ap.parse_args())
     run_on_server = args["server"]
+    run_model = int(args["model"])
+
+    models = ["VGG", "ResNet", "Inception"]
+	model_type = models[run_model]
+	img_size = 224 if run_model == 0 or run_model == 1 else 299
+
+	if model_type == "VGG":
+	    preprocess_input = pre_process_VGG
+
+	elif model_type == "ResNet":
+	    preprocess_input = pre_process_ResNet
+
+	elif model_type == "Inception":
+	    preprocess_input = pre_process_Inception
+
 
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
-        model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/VGG/3classes/Models/"
-        out_path = "/mnt/data/ltanzi/PAPER/Output/Classic/VGG/3classes/Metrics/Best/"
+        model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/3classes/Models/".format(model_type)
+        out_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/3classes/Metrics/Best/".format(model_type)
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -50,7 +67,6 @@ if __name__ == "__main__":
         out_path = "/Users/leonardotanzi/Desktop/"
 
     classes = ["A", "B", "Unbroken"]
-    img_size = 299
     training_data = []
     n_classes = len(classes)
     n_fold = 5
@@ -93,7 +109,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_VGG_ABUnbroken-best_model.h5".format(fold_n + 1)
+        model_name = model_path + "Fold{}_{}_ABUnbroken-best_model.h5".format(fold_n + 1, model_type)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 
