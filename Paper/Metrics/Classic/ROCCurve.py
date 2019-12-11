@@ -99,7 +99,7 @@ if __name__ == "__main__":
         X.append(x)
         y.append(label)
 
-    y = label_binarize(y, classes=[0, 1, 2])
+    y = label_binarize(y, classes=[0, 1, 2, 3, 4])
     y_ROC = np.concatenate((y, y, y, y, y), axis=0)
 
     # model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
