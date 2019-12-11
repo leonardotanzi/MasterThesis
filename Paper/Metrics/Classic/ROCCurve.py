@@ -41,8 +41,8 @@ if __name__ == "__main__":
 
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
-        model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/Inception/3classes/"
-        out_path = "/mnt/data/ltanzi/MasterThesis/Paper/Metrics/Classic/Result/Best/"
+        model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/VGG/3classes/Models/"
+        out_path = "/mnt/data/ltanzi/PAPER/Output/Classic/VGG/3classes/Metrics/Best/"
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_Inception_ABUnbroken-best_model.h5".format(fold_n + 1)
+        model_name = model_path + "Fold{}_VGG_ABUnbroken-best_model.h5".format(fold_n + 1)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 
@@ -176,7 +176,7 @@ if __name__ == "__main__":
         plt.title('Fold{}'.format(fold_n))
         plt.legend(loc="lower right")
 
-        plt.savefig(out_path + "Fold{}_ROC.png".format(fold_n))
+        plt.savefig(out_path + model_name.split(".")[0] + "_ROC.png")
         plt.close()
 
         # Zoom in view of the upper left corner.
@@ -195,7 +195,7 @@ if __name__ == "__main__":
         plt.title('Fold{}'.format(fold_n))
         plt.legend(loc="lower right")
 
-        plt.savefig(out_path + "Fold{}zoom.png".format(fold_n))
+        plt.savefig(out_path + model_name+ "_ROCzoom.png")
         plt.close()
 
 
@@ -266,4 +266,4 @@ if __name__ == "__main__":
     plt.title('Averaged ROC')
     plt.legend(loc="lower right")
 
-    plt.savefig(out_path + "AVG_ROC.png")
+    plt.savefig(out_path + model_name + "_AvgROC.png")
