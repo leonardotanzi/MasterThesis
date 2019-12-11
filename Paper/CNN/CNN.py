@@ -74,10 +74,10 @@ if __name__ == "__main__":
             raise ValueError("Incorrect 1st arg")
 
         if run_binary == "n":
-            classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A1","A2", "A3", "B", "Unbroken"]
+            classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A1", "A2", "A3", "B", "Unbroken"]
             name = "Fold{}_{}_{}{}{}".format(i, model_type, classes[0], classes[1], classes[2])
             final_model_name = "{}_{}{}{}".format(model_type, classes[0], classes[1], classes[2])
-            last_layer = 3
+            last_layer = 5
         elif run_binary == "y":
             classes = ["A1", "A2"] if run_classification == 1 else ["A", "B"]
             name = "Fold{}_{}_{}{}".format(i, model_type, classes[0], classes[1])
