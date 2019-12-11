@@ -63,7 +63,7 @@ if __name__ == "__main__":
             train_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Test"
-            out_folder = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/3classes/".format(model_type)
+            out_folder = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
 
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Folds_Proportioned/Fold{}/Train".format(i)
@@ -74,7 +74,7 @@ if __name__ == "__main__":
             raise ValueError("Incorrect 1st arg")
 
         if run_binary == "n":
-            classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A", "B", "Unbroken"]
+            classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A1","A2", "A3", "B", "Unbroken"]
             name = "Fold{}_{}_{}{}{}".format(i, model_type, classes[0], classes[1], classes[2])
             final_model_name = "{}_{}{}{}".format(model_type, classes[0], classes[1], classes[2])
             last_layer = 3
@@ -133,18 +133,19 @@ if __name__ == "__main__":
                                                                          class_mode=classmode,
                                                                          classes=classes)
 
+        '''
         test_generator = data_generator_notAug.flow_from_directory(test_folder,
                                                                    target_size=(image_size, image_size),
                                                                    batch_size=batch_size,
                                                                    class_mode=classmode,
                                                                    classes=classes)
-
+        '''
         # Trains the model on data generated batch-by-batch by a Python generator
         # When you use fit_generator, the number of samples processed for each epoch is batch_size * steps_per_epochs.
 
         STEP_SIZE_TRAIN = train_generator.n//train_generator.batch_size
         STEP_SIZE_VALID = validation_generator.n//validation_generator.batch_size
-        STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
+        # STEP_SIZE_TEST = test_generator.n//test_generator.batch_size
 
         # fit_generator calls train_generator that generate a batch of images from train_folder
 

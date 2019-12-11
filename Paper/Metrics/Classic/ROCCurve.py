@@ -12,6 +12,7 @@ from tensorflow.python.keras.applications.vgg16 import preprocess_input as pre_p
 from tensorflow.python.keras.applications.resnet50 import preprocess_input as pre_process_ResNet
 from tensorflow.python.keras.applications.inception_v3 import preprocess_input as pre_process_Inception
 from sklearn.preprocessing import label_binarize
+from keras.preprocessing import image
 import glob
 import argparse
 import scipy
@@ -43,23 +44,20 @@ if __name__ == "__main__":
     run_model = int(args["model"])
 
     models = ["VGG", "ResNet", "Inception"]
-	model_type = models[run_model]
-	img_size = 224 if run_model == 0 or run_model == 1 else 299
-
-	if model_type == "VGG":
-	    preprocess_input = pre_process_VGG
-
-	elif model_type == "ResNet":
-	    preprocess_input = pre_process_ResNet
-
-	elif model_type == "Inception":
-	    preprocess_input = pre_process_Inception
-
-
+    model_type = models[run_model]
+    img_size = 224 if run_model == 0 or run_model == 1 else 299
+    
+    if model_type == "VGG":
+        preprocess_input = pre_process_VGG
+    elif model_type == "ResNet":
+        preprocess_input = pre_process_ResNet
+    elif model_type == "Inception":
+        preprocess_input = pre_process_Inception
+        
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
         model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/3classes/Models/".format(model_type)
-        out_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/3classes/Metrics/Best/".format(model_type)
+        out_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/3classes/Metrics/Normal/".format(model_type)
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -80,14 +78,14 @@ if __name__ == "__main__":
     for category in classes:
 
         path = os.path.join(datadir, category)  # create path to broken and unbroken
-        class_num = classes.index(category)  # get the classification  (0 or a 1). 0=broken 1=unbroken
-
+        class_num = classes.index(category)
         for img in tqdm(os.listdir(path)):  # iterate over each image per broken and unbroken
-            try:
-                img = image.load_img(os.path.join(path, img), target_size=(img_size, img_size))
-                training_data.append([img, class_num])  # add this to our training_data
-            except Exception as e:  # in the interest in keeping the output clean...
-                pass
+            if img.endswith(".png"):
+                try:
+                    img = image.load_img(os.path.join(path, img), target_size=(img_size, img_size))
+                    training_data.append([img, class_num])  # add this to our training_data
+                except Exception as e:  # in the interest in keeping the output clean...
+                    pass
 
     random.shuffle(training_data)
 
@@ -109,7 +107,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_{}_ABUnbroken-best_model.h5".format(fold_n + 1, model_type)
+        model_name = model_path + "Fold{}_{}_ABUnbroken.model".format(fold_n + 1, model_type)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 
@@ -192,7 +190,7 @@ if __name__ == "__main__":
         plt.title('Fold{}'.format(fold_n))
         plt.legend(loc="lower right")
 
-        plt.savefig(out_path + model_name.split(".")[0] + "_ROC.png")
+        plt.savefig(out_path + "Fold{}_ROC.png".format(fold_n + 1))
         plt.close()
 
         # Zoom in view of the upper left corner.
@@ -211,7 +209,7 @@ if __name__ == "__main__":
         plt.title('Fold{}'.format(fold_n))
         plt.legend(loc="lower right")
 
-        plt.savefig(out_path + model_name+ "_ROCzoom.png")
+        plt.savefig(out_path + "Fold{}_ROCzoom.png".format(fold_n + 1))
         plt.close()
 
 
@@ -282,4 +280,4 @@ if __name__ == "__main__":
     plt.title('Averaged ROC')
     plt.legend(loc="lower right")
 
-    plt.savefig(out_path + model_name + "_AvgROC.png")
+    plt.savefig(out_path + "AvgROC.png")
