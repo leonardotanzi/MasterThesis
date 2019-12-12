@@ -63,7 +63,7 @@ if __name__ == "__main__":
             train_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Train".format(i)
             val_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Validation".format(i)
             test_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Test"
-            out_folder = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
+            out_folder = "/mnt/data/ltanzi/PAPER/Output/Cascade/BroUnbro/Models/".format(model_type)
 
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Folds_Proportioned/Fold{}/Train".format(i)
@@ -79,7 +79,7 @@ if __name__ == "__main__":
             final_model_name = "{}_{}{}{}".format(model_type, classes[0], classes[1], classes[2])
             last_layer = 5
         elif run_binary == "y":
-            classes = ["A1", "A2"] if run_classification == 1 else ["A", "B"]
+            classes = ["A1", "A2"] if run_classification == 1 else ["Broken", "Unbroken"]
             name = "Fold{}_{}_{}{}".format(i, model_type, classes[0], classes[1])
             final_model_name = "{}_{}{}".format(model_type, classes[0], classes[1])
             last_layer = 2
