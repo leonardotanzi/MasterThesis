@@ -38,9 +38,11 @@ if __name__ == "__main__":
 
     ap = argparse.ArgumentParser()
     ap.add_argument("-s", "--server", required=True, help="Running the code on the server or not (y/n)")
+    ap.add_argument("-b", "--binary", required=True, help="NN works on binary classification or not (y/n)")
     ap.add_argument("-m", "--model", required=True, help="Select the network (0 for VGG, 1 for ResNet, 2 for InceptionV3)")
     args = vars(ap.parse_args())
     run_on_server = args["server"]
+    run_binary = args["binary"]
     run_model = int(args["model"])
 
     models = ["VGG", "ResNet", "Inception"]
@@ -56,15 +58,15 @@ if __name__ == "__main__":
         
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
-        model_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
-        out_path = "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
+        model_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Models/" # "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
+        out_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Metrics/Normal/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
         model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
         out_path = "/Users/leonardotanzi/Desktop/"
 
-    classes = ["A1", "A2", "A3", "B", "Unbroken"]
+    classes = ["A1", "A2", "A3", "B", "Unbroken"] if binary == "n" else classes = ["A", "B"]
     training_data = []
     n_classes = len(classes)
     n_fold = 5
@@ -99,7 +101,11 @@ if __name__ == "__main__":
         X.append(x)
         y.append(label)
 
-    y = label_binarize(y, classes=[0, 1, 2, 3, 4])
+    if binary == "n":
+        y = label_binarize(y, classes=[0, 1, 2, 3, 4])
+    elif binary == "y":
+        y = label_binarize(y, classes=[0, 1])
+
     y_ROC = np.concatenate((y, y, y, y, y), axis=0)
 
     # model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
@@ -107,7 +113,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_{}_A1A2A3.model".format(fold_n + 1, model_type)
+        model_name = model_path + "Fold{}_Inception_AB.model".format(fold_n + 1, model_type)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 
