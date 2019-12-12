@@ -59,14 +59,18 @@ if __name__ == "__main__":
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
         model_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Models/" # "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
-        out_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Metrics/Normal/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
+        out_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/MetricSingleNet/AB/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
         model_path = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/"
         out_path = "/Users/leonardotanzi/Desktop/"
 
-    classes = ["A1", "A2", "A3", "B", "Unbroken"] if binary == "n" else classes = ["A", "B"]
+    if run_binary == "n":
+        classes = ["A1", "A2", "A3", "B", "Unbroken"]
+    elif run_binary =="y":
+        classes = ["A", "B"]
+        
     training_data = []
     n_classes = len(classes)
     n_fold = 5
@@ -101,9 +105,9 @@ if __name__ == "__main__":
         X.append(x)
         y.append(label)
 
-    if binary == "n":
+    if run_binary == "n":
         y = label_binarize(y, classes=[0, 1, 2, 3, 4])
-    elif binary == "y":
+    elif run_binary == "y":
         y = label_binarize(y, classes=[0, 1])
 
     y_ROC = np.concatenate((y, y, y, y, y), axis=0)
@@ -113,7 +117,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_Inception_AB.model".format(fold_n + 1, model_type)
+        model_name = model_path + "Fold{}_Inception_AB-best_model.h5".format(fold_n + 1)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 
@@ -147,6 +151,7 @@ if __name__ == "__main__":
             recalls[i].append(classification_report_dict['{}'.format(i)]['recall'])
             f1scores[i].append(classification_report_dict['{}'.format(i)]['f1-score'])
 
+        '''    
         # Plot linewidth.
         lw = 2
 
@@ -217,7 +222,7 @@ if __name__ == "__main__":
 
         plt.savefig(out_path + "Fold{}_ROCzoom.png".format(fold_n + 1))
         plt.close()
-
+        '''
 
     print("\n\nAveraged results among 5 folds:")
     # Print accuracies
@@ -237,7 +242,7 @@ if __name__ == "__main__":
     for i in range(n_classes):
         mean_auc, CI_low, CI_high = mean_confidence_interval(roc_avg[i])
         print("Avg AUC class {}: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(classes[i], mean_auc, CI_low, CI_high))
-
+    '''
     # print avg roc
     lw = 2
     y_score_ROC = np.squeeze(y_score_ROC)
@@ -287,3 +292,4 @@ if __name__ == "__main__":
     plt.legend(loc="lower right")
 
     plt.savefig(out_path + "AvgROC.png")
+    '''
