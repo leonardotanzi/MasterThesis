@@ -53,7 +53,7 @@ if __name__ == "__main__":
         test_folder = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test/"
         output_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputBroUnbro/"
         output_path_AB = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputAB/"
-        file_path = "/mnt/data/ltanzi/Cascade/cascadeMetrics3class.txt"
+        file_path = "/mnt/data/ltanzi/Cascade/cascadeMetrics3class_best.txt"
         # out_path = "/mnt/data/ltanzi/Cascade/ROC/"
 
     elif run_on_server == "n":
@@ -82,8 +82,8 @@ if __name__ == "__main__":
 
     for fold_n in range(n_folds):
         
-        first_model = load_model(model_path + "Fold{}_Inception_BrokenUnbroken.model".format(fold_n + 1))
-        second_model = load_model(model_path + "Fold{}_Inception_AB.model".format(fold_n + 1))
+        first_model = load_model(model_path + "Fold{}_Inception_BrokenUnbroken-best_model.h5".format(fold_n + 1))
+        second_model = load_model(model_path + "Fold{}_Inception_AB-best_model.h5".format(fold_n + 1))
         # y_score = []
 
         # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
@@ -108,13 +108,13 @@ if __name__ == "__main__":
                 class_idx = np.argmax(preds, axis=1)
 
                 if class_idx == 1:
-                    print("Unbroken")
+                    #print("Unbroken")
                     # conf_matrix[class_n][2] += 1
                     final_predictions_dict["{}".format(original_name)] = 2
                     # y_score_dict["{}".format(original_name)] = preds
 
                 elif class_idx == 0:
-                    print("Broken")
+                    #print("Broken")
                     name_out = output_path + "{}".format(img_path.split("/")[-1])
                     cv2.imwrite(name_out, X_original)
 
@@ -133,7 +133,7 @@ if __name__ == "__main__":
                 class_idx = np.argmax(preds, axis=1)
 
                 if class_idx == 0:
-                    print("A")
+                    #print("A")
                     # conf_matrix[class_n][0] += 1
                     final_predictions_dict["{}".format(original_name)] = 0
                     # cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/APredicted/{}-Label{}-PredictedA.png".format(original_name, label), X_original)
@@ -141,7 +141,7 @@ if __name__ == "__main__":
                     # cv2.imwrite(name_out, X_original)
 
                 elif class_idx == 1:
-                    print("B")
+                    #print("B")
                     # conf_matrix[class_n][1] += 1
                     final_predictions_dict["{}".format(original_name)] = 1
                     # cv2.imwrite("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/BPredicted/{}-Label{}-PredictedB.png".format(original_name, label), X_original)
@@ -288,69 +288,69 @@ if __name__ == "__main__":
         print("Avg AUC class {}: {:0.2f} (CI {:0.2f}-{:0.2f})\n".format(classes[i], mean_auc, CI_low, CI_high))
     '''
 
-        '''
-        file = open(file_path, "a")
-        file.write("Fold{} - Confusion Matrix\n".format(fold_n + 1))
-        file.write(str(conf_matrix[0]))
-        file.write("\n")
-        file.write(str(conf_matrix[1]))
-        file.write("\n")
-        file.write(str(conf_matrix[2]))
-        file.write("\n\n")
+    '''
+    file = open(file_path, "a")
+    file.write("Fold{} - Confusion Matrix\n".format(fold_n + 1))
+    file.write(str(conf_matrix[0]))
+    file.write("\n")
+    file.write(str(conf_matrix[1]))
+    file.write("\n")
+    file.write(str(conf_matrix[2]))
+    file.write("\n\n")
+    
+    x1 = conf_matrix[0][0]
+    x2 = conf_matrix[1][0]
+    x3 = conf_matrix[2][0]
 
-        x1 = conf_matrix[0][0]
-        x2 = conf_matrix[1][0]
-        x3 = conf_matrix[2][0]
+    y1 = conf_matrix[0][1]
+    y2 = conf_matrix[1][1]
+    y3 = conf_matrix[2][1]
 
-        y1 = conf_matrix[0][1]
-        y2 = conf_matrix[1][1]
-        y3 = conf_matrix[2][1]
+    z1 = conf_matrix[0][2]
+    z2 = conf_matrix[1][2]
+    z3 = conf_matrix[2][2]
 
-        z1 = conf_matrix[0][2]
-        z2 = conf_matrix[1][2]
-        z3 = conf_matrix[2][2]
+    TP = x1 + y2 + z3
+    TOT = x1 + x2 + x3 + y1 + y2 + y3 + z1 + z2 + z3
+    
+    acc = TP / TOT
+    accuracies[fold_n] = acc
 
-        TP = x1 + y2 + z3
-        TOT = x1 + x2 + x3 + y1 + y2 + y3 + z1 + z2 + z3
+    TP_A = x1
+    TN_A = y2 + y3 + z2 + z3
+    FP_A = x2 + x3
+    FN_A = y1 + z1
 
-        acc = TP / TOT
-        accuracies[fold_n] = acc
+    TP_B = y2
+    TN_B = x1 + x3 + z1 + z3
+    FP_B = y1 + y3
+    FN_B = x2 + z2
 
-        TP_A = x1
-        TN_A = y2 + y3 + z2 + z3
-        FP_A = x2 + x3
-        FN_A = y1 + z1
+    TP_U = z3
+    TN_U = x1 + x2 + y1 + y2
+    FP_U = z1 + z2
+    FN_U = x3 + y3
+    
+    rec_A = TP_A / (TP_A + FN_A)
+    rec_B = TP_B / (TP_B + FN_B)
+    rec_U = TP_U / (TP_U + FN_U)
+    recalls[0][fold_n] = rec_A
+    recalls[1][fold_n] = rec_B
+    recalls[2][fold_n] = rec_U
 
-        TP_B = y2
-        TN_B = x1 + x3 + z1 + z3
-        FP_B = y1 + y3
-        FN_B = x2 + z2
+    prec_A = TP_A / (TP_A + FP_A)
+    prec_B = TP_B / (TP_B + FP_B)
+    prec_U = TP_U / (TP_U + FP_U)
+    precisions[0][fold_n] = prec_A
+    precisions[1][fold_n] = prec_B
+    precisions[2][fold_n] = prec_U
 
-        TP_U = z3
-        TN_U = x1 + x2 + y1 + y2
-        FP_U = z1 + z2
-        FN_U = x3 + y3
-
-        rec_A = TP_A / (TP_A + FN_A)
-        rec_B = TP_B / (TP_B + FN_B)
-        rec_U = TP_U / (TP_U + FN_U)
-        recalls[0][fold_n] = rec_A
-        recalls[1][fold_n] = rec_B
-        recalls[2][fold_n] = rec_U
-
-        prec_A = TP_A / (TP_A + FP_A)
-        prec_B = TP_B / (TP_B + FP_B)
-        prec_U = TP_U / (TP_U + FP_U)
-        precisions[0][fold_n] = prec_A
-        precisions[1][fold_n] = prec_B
-        precisions[2][fold_n] = prec_U
-
-        f1_A = 2 * (prec_A * rec_A) / (prec_A + rec_A)
-        f1_B = 2 * (prec_B * rec_B) / (prec_B + rec_B)
-        f1_U = 2 * (prec_U * rec_U) / (prec_U + rec_U)
-        f1scores[0][fold_n] = spec_A
-        f1scores[1][fold_n] = spec_B
-        f1scores[2][fold_n] = spec_U
+    f1_A = 2 * (prec_A * rec_A) / (prec_A + rec_A)
+    f1_B = 2 * (prec_B * rec_B) / (prec_B + rec_B)
+    f1_U = 2 * (prec_U * rec_U) / (prec_U + rec_U)
+    f1scores[0][fold_n] = spec_A
+    f1scores[1][fold_n] = spec_B
+    f1scores[2][fold_n] = spec_U
 
 
     print(precisions)
