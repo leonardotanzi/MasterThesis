@@ -67,8 +67,8 @@ if __name__ == "__main__":
         out_path = "/Users/leonardotanzi/Desktop/"
 
     if run_binary == "n":
-        classes = ["A1", "A2", "A3", "B", "Unbroken"]
-    elif run_binary =="y":
+        classes = ["A1", "A2", "A3"]
+    elif run_binary == "y":
         classes = ["A", "B"]
         
     training_data = []
@@ -106,19 +106,20 @@ if __name__ == "__main__":
         y.append(label)
 
     if run_binary == "n":
-        y = label_binarize(y, classes=[0, 1, 2, 3, 4])
+        y = label_binarize(y, classes=[0, 1, 2])
     elif run_binary == "y":
-        y = label_binarize(y, classes=[0, 1])
+        y = label_binarize(y, classes=[0, 1, 2])
+        y = y[:, :-1]
 
     y_ROC = np.concatenate((y, y, y, y, y), axis=0)
 
-    # model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold3_A1A2A3_notflipped-retrainAll-categorical-Inception-1569509422.model"
-    # model = tf.keras.models.load_model(model_name)
+    model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5"
+    model = tf.keras.models.load_model(model_name)
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_Inception_AB-best_model.h5".format(fold_n + 1)
-        model = tf.keras.models.load_model(model_name)
+        # model_name = model_path + "Fold{}_Inception_AB-best_model.h5".format(fold_n + 1)
+        # model = tf.keras.models.load_model(model_name)
         y_score = []
 
         print("\n\nFold number {}".format(fold_n + 1))
