@@ -59,7 +59,7 @@ if __name__ == "__main__":
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test"
         model_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Models/" # "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
-        out_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/MetricSingleNet/AB/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
+        out_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/MetricSingleNet/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     if run_binary == "n":
         classes = ["A1", "A2", "A3"]
     elif run_binary == "y":
-        classes = ["A", "B"]
+        classes = ["Broken", "Unbroken"]
         
     training_data = []
     n_classes = len(classes)
@@ -113,13 +113,13 @@ if __name__ == "__main__":
 
     y_ROC = np.concatenate((y, y, y, y, y), axis=0)
 
-    model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5"
-    model = tf.keras.models.load_model(model_name)
+    # model_name = "/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5"
+    # model = tf.keras.models.load_model(model_name)
 
     for fold_n in range(n_fold):
 
-        # model_name = model_path + "Fold{}_Inception_AB-best_model.h5".format(fold_n + 1)
-        # model = tf.keras.models.load_model(model_name)
+        model_name = model_path + "Fold{}_Inception_A1A2A3.model".format(fold_n + 1)
+        model = tf.keras.models.load_model(model_name)
         y_score = []
 
         print("\n\nFold number {}".format(fold_n + 1))
