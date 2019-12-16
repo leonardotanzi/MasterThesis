@@ -50,7 +50,8 @@ if __name__ == "__main__":
 
     if run_on_server == "y":
         model_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Models/"
-        test_folder = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test/"
+        model_path_a1a2a3 = "/mnt/data/ltanzi/PAPER/Output/A1A2A3/Models/"
+        test_folder = "/mnt/data/ltanzi/PAPER/A1A2A3_Cross_Val/Test/"
         output_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputBroUnbro/"
         output_path_AB = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputAB/"
         file_path = "/mnt/data/ltanzi/Cascade/cascadeMetrics5class_best.txt"
@@ -79,7 +80,7 @@ if __name__ == "__main__":
 
         first_model = load_model(model_path + "Fold{}_Inception_BrokenUnbroken-best_model.h5".format(fold_n + 1))
         second_model = load_model(model_path + "Fold{}_Inception_AB-best_model.h5".format(fold_n + 1))
-        third_model = third_model = load_model(model_path + "Fold{}_Inception_A1A2A3-best_model.h5".format(fold_n + 1))
+        third_model = load_model(model_path_a1a2a3 + "Fold{}_A1A2A3-best_model.h5".format(fold_n + 1))
 
         # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
         # second_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")
