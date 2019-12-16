@@ -7,14 +7,14 @@ import numpy as np
 
 K = 5
 image_size = 256
-categories = ["A", "B", "Unbroken", "Broken", "A1", "A2", "A3"]
+categories = ["A1", "A2", "A3"]
 input_folders = []
 
 for cat in categories:
-    input_folders.append("/mnt/data/ltanzi/PAPER/{}".format(cat))
+    input_folders.append("/mnt/data/ltanzi/PAPER/A1A2A3New/{}".format(cat))
     
 # create the root folder
-output_path = "/mnt/data/ltanzi/PAPER/All_Cross_Val"
+output_path = "/mnt/data/ltanzi/PAPER/A1A2A3_Cross_Val"
 os.mkdir(output_path)
 
 # create folders for splitting the dataset

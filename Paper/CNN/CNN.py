@@ -60,10 +60,10 @@ if __name__ == "__main__":
         print("Fold number {}".format(i))
 
         if run_on_server == "y":
-            train_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Train".format(i)
-            val_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Fold{}/Validation".format(i)
-            test_folder = "/mnt/Data/ltanzi/PAPER/All_Cross_Val/Test"
-            out_folder = "/mnt/data/ltanzi/PAPER/Output/Cascade/Models/".format(model_type)
+            train_folder = "/mnt/Data/ltanzi/PAPER/A1A2A3_Cross_Val/Fold{}/Train".format(i)
+            val_folder = "/mnt/Data/ltanzi/PAPER/A1A2A3_Cross_Val/Fold{}/Validation".format(i)
+            test_folder = "/mnt/Data/ltanzi/PAPER/A1A2A3_Cross_Val/Test"
+            out_folder = "/mnt/data/ltanzi/PAPER/Output/A1A2A3/"
 
         elif run_on_server == "n":
             train_folder = "/Users/leonardotanzi/Desktop/NeededDataset/SubgroupA_Folds_Proportioned/Fold{}/Train".format(i)
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
         if run_binary == "n":
             classes = ["A1", "A2", "A3"] if run_classification == 1 else ["A1", "A2", "A3", "B", "Unbroken"]
-            name = "Fold{}_{}_{}{}{}".format(i, model_type, classes[0], classes[1], classes[2])
+            name = "Fold{}_{}{}{}".format(i, classes[0], classes[1], classes[2])
             final_model_name = "{}_{}{}{}".format(model_type, classes[0], classes[1], classes[2])
             last_layer = 5
         elif run_binary == "y":
