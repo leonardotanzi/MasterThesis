@@ -58,8 +58,8 @@ if __name__ == "__main__":
         
     if run_on_server == 'y':
         datadir = "/mnt/data/ltanzi/PAPER/A1A2A3_Cross_Val/Test"
-        model_path = "/mnt/data/ltanzi/PAPER/Output/A1A2A3/Models/" # "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
-        out_path = "/mnt/data/ltanzi/PAPER/Output/A1A2A3/Metrics/Best/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
+        model_path = "/mnt/data/ltanzi/PAPER/Output/A1A2vsA3/Models/" # "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Models/".format(model_type)
+        out_path = "/mnt/data/ltanzi/PAPER/Output/A1A2vsA3/Metrics/"# "/mnt/data/ltanzi/PAPER/Output/Classic/{}/5classes/Metrics/Normal/".format(model_type)
 
     elif run_on_server == 'n':
         datadir = "/Users/leonardotanzi/Desktop/Test"
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     if run_binary == "n":
         classes = ["A1", "A2", "A3"]
     elif run_binary == "y":
-        classes = ["Broken", "Unbroken"]
+        classes = ["A1", "A2"]
         
     training_data = []
     n_classes = len(classes)
@@ -118,7 +118,7 @@ if __name__ == "__main__":
 
     for fold_n in range(n_fold):
 
-        model_name = model_path + "Fold{}_A1A2A3-best_model.h5".format(fold_n + 1)
+        model_name = model_path + "Fold{}_Inception_A1vsA2-best_model.h5".format(fold_n + 1)
         model = tf.keras.models.load_model(model_name)
         y_score = []
 

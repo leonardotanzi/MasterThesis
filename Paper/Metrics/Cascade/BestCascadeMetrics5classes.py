@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
         first_model = load_model(model_path + "Fold4_Inception_BrokenUnbroken-best_model.h5")
         second_model = load_model(model_path + "Fold3_Inception_AB-best_model.h5")
-        third_model = third_model = load_model(model_path_a1a2a4 + "Fold2_Inception_A1A2A3-best_model.h5")
+        third_model = third_model = load_model(model_path_a1a2a4 + "Fold2_A1A2A3-best_model.h5")
 
         # first_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold1_IncV3-Broken_Unbroken-categorical-baselineInception-1568367921-best_model.h5")
         # second_model = load_model("/Users/leonardotanzi/Desktop/NeededDataset/Cascade/Fold4_IncV3-A_B-categorical-baselineInception-1568304568-best_model.h5")

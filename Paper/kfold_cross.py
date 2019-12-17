@@ -7,7 +7,7 @@ import numpy as np
 
 K = 5
 image_size = 256
-categories = ["A1", "A2", "A3"]
+categories = ["A1A2", "A1", "A2", "A3"]
 input_folders = []
 
 for cat in categories:
