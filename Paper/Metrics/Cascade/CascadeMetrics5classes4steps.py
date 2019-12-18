@@ -32,7 +32,7 @@ if __name__ == "__main__":
     args = vars(ap.parse_args())
     run_on_server = args["server"]
 
-    classes = ["A1A2", "A1", "A2", "A3", "B", "Unbroken"]
+    classes = [ "A1", "A2", "A3", "B", "Unbroken"]
     n_classes = len(classes)
     n_folds = 5
     image_size = 299
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     if run_on_server == "y":
         model_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/Models/"
         model_path_a1a2a3 = "/mnt/data/ltanzi/PAPER/Output/A1A2vsA3/Models/"
-        test_folder = "/mnt/data/ltanzi/PAPER/A1A2A3_Cross_Val/Test/"
+        test_folder = "/mnt/data/ltanzi/PAPER/All_Cross_Val/Test/"
         output_path = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputBroUnbro/"
         output_path_AB = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputAB/"
         output_path_A1A2A3 = "/mnt/data/ltanzi/PAPER/Output/Cascade/OutputA1A2A3/"
@@ -161,7 +161,7 @@ if __name__ == "__main__":
                     cv2.imwrite(name_out, X_original)
 
                 elif class_idx == 1:
-                    print("A3")
+                    # print("A3")
                     # confusion_matrix[class_n][1] += 1
                     final_predictions_dict["{}".format(original_name)] = 2
 
